@@ -99,13 +99,13 @@ export default async function HomePage({ params }: HomePageProps) {
   };
 
   return (
-    <main className="w-full" id="home">
+    <main className="w-full snap-y snap-mandatory" id="home">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <section
-        className="w-full max-w-[1440px] p-10 mx-auto min-h-[calc(100vh-0px)] flex items-center justify-center bg-gradient-to-b from-white to-gray-50"
+        className="w-full max-w-[1440px] p-10 mx-auto min-h-screen snap-start scroll-mt-24 flex items-center justify-center bg-gradient-to-b from-white to-gray-50"
         aria-labelledby="hero-heading"
       >
         <div className="flex flex-col items-center justify-center mb-32 gap-4 text-center">
