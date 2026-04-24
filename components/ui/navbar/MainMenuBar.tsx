@@ -18,22 +18,22 @@ export async function MainMenuBar({ locale, className }: MainMenuBarProps) {
         {
             label: t("home"),
             id: "home",
-            href: `/${locale}#home`,
+            href: `/${locale}/home#home`,
         },
         {
             label: t("services"),
             id: "services",
-            href: `/${locale}#services`,
+            href: `/${locale}/home#services`,
         },
         {
             label: t("about"),
             id: "about",
-            href: `/${locale}#about`,
+            href: `/${locale}/home#about`,
         },
         {
             label: t("contact"),
             id: "contact",
-            href: `/${locale}#contact`,
+            href: `/${locale}/home#contact`,
         },
     ]
   return (

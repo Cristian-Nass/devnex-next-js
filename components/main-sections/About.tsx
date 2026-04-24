@@ -1,0 +1,21 @@
+import { Ubuntu } from "next/font/google";
+import { getTranslations } from "next-intl/server";
+import { cn } from "@/lib/utils";
+
+const ubuntu = Ubuntu({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
+
+export default async function About() {
+  const t = await getTranslations("HomePage");
+
+  return (
+    <section id="about" className="mx-auto w-full max-w-6xl px-6 py-16" aria-labelledby="about-heading">
+      <h2 id="about-heading" className={cn("text-3xl font-bold text-gray-900", ubuntu.className)}>
+        {t("aboutHeading")}
+      </h2>
+      <p className={cn("mt-4 text-lg text-gray-700 max-w-3xl", ubuntu.className)}>{t("aboutDescription")}</p>
+    </section>
+  );
+}

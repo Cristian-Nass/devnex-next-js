@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import OurServices from "@/components/main-sections/OurServices";
+import About from "@/components/main-sections/About";
+import Contact from "@/components/main-sections/Contact";
 import { getSiteUrl } from "@/lib/seo";
 
 const ubuntu = Ubuntu({
@@ -103,28 +105,22 @@ export default async function HomePage({ params }: HomePageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <section
-        className="w-full max-w-[1440px] p-10 mx-auto min-h-[calc(100vh-0px)] flex items-center justify-center"
+        className="w-full max-w-[1440px] p-10 mx-auto min-h-[calc(100vh-0px)] flex items-center justify-center bg-gradient-to-b from-white to-gray-50"
         aria-labelledby="hero-heading"
       >
         <div className="flex flex-col items-center justify-center mb-32 gap-4 text-center">
           <h1
             id="hero-heading"
             className={cn(
-              "text-6xl font-bold text-center text-white sm:text-6xl text-4xl",
-              "stroke-black",
-              "stroke-1",
+              "text-4xl sm:text-6xl font-bold text-center text-gray-900 tracking-tight",
               ubuntu.className
             )}
-            style={{
-              WebkitTextStroke: "1px #000",
-              color: "#ededed",
-            }}
           >
             {t("title")}
           </h1>
           <p
             className={cn(
-              "text-3xl text-center sm:text-3xl text-base font-medium text-gray-500",
+              "text-lg sm:text-2xl text-center font-medium text-gray-700 max-w-3xl",
               ubuntu.className
             )}
           >
@@ -132,7 +128,7 @@ export default async function HomePage({ params }: HomePageProps) {
           </p>
           <div className="flex items-center gap-8 sm:flex-row flex-col">
             <Button
-              variant="outline"
+              variant="default"
               className={cn(
                 "text-lg text-center py-6 mt-8 w-56 cursor-pointer",
                 ubuntu.className
@@ -140,7 +136,7 @@ export default async function HomePage({ params }: HomePageProps) {
               size="lg"
               asChild
             >
-              <Link href={`/${locale}#contact`}>{t("getStarted")}</Link>
+              <Link href={`/${locale}/home#contact`}>{t("getStarted")}</Link>
             </Button>
             <Button
               variant="outline"
@@ -151,25 +147,17 @@ export default async function HomePage({ params }: HomePageProps) {
               size="lg"
               asChild
             >
-              <Link href={`/${locale}#services`}>{t("exploreOurServices")}</Link>
+              <Link href={`/${locale}/home#services`}>{t("exploreOurServices")}</Link>
             </Button>
           </div>
+          <p className={cn("mt-2 text-sm sm:text-base text-gray-600", ubuntu.className)}>
+            {t("trustLine")}
+          </p>
         </div>
       </section>
       <OurServices />
-      <section id="about" className="mx-auto w-full max-w-6xl px-6 py-16" aria-labelledby="about-heading">
-        <h2 id="about-heading" className={cn("text-3xl font-bold text-gray-900", ubuntu.className)}>
-          {t("aboutHeading")}
-        </h2>
-        <p className={cn("mt-4 text-lg text-gray-700 max-w-3xl", ubuntu.className)}>{t("aboutDescription")}</p>
-      </section>
-      <section id="contact" className="mx-auto w-full max-w-6xl px-6 pb-20" aria-labelledby="contact-heading">
-        <h2 id="contact-heading" className={cn("text-3xl font-bold text-gray-900", ubuntu.className)}>
-          {t("contactHeading")}
-        </h2>
-        <p className={cn("mt-4 text-lg text-gray-700 max-w-3xl", ubuntu.className)}>{t("contactDescription")}</p>
-        <address className={cn("mt-6 not-italic text-gray-700", ubuntu.className)}>{t("contactEmail")}</address>
-      </section>
+      <About />
+      <Contact />
     </main>
   );
 }
