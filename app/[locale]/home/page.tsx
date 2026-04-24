@@ -2,7 +2,6 @@ import { Ubuntu } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import { getTranslations } from 'next-intl/server'
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import OurServices from '@/components/main-sections/OurServices';
 const ubuntu = Ubuntu({
   subsets: ['latin'],

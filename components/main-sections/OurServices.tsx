@@ -1,6 +1,11 @@
 import { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
-
+import { Ubuntu } from 'next/font/google'
+import { cn } from "@/lib/utils";
+const ubuntu = Ubuntu({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+})
 // List of service IDs
 const serviceIds = [
   "mobile",
@@ -97,10 +102,10 @@ export default async function OurServices() {
     <section id="services" className="py-16 md:py-20 lg:py-24 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className={cn("text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4", ubuntu.className)}>
             {t("heading")}
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
+          <p className={cn("text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4", ubuntu.className)}>
             {t("subheading")}
           </p>
         </div>
@@ -109,16 +114,16 @@ export default async function OurServices() {
           {services.map((service, index) => (
             <div
               key={service.title?.toString() || index}
-              className="bg-white rounded-xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group"
+              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default"
             >
               <div className="text-blue-600 mb-4 group-hover:scale-110 transition-transform">
                 {service.icon}
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
-              <p className="text-gray-600 mb-4">{service.description}</p>
+              <h3 className={cn("text-2xl font-bold text-gray-900 mb-3", ubuntu.className)}>{service.title}</h3>
+              <p className={cn("text-gray-600 mb-4", ubuntu.className)}>{service.description}</p>
               <ul className="space-y-2">
                 {(Array.isArray(service.features) ? service.features : []).map((feature, idx) => (
-                  <li key={idx} className="flex items-center text-gray-700">
+                  <li key={idx} className={cn("flex items-center text-gray-700", ubuntu.className)}>
                     <svg
                       className="w-5 h-5 text-green-500 mr-2"
                       fill="none"
@@ -133,7 +138,7 @@ export default async function OurServices() {
                         d="M5 13l4 4L19 7"
                       />
                     </svg>
-                    {feature}
+                    <span className={cn("text-gray-700", ubuntu.className)}>{feature}</span>
                   </li>
                 ))}
               </ul>
