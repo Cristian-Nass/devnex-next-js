@@ -1,7 +1,9 @@
 {
   "HomePage": {
-    "title": "Hello World",
-    "description": "This app is ready with PWA basics and internationalization.",
+    "title": "Transform Your Ideas Into Digital Reality",
+    "description": "We build innovative apps and create stunning web applications that drive your business forward",
+    "getStarted": "Get Started",
+    "exploreOurServices": "Explore Our Services",
     "currentLocale": "Current locale: {locale}",
     "switchLabel": "Change language"
   },

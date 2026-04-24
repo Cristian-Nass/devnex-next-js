@@ -1,7 +1,9 @@
 {
   "HomePage": {
-    "title": "Hej Varlden",
-    "description": "Den har appen ar redo med PWA-grunder och internationalisering.",
+    "title": "Transformera dina idéer till digital verklighet",
+    "description": "Vi bygger innovativa appar och skapar stiliga webbapplikationer som driver ditt företag framåt",
+    "getStarted": "Komma igång",
+    "exploreOurServices": "Utforska våra tjänster",
     "currentLocale": "Nuvarande sprak: {locale}",
     "switchLabel": "Byt sprak"
   },

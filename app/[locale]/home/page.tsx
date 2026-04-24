@@ -1,11 +1,31 @@
-const HomePage = () => {
+import { Ubuntu } from 'next/font/google'
+import { cn } from '@/lib/utils'
+import { getTranslations } from 'next-intl/server'
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+const ubuntu = Ubuntu({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+})
+export default async function HomePage() {
+  const t = await getTranslations("HomePage");
   return (
-    <div className="flex flex-1 items-center justify-center px-6">
-      <main className="w-full max-w-4xl rounded-2xl border border-black/10 bg-white p-10 shadow-sm dark:border-white/20 dark:bg-black">
-        <h1 className="text-4xl font-bold">Home</h1>
+    <div className="w-full">
+      <main className="w-full max-w-[1440px] p-10 mx-auto min-h-[calc(100vh-0px)] flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center mb-32 gap-4">
+          <h1 className={cn("text-6xl font-bold text-center", ubuntu.className)}>{t("title")}</h1>
+          <p className={cn("text-lg text-center", ubuntu.className)}>{t("description")}</p>
+          <div className="flex items-center gap-8"> 
+
+          <Button variant="outline" className={cn("text-lg text-center py-6 mt-8 w-56 cursor-pointer", ubuntu.className)} size="lg">
+            {t("getStarted")}
+          </Button>
+          <Button variant="outline" className={cn("text-lg text-center py-6 mt-8 w-56 cursor-pointer", ubuntu.className)} size="lg">
+            {t("exploreOurServices")}
+          </Button>
+          </div>
+        </div>
       </main>
     </div>
   );
-};
-
-export default HomePage;
+}
