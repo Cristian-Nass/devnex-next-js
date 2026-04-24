@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "../button";
 import { Ubuntu } from 'next/font/google'
+import { getTranslations } from "next-intl/server";
 const ubuntu = Ubuntu({
     subsets: ['latin'],
     weight: ['400', '500', '700'],
@@ -11,18 +12,19 @@ type MainMenuBarProps = {
     className?: string;
 }
 
-const MainMenuBar = ({ locale, className }: MainMenuBarProps) => {
+export async function MainMenuBar({ locale, className }: MainMenuBarProps) {
+    const t = await getTranslations("NavigationBar");
     const menuItems = [
         {
-            label: "Home",
+            label: t("home"),
             href: `/${locale}`,
         },
         {
-            label: "About",
+            label: t("about"),
             href: `/${locale}/about`,
         },
         {
-            label: "Contact",
+            label: t("contact"),
             href: `/${locale}/contact`,
         },
     ]

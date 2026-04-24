@@ -4,5 +4,10 @@
     "description": "This app is ready with PWA basics and internationalization.",
     "currentLocale": "Current locale: {locale}",
     "switchLabel": "Change language"
+  },
+  "NavigationBar": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
   }
 }

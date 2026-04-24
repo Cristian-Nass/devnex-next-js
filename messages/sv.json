@@ -4,5 +4,10 @@
     "description": "Den har appen ar redo med PWA-grunder och internationalisering.",
     "currentLocale": "Nuvarande sprak: {locale}",
     "switchLabel": "Byt sprak"
+  },
+  "NavigationBar": {
+    "home": "Hem",
+    "about": "Om Oss",
+    "contact": "Kontakta Oss"
   }
 }
