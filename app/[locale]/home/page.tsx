@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import OurServices from "@/components/main-sections/OurServices";
+import { getSiteUrl } from "@/lib/seo";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -48,9 +49,59 @@ export default async function HomePage({ params }: HomePageProps) {
   const resolvedParams = await Promise.resolve(params);
   const locale = resolvedParams?.locale ?? "en";
   const t = await getTranslations("HomePage");
+  const servicesT = await getTranslations({ locale, namespace: "OurServices" });
+  const siteUrl = getSiteUrl();
+  const homeUrl = `${siteUrl}/${locale}/home`;
+  const localeName = locale === "sv" ? "sv-SE" : "en-US";
+  const organizationName = "Devnex";
+  const serviceIds = ["mobile", "web", "uiux", "cloud", "database", "api"] as const;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        name: organizationName,
+        url: siteUrl,
+        email: t("contactEmail"),
+      },
+      {
+        "@type": "WebSite",
+        name: organizationName,
+        url: siteUrl,
+        inLanguage: localeName,
+      },
+      {
+        "@type": "WebPage",
+        name: t("title"),
+        description: t("description"),
+        url: homeUrl,
+        inLanguage: localeName,
+        isPartOf: {
+          "@type": "WebSite",
+          name: organizationName,
+          url: siteUrl,
+        },
+      },
+      ...serviceIds.map((id) => ({
+        "@type": "Service",
+        serviceType: servicesT(`${id}.title`),
+        description: servicesT(`${id}.description`),
+        provider: {
+          "@type": "Organization",
+          name: organizationName,
+          url: siteUrl,
+        },
+      })),
+    ],
+  };
 
   return (
     <main className="w-full" id="home">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section
         className="w-full max-w-[1440px] p-10 mx-auto min-h-[calc(100vh-0px)] flex items-center justify-center"
         aria-labelledby="hero-heading"
