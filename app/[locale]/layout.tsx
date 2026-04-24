@@ -6,7 +6,7 @@ import { NavigationBar } from "@/components/ui/navbar/NavigationBar";
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params?: Promise<{ locale: string }> | { locale: string };
 };
 
 export function generateStaticParams() {
@@ -14,9 +14,10 @@ export function generateStaticParams() {
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params;
+  const resolvedParams = await Promise.resolve(params);
+  const locale = resolvedParams?.locale;
 
-  if (!hasLocale(routing.locales, locale)) {
+  if (!locale || !hasLocale(routing.locales, locale)) {
     notFound();
   }
 

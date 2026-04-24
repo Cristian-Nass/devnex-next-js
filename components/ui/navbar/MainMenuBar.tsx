@@ -30,7 +30,7 @@ const MainMenuBar = ({ locale, className }: MainMenuBarProps) => {
     <nav className={cn("flex items-center gap-2", className)}>
       {menuItems.map((item) => (
         <Button variant="ghost" size="lg" key={item.href} asChild>
-            <Link href={item.href} locale={locale} prefetch={false} className={cn("text-base font-medium", ubuntu.className)}>{item.label}</Link>
+            <Link href={item.href} prefetch={false} className={cn("text-base font-medium", ubuntu.className)}>{item.label}</Link>
         </Button>
     ))}
   </nav>
