@@ -1,19 +1,146 @@
-import { Ubuntu } from 'next/font/google'
-import { cn } from '@/lib/utils'
-const ubuntu = Ubuntu({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-})
+import { ReactNode } from "react";
+import { getTranslations } from "next-intl/server";
 
+// List of service IDs
+const serviceIds = [
+  "mobile",
+  "web",
+  "uiux",
+  "cloud",
+  "database",
+  "api",
+] as const;
+
+// Static SVG icons for each service
+const serviceIcons: Record<(typeof serviceIds)[number], ReactNode> = {
+  mobile: (
+    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+      />
+    </svg>
+  ),
+  web: (
+    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+      />
+    </svg>
+  ),
+  uiux: (
+    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+      />
+    </svg>
+  ),
+  cloud: (
+    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+      />
+    </svg>
+  ),
+  database: (
+    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
+      />
+    </svg>
+  ),
+  api: (
+    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M13 10V3L4 14h7v7l9-11h-7z"
+      />
+    </svg>
+  ),
+};
+
+// Next.js server component for rendering the Our Services section
 export default async function OurServices() {
+  const t = await getTranslations("OurServices");
+
+  // Safe translation fetch per service
+  const services = serviceIds.map((id) => {
+    const rawFeatures = t.raw(`${id}.features`);
+    return {
+      icon: serviceIcons[id],
+      title: t(`${id}.title`),
+      description: t(`${id}.description`),
+      // "features" is defined as an array in messages, so use raw values.
+      features: Array.isArray(rawFeatures)
+        ? rawFeatures.filter((feature): feature is string => typeof feature === "string")
+        : [],
+    };
+  });
+
   return (
-    <div className="w-full">
-      <main className="w-full max-w-[1440px] p-10 mx-auto min-h-[calc(100vh-0px)] flex items-center justify-center">
-        <div className="flex flex-col items-center justify-center mb-32 gap-4">
-          <h1 className={cn("text-6xl font-bold text-center", ubuntu.className)}>Our Services</h1>
-          <p className={cn("text-lg text-center", ubuntu.className)}>We offer a wide range of services to help you grow your business and reach your goals.</p>
+    <section id="services" className="py-16 md:py-20 lg:py-24 bg-gray-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            {t("heading")}
+          </h2>
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
+            {t("subheading")}
+          </p>
         </div>
-      </main>
-    </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {services.map((service, index) => (
+            <div
+              key={service.title?.toString() || index}
+              className="bg-white rounded-xl p-6 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group"
+            >
+              <div className="text-blue-600 mb-4 group-hover:scale-110 transition-transform">
+                {service.icon}
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
+              <p className="text-gray-600 mb-4">{service.description}</p>
+              <ul className="space-y-2">
+                {(Array.isArray(service.features) ? service.features : []).map((feature, idx) => (
+                  <li key={idx} className="flex items-center text-gray-700">
+                    <svg
+                      className="w-5 h-5 text-green-500 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

@@ -12,5 +12,69 @@
     "services": "Tjänster",
     "about": "Om Oss",
     "contact": "Kontakta Oss"
+  },
+  "OurServices": {
+    "heading": "Våra Tjänster",
+    "subheading": "Vi erbjuder ett brett utbud av tjänster för att hjälpa dig att växa ditt företag",
+    "mobile": {
+      "title": "Mobil App Utveckling",
+      "description": "Native och korsplattformsuppvecklade mobilapplikationer byggda med de senaste teknologierna för iOS och Android.",
+      "features": [
+        "React Native",
+        "Flutter",
+        "Native iOS/Android",
+        "App Store Optimering"
+      ]
+    },
+    "web": {
+      "title": "Webbapplikation Utveckling",
+      "description": "Moderna, responsiva webbapplikationer anpassade till dina företagsskulor med avancerade ramverk.",
+      "features": [
+        "React/Vue/Angular",
+        "Node.js Bakend",
+        "Cloud Deployment",
+        "Responsive Web Design"
+      ]
+    },
+    "uiux": {
+      "title": "UI/UX Designering",
+      "description": "Snygga, användarcentrerade designeringar som skapar engagerande upplevelser och driver konverteringar.",
+      "features": [
+        "Användarforskning",
+        "Wireframing",
+        "Prototyping",
+        "Design Systemer"
+      ]
+    },
+    "cloud": {
+      "title": "Cloud Lösningar",
+      "description": "Skalbar cloud infrastruktur och distribution lösningar för dina applikationer.",
+      "features": [
+        "AWS/Azure/GCP",
+        "DevOps",
+        "CI/CD Pipelines",
+        "Monitoring"
+      ]
+    },
+    "database": {
+      "title": "Database Designering",
+      "description": "Robust database arkitektur och optimering för högpresterande applikationer.",
+      "features": [
+        "SQL/NoSQL",
+        "Data Modellering",
+        "Prestandatuning",
+        "Migration"
+      ]
+    },
+    "api": {
+      "title": "API Utveckling",
+      "description": "RESTful och GraphQL API:er designade för skalbarhet, säkerhet och prestanda.",
+      "features": [
+        "REST API",
+        "GraphQL",
+        "Autentisering",
+        "Dokumentation"
+      ]
+    }
   }
 }
