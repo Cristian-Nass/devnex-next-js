@@ -3,6 +3,7 @@ import { LanguageSwitch } from "./LanguageSwitch";
 import { Ubuntu } from 'next/font/google'
 import { cn } from "@/lib/utils";
 import MainMenuBar from "./MainMenuBar";
+import { MenuIcon } from "lucide-react";
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -23,8 +24,11 @@ export function NavigationBar({ locale }: NavigationBarProps) {
         </Link>
 
         <div className="flex items-center gap-2 w-full">
-          <MainMenuBar locale={locale} className="mx-auto" />
+          <MainMenuBar locale={locale} className="mx-auto hidden md:block" />
           <LanguageSwitch locale={locale} />
+          <div className="ml-auto flex items-center md:hidden">
+            <MenuIcon className="w-6 h-6 cursor-pointer" />
+          </div>
         </div>
       </div>
     </header>
