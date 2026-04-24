@@ -4,10 +4,28 @@
     "description": "We handle everything for you.",
     "getStarted": "Get Started",
     "exploreOurServices": "Explore Our Services",
+    "aboutHeading": "About Devnex",
+    "aboutDescription": "We are a development team focused on fast delivery, clean architecture, and measurable business outcomes for startups and small businesses.",
+    "contactHeading": "Contact Us",
+    "contactDescription": "Tell us about your project and we will get back to you with a clear proposal and timeline.",
+    "contactEmail": "hello@devnex.app",
     "currentLocale": "Current locale: {locale}",
     "switchLabel": "Change language"
   },
+  "HomePageSeo": {
+    "title": "Web and App Development Services",
+    "description": "Devnex helps businesses launch websites and applications quickly with modern technology, SEO best practices, and scalable architecture.",
+    "keywords": [
+      "web development",
+      "mobile app development",
+      "software agency",
+      "seo friendly websites",
+      "next.js development",
+      "business websites"
+    ]
+  },
   "NavigationBar": {
+    "navLabel": "Primary navigation",
     "home": "Home",
     "services": "Services",
     "about": "About",

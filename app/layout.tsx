@@ -14,8 +14,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Devnex App",
-  description: "Devnex starter app with PWA and i18n support",
+  metadataBase: new URL("https://devnex.app"),
+  title: {
+    default: "Devnex | Web and App Development",
+    template: "%s | Devnex",
+  },
+  description:
+    "Devnex builds modern websites, web apps, and mobile applications for growing businesses.",
+  applicationName: "Devnex",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Devnex",
+    title: "Devnex | Web and App Development",
+    description:
+      "Devnex builds modern websites, web apps, and mobile applications for growing businesses.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Devnex | Web and App Development",
+    description:
+      "Devnex builds modern websites, web apps, and mobile applications for growing businesses.",
+  },
 };
 
 export default function RootLayout({

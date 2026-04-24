@@ -18,26 +18,26 @@ export async function MainMenuBar({ locale, className }: MainMenuBarProps) {
         {
             label: t("home"),
             id: "home",
-            href: `/${locale}`,
+            href: `/${locale}#home`,
         },
         {
             label: t("services"),
             id: "services",
-            href: `/${locale}`,
+            href: `/${locale}#services`,
         },
         {
             label: t("about"),
             id: "about",
-            href: `/${locale}`,
+            href: `/${locale}#about`,
         },
         {
             label: t("contact"),
             id: "contact",
-            href: `/${locale}`,
+            href: `/${locale}#contact`,
         },
     ]
   return (
-    <nav className={cn("flex items-center gap-2", className)}>
+    <nav className={cn("flex items-center gap-2", className)} aria-label={t("navLabel")}>
       {menuItems.map((item) => (
         <Button variant="ghost" size="lg" key={item.id} asChild>
             <Link href={item.href} prefetch={false} className={cn("text-base font-medium", ubuntu.className)}>{item.label}</Link>
