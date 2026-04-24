@@ -15,19 +15,19 @@ export default async function HomePage() {
         <div className="flex flex-col items-center justify-center mb-32 gap-4">
           <h1
             className={cn(
-              "text-8xl font-bold text-center text-white sm:text-8xl text-5xl",
+              "text-6xl font-bold text-center text-white sm:text-6xl text-4xl",
               "stroke-black",
-              "stroke-2",
+              "stroke-1",
               ubuntu.className
             )}
             style={{
-              WebkitTextStroke: "2px #000",
-              color: "#ffffff", // Tailwind gray-300
+              WebkitTextStroke: "1px #000",
+              color: "#ededed", // Tailwind gray-300
             }}
           >
             {t("title")}
           </h1>
-          <p className={cn("text-lg text-center sm:text-xl text-base", ubuntu.className)}>{t("description")}</p>
+          <p className={cn("text-3xl text-center sm:text-3xl text-base font-medium text-gray-500", ubuntu.className)}>{t("description")}</p>
           <div className="flex items-center gap-8 sm:flex-row flex-col"> 
 
           <Button variant="outline" className={cn("text-lg text-center py-6 mt-8 w-56 cursor-pointer", ubuntu.className)} size="lg">
