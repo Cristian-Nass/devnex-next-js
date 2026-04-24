@@ -17,21 +17,29 @@ export async function MainMenuBar({ locale, className }: MainMenuBarProps) {
     const menuItems = [
         {
             label: t("home"),
+            id: "home",
+            href: `/${locale}`,
+        },
+        {
+            label: t("services"),
+            id: "services",
             href: `/${locale}`,
         },
         {
             label: t("about"),
-            href: `/${locale}/about`,
+            id: "about",
+            href: `/${locale}`,
         },
         {
             label: t("contact"),
-            href: `/${locale}/contact`,
+            id: "contact",
+            href: `/${locale}`,
         },
     ]
   return (
     <nav className={cn("flex items-center gap-2", className)}>
       {menuItems.map((item) => (
-        <Button variant="ghost" size="lg" key={item.href} asChild>
+        <Button variant="ghost" size="lg" key={item.id} asChild>
             <Link href={item.href} prefetch={false} className={cn("text-base font-medium", ubuntu.className)}>{item.label}</Link>
         </Button>
     ))}

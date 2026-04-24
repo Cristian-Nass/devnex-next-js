@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import { getTranslations } from 'next-intl/server'
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import OurServices from '@/components/main-sections/OurServices';
 const ubuntu = Ubuntu({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
@@ -26,6 +27,7 @@ export default async function HomePage() {
           </div>
         </div>
       </main>
+      <OurServices />
     </div>
   );
 }
