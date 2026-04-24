@@ -1,0 +1,8 @@
+{
+  "HomePage": {
+    "title": "Hej Varlden",
+    "description": "Den har appen ar redo med PWA-grunder och internationalisering.",
+    "currentLocale": "Nuvarande sprak: {locale}",
+    "switchLabel": "Byt sprak"
+  }
+}
