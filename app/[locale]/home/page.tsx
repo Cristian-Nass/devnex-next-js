@@ -13,9 +13,22 @@ export default async function HomePage() {
     <div className="w-full">
       <main className="w-full max-w-[1440px] p-10 mx-auto min-h-[calc(100vh-0px)] flex items-center justify-center">
         <div className="flex flex-col items-center justify-center mb-32 gap-4">
-          <h1 className={cn("text-6xl font-bold text-center", ubuntu.className)}>{t("title")}</h1>
-          <p className={cn("text-lg text-center", ubuntu.className)}>{t("description")}</p>
-          <div className="flex items-center gap-8"> 
+          <h1
+            className={cn(
+              "text-8xl font-bold text-center text-white sm:text-8xl text-5xl",
+              "stroke-black",
+              "stroke-2",
+              ubuntu.className
+            )}
+            style={{
+              WebkitTextStroke: "2px #000",
+              color: "#ffffff", // Tailwind gray-300
+            }}
+          >
+            {t("title")}
+          </h1>
+          <p className={cn("text-lg text-center sm:text-xl text-base", ubuntu.className)}>{t("description")}</p>
+          <div className="flex items-center gap-8 sm:flex-row flex-col"> 
 
           <Button variant="outline" className={cn("text-lg text-center py-6 mt-8 w-56 cursor-pointer", ubuntu.className)} size="lg">
             {t("getStarted")}
