@@ -2,6 +2,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { NavigationBar } from "@/components/ui/navbar/NavigationBar";
 
 type Props = {
   children: React.ReactNode;
@@ -21,5 +22,10 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
 
-  return <NextIntlClientProvider>{children}</NextIntlClientProvider>;
+  return (
+    <NextIntlClientProvider>
+      <NavigationBar locale={locale} />
+      {children}
+    </NextIntlClientProvider>
+  );
 }
