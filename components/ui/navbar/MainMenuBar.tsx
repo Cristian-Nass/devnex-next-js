@@ -18,7 +18,7 @@ export async function MainMenuBar({ locale, className }: MainMenuBarProps) {
         {
             label: t("home"),
             id: "home",
-            href: `/${locale}/home#home`,
+            href: `/${locale}/home`,
         },
         {
             label: t("services"),

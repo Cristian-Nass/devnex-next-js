@@ -18,7 +18,7 @@ type NavigationBarProps = {
 export async function NavigationBar({ locale }: NavigationBarProps) {
   const t = await getTranslations("NavigationBar");
   const mobileMenuItems = [
-    { id: "home", label: t("home"), href: `/${locale}/home#home` },
+    { id: "home", label: t("home"), href: `/${locale}/home` },
     { id: "services", label: t("services"), href: `/${locale}/home#services` },
     { id: "about", label: t("about"), href: `/${locale}/home#about` },
     { id: "contact", label: t("contact"), href: `/${locale}/home#contact` },
