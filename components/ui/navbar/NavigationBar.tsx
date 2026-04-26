@@ -21,6 +21,7 @@ export async function NavigationBar({ locale }: NavigationBarProps) {
   const mobileMenuItems = getMenuItems(locale, {
     home: t("home"),
     services: t("services"),
+    products: t("products"),
     about: t("about"),
     contact: t("contact"),
   });

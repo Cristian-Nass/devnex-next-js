@@ -20,6 +20,7 @@ export async function MainMenuBar({ locale, className }: MainMenuBarProps) {
         services: t("services"),
         about: t("about"),
         contact: t("contact"),
+        products: t("products"),
     });
   return (
     <nav className={cn("flex items-center gap-2", className)} aria-label={t("navLabel")}>

@@ -30,7 +30,8 @@
     "home": "Hem",
     "services": "Tjänster",
     "about": "Om Oss",
-    "contact": "Kontakta Oss"
+    "contact": "Kontakta Oss",
+    "products": "Produkter"
   },
   "OurServices": {
     "heading": "Våra Tjänster",
@@ -95,5 +96,15 @@
         "Dokumentation"
       ]
     }
+  },
+  "Products": {
+    "heading": "Våra Produkter",
+    "subheading": "Våra produkter är designade för att hjälpa dig att växa ditt företag",
+    "products": [
+      {
+        "name": "Devnex",
+        "description": "Devnex är ett webbplatsbyggverktyg som låter dig bygga webbplatser snabbt och enkelt."
+      }
+    ]
   }
 }

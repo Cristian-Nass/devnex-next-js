@@ -30,7 +30,8 @@
     "home": "Home",
     "services": "Services",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "products": "Products"
   },
   "OurServices": {
     "heading": "Our Services",
@@ -95,5 +96,15 @@
         "Documentation"
       ]
     }
+  },
+  "Products": {
+    "heading": "Our Products",
+    "subheading": "Our products are designed to help you grow your business",
+    "products": [
+      {
+        "name": "Devnex",
+        "description": "Devnex is a website builder tool that lets you build websites quickly and easily."
+      }
+    ]
   }
 }

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import OurServices from "@/components/main-sections/OurServices";
 import About from "@/components/main-sections/About";
 import Contact from "@/components/main-sections/Contact";
+import Products from "@/components/main-sections/Products";
 import { getSiteUrl } from "@/lib/seo";
 
 const ubuntu = Ubuntu({
@@ -161,6 +162,7 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
       </section>
       <OurServices />
+      <Products />
       <About />
       <Contact />
     </main>
