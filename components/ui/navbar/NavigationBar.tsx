@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import MainMenuBar from "./MainMenuBar";
 import { MenuIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { getMenuItems } from "./menuItems";
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -17,12 +18,12 @@ type NavigationBarProps = {
 
 export async function NavigationBar({ locale }: NavigationBarProps) {
   const t = await getTranslations("NavigationBar");
-  const mobileMenuItems = [
-    { id: "home", label: t("home"), href: `/${locale}/home` },
-    { id: "services", label: t("services"), href: `/${locale}/home#services` },
-    { id: "about", label: t("about"), href: `/${locale}/home#about` },
-    { id: "contact", label: t("contact"), href: `/${locale}/home#contact` },
-  ];
+  const mobileMenuItems = getMenuItems(locale, {
+    home: t("home"),
+    services: t("services"),
+    about: t("about"),
+    contact: t("contact"),
+  });
 
   return (
     <header className="sticky top-0 z-20 border-b border-black/10 bg-white/90 backdrop-blur dark:border-white/20 dark:bg-black/90">

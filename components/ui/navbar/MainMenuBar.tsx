@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "../button";
 import { Ubuntu } from 'next/font/google'
 import { getTranslations } from "next-intl/server";
+import { getMenuItems } from "./menuItems";
 const ubuntu = Ubuntu({
     subsets: ['latin'],
     weight: ['400', '500', '700'],
@@ -14,28 +15,12 @@ type MainMenuBarProps = {
 
 export async function MainMenuBar({ locale, className }: MainMenuBarProps) {
     const t = await getTranslations("NavigationBar");
-    const menuItems = [
-        {
-            label: t("home"),
-            id: "home",
-            href: `/${locale}/home`,
-        },
-        {
-            label: t("services"),
-            id: "services",
-            href: `/${locale}/home#services`,
-        },
-        {
-            label: t("about"),
-            id: "about",
-            href: `/${locale}/home#about`,
-        },
-        {
-            label: t("contact"),
-            id: "contact",
-            href: `/${locale}/home#contact`,
-        },
-    ]
+    const menuItems = getMenuItems(locale, {
+        home: t("home"),
+        services: t("services"),
+        about: t("about"),
+        contact: t("contact"),
+    });
   return (
     <nav className={cn("flex items-center gap-2", className)} aria-label={t("navLabel")}>
       {menuItems.map((item) => (
