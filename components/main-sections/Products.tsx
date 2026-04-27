@@ -82,7 +82,7 @@ const products = productIds.map((id) => {
       icon: productIcons[id],
       title: "Enterprise Website",
       description: "A scalable business website template with sections for teams, services, and corporate communication.",
-      features: ["Multi-page corporate structure", "Lead capture contact modules", "Performance-focused page templates"],
+      features: ["Multi-page corporate structure", "Lead capture contact modules", "Performance-focused page templates", "SEO-friendly article layout", "PWA Compatible With All Desktop and Mobile Devices"],
     };
   }
 
@@ -119,7 +119,7 @@ export default function Products({ locale }: ProductsProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-4">
           {products.map((product, index) => (
             <div
               key={product.title?.toString() || index}
@@ -128,7 +128,7 @@ export default function Products({ locale }: ProductsProps) {
               <div className="text-blue-600 mb-4 group-hover:scale-110 transition-transform">{product.icon}</div>
               <h3 className={cn("text-2xl font-bold text-gray-900 mb-3", ubuntu.className)}>{product.title}</h3>
               <p className={cn("text-gray-600 mb-4", ubuntu.className)}>{product.description}</p>
-              <ul className="space-y-2 h-44 overflow-y-auto">
+              <ul className="space-y-2 h-[260px] overflow-y-auto">
                 {(Array.isArray(product.features) ? product.features : []).map((feature, idx) => (
                   <li key={idx} className={cn("flex items-center text-gray-700", ubuntu.className)}>
                     <svg
