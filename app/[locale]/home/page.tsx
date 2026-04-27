@@ -163,7 +163,7 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
       </section>
       <OurServices />
-      <Products />
+      <Products locale={locale} />
       <About />
       <Contact />
       <Footer />

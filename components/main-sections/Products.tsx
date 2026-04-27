@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import { Ubuntu } from "next/font/google";
 import { cn } from "@/lib/utils";
-
+import ClickToLink from "@/components/main-sections/ClickToLink";
+import { ArrowRightIcon } from "lucide-react";
 const ubuntu = Ubuntu({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -93,7 +94,11 @@ const products = productIds.map((id) => {
   };
 });
 
-export default function Products() {
+type ProductsProps = {
+  locale: string;
+};
+
+export default function Products({ locale }: ProductsProps) {
 
   return (
     <section
@@ -118,12 +123,12 @@ export default function Products() {
           {products.map((product, index) => (
             <div
               key={product.title?.toString() || index}
-              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default"
+              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-pointer"
             >
               <div className="text-blue-600 mb-4 group-hover:scale-110 transition-transform">{product.icon}</div>
               <h3 className={cn("text-2xl font-bold text-gray-900 mb-3", ubuntu.className)}>{product.title}</h3>
               <p className={cn("text-gray-600 mb-4", ubuntu.className)}>{product.description}</p>
-              <ul className="space-y-2">
+              <ul className="space-y-2 h-44 overflow-y-auto">
                 {(Array.isArray(product.features) ? product.features : []).map((feature, idx) => (
                   <li key={idx} className={cn("flex items-center text-gray-700", ubuntu.className)}>
                     <svg
@@ -139,6 +144,10 @@ export default function Products() {
                   </li>
                 ))}
               </ul>
+                <ClickToLink href={`/${locale}/products/website`}>
+                    <span className={cn("text-gray-100", ubuntu.className)}>Read More</span>
+                    <ArrowRightIcon className="w-4 h-4" />
+                </ClickToLink>
             </div>
           ))}
         </div>
