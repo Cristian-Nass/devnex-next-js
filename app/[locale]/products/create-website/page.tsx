@@ -71,7 +71,7 @@ const WebsiteProductsPage = () => {
                 <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan D</h2>
                 <ul className={cn("list-none text-left text-gray-800 space-y-3", ubuntu.className)}>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Web Application / Mobile App</li>
-                    <p className="text-gray-800">Create Web/Mobile Application for your website 100% Customizable for your business</p>
+                    <p className="text-gray-800">Create Web/Mobile Application for you, fully customizable for you and your needs</p>
                 </ul>
 
             </div>
