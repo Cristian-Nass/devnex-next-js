@@ -12,7 +12,7 @@ const productIds = [
   "shop",
   "restaurant",
   "enterprise",
-  "blog",
+  "wordPress",
 ] as const;
 
 const productIcons: Record<(typeof productIds)[number], ReactNode> = {
@@ -46,7 +46,7 @@ const productIcons: Record<(typeof productIds)[number], ReactNode> = {
       />
     </svg>
   ),
-  blog: (
+  wordPress: (
     <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path
         strokeLinecap="round"
@@ -88,8 +88,8 @@ const products = productIds.map((id) => {
 
   return {
     icon: productIcons[id],
-    title: "Blog",
-    description: "A content-ready publishing product to share updates, stories, and news with a clean reading experience.",
+    title: "WordPress",
+    description: "A content-ready publishing product to share updates, stories, and news with a clean reading experience. WordPress is a content management system (CMS) that allows you to create and manage your website.",
     features: ["Category and tag organization", "Author and post highlight blocks", "SEO-friendly article layout"],
   };
 });
@@ -123,12 +123,12 @@ export default function Products({ locale }: ProductsProps) {
           {products.map((product, index) => (
             <div
               key={product.title?.toString() || index}
-              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-pointer"
+              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default"
             >
               <div className="text-blue-600 mb-4 group-hover:scale-110 transition-transform">{product.icon}</div>
               <h3 className={cn("text-2xl font-bold text-gray-900 mb-3", ubuntu.className)}>{product.title}</h3>
               <p className={cn("text-gray-600 mb-4", ubuntu.className)}>{product.description}</p>
-              <ul className="space-y-2 h-[260px] overflow-y-auto">
+              <ul className="space-y-2 h-[240px] overflow-y-auto">
                 {(Array.isArray(product.features) ? product.features : []).map((feature, idx) => (
                   <li key={idx} className={cn("flex items-center text-gray-700", ubuntu.className)}>
                     <svg
