@@ -63,6 +63,7 @@ const WebsiteProductsPage = () => {
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Send SMS</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Pay Online</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Analytics and Reporting</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Booking System and Reporting</li>
                 </ul>
 
             </div>
