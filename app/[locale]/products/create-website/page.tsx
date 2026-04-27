@@ -10,8 +10,8 @@ const WebsiteProductsPage = () => {
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
-        <h1 className="text-4xl font-bold text-center mb-4">Order Your Website/WebApplication</h1>
-        <p className="text-lg text-center mb-4">We will help you create your website</p>
+        <h1 className={cn("text-4xl font-bold text-center mb-4 pt-28", ubuntu.className)}>Order Your Website/WebApplication</h1>
+        <p className={cn("text-lg text-center mb-4 py-8", ubuntu.className)} >We will help you create your website</p>
         <div className="flex flex-row gap-6 w-full">
             <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
                 <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan A</h2>
