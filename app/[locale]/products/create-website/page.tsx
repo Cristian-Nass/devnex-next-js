@@ -15,7 +15,7 @@ const WebsiteProductsPage = () => {
         <div className="flex flex-row gap-6 w-full">
             <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
                 <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan A</h2>
-                <ul className={cn("list-none text-left text-gray-800", ubuntu.className)}>
+                <ul className={cn("list-none text-left text-gray-800 space-y-3", ubuntu.className)}>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Customizable</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Editable</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Responsive</li>
@@ -30,7 +30,7 @@ const WebsiteProductsPage = () => {
             </div>
             <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
                 <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan B</h2>
-                <ul className={cn("list-none text-left text-gray-800", ubuntu.className)}>
+                <ul className={cn("list-none text-left text-gray-800 space-y-3", ubuntu.className)}>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Customizable</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Editable</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Responsive</li>
@@ -48,7 +48,7 @@ const WebsiteProductsPage = () => {
             </div>
             <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
                 <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan C</h2>
-                <ul className={cn("list-none text-left text-gray-800", ubuntu.className)}>
+                <ul className={cn("list-none text-left text-gray-800 space-y-3", ubuntu.className)}>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Customizable</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Editable</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Responsive</li>
@@ -68,9 +68,9 @@ const WebsiteProductsPage = () => {
             </div>
             <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
                 <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan D</h2>
-                <ul className={cn("list-none text-left text-gray-800", ubuntu.className)}>
-                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Web Application</li>
-                    <p className="text-gray-800">Create a web application for your website 100% Customizable for your business</p>
+                <ul className={cn("list-none text-left text-gray-800 space-y-3", ubuntu.className)}>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Web Application / Mobile App</li>
+                    <p className="text-gray-800">Create Web/Mobile Application for your website 100% Customizable for your business</p>
                 </ul>
 
             </div>
