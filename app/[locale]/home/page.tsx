@@ -9,6 +9,7 @@ import About from "@/components/main-sections/About";
 import Contact from "@/components/main-sections/Contact";
 import Products from "@/components/main-sections/Products";
 import { getSiteUrl } from "@/lib/seo";
+import Footer from "@/components/main-sections/Footer";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -165,6 +166,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <Products />
       <About />
       <Contact />
+      <Footer />
     </main>
   );
 }
