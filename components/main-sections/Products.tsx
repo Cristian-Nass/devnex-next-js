@@ -144,7 +144,7 @@ export default function Products({ locale }: ProductsProps) {
                   </li>
                 ))}
               </ul>
-                <ClickToLink href={`/${locale}/products/website`}>
+                <ClickToLink href={`/${locale}/products/create-website`}>
                     <span className={cn("text-gray-100", ubuntu.className)}>Read More</span>
                     <ArrowRightIcon className="w-4 h-4" />
                 </ClickToLink>
