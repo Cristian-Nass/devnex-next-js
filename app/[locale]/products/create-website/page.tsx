@@ -1,5 +1,82 @@
+import { CheckIcon } from "lucide-react";
+import { Ubuntu } from "next/font/google";
+import { cn } from "@/lib/utils";
+const ubuntu = Ubuntu({
+    subsets: ["latin"],
+    weight: ["400", "500", "700"],
+});
+
 const WebsiteProductsPage = () => {
-    return <h1>Create your website in 48 hours</h1>;
+    return (
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+
+        <h1 className="text-4xl font-bold text-center mb-4">Order Your Website/WebApplication</h1>
+        <p className="text-lg text-center mb-4">We will help you create your website</p>
+        <div className="flex flex-row gap-6 w-full">
+            <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
+                <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan A</h2>
+                <ul className={cn("list-none text-left text-gray-800", ubuntu.className)}>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Customizable</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Editable</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Responsive</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />SEO Friendly</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Performance Optimized</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Security</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Support</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Updates</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Maintenance</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Email Support</li>
+                </ul>
+            </div>
+            <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
+                <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan B</h2>
+                <ul className={cn("list-none text-left text-gray-800", ubuntu.className)}>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Customizable</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Editable</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Responsive</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />SEO Friendly</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Performance Optimized</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Security</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Support</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Updates</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Maintenance</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Maintenance</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Email Support</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Analytics and Reporting</li>
+                </ul>
+
+            </div>
+            <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
+                <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan C</h2>
+                <ul className={cn("list-none text-left text-gray-800", ubuntu.className)}>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Customizable</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Editable</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Responsive</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />SEO Friendly</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Performance Optimized</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Security</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Support</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Updates</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Maintenance</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Maintenance</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Email Support</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Send SMS</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Pay Online</li>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Analytics and Reporting</li>
+                </ul>
+
+            </div>
+            <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
+                <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan D</h2>
+                <ul className={cn("list-none text-left text-gray-800", ubuntu.className)}>
+                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Web Application</li>
+                    <p className="text-gray-800">Create a web application for your website 100% Customizable for your business</p>
+                </ul>
+
+            </div>
+        </div>
+        </div>
+    );
 };
 
 export default WebsiteProductsPage;
