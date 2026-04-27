@@ -17,7 +17,7 @@ const navigationLinks = [
 
 const Footer = () => {
   return (
-    <footer className="snap-start scroll-mt-24 bg-cyan-800 text-slate-100">
+    <footer className="snap-start scroll-mt-24 bg-zinc-900 text-slate-100">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
           <div className="space-y-4">
