@@ -143,64 +143,77 @@ body {
 
 .main-title-animation {
   animation-name: fadeIn;
-  animation-duration: 1s;
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   animation-delay: 0s;
-
+  animation-fill-mode: both;
 }
 
 @keyframes fadeIn {
-  0%   {opacity: 0; transform: translateY(100px);}
-  100% {opacity: 1; transform: translateY(0px);}
+  0%   {opacity: 0; transform: translateY(32px);}
+  100% {opacity: 1; transform: translateY(0);}
 }
 
 .subtitle-animation {
   animation-name: fadeInUp;
-  animation-duration: 1s;
-  animation-delay: 0s;
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-delay: 0.12s;
+  animation-fill-mode: both;
 }
 
 @keyframes fadeInUp {
-  0%   {opacity: 0; transform: translateY(-100px);}
-  100% {opacity: 1; transform: translateY(0px);}
+  0%   {opacity: 0; transform: translateY(24px);}
+  100% {opacity: 1; transform: translateY(0);}
 }
 
 .right-button-animation {
   animation-name: fadeInRight;
-  animation-duration: 1s;
-  animation-delay: 0s;
+  animation-duration: 0.75s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-delay: 0.28s;
+  animation-fill-mode: both;
 }
 
 @keyframes fadeInRight {
-  0%   {opacity: 0; transform: translateX(100px);}
-  100% {opacity: 1; transform: translateX(0px);}
+  0%   {opacity: 0; transform: translateX(28px);}
+  100% {opacity: 1; transform: translateX(0);}
 }
 
 .left-button-animation {
   animation-name: fadeInLeft;
-  animation-duration: 1s;
-  animation-delay: 0s;
+  animation-duration: 0.75s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
 }
 
 @keyframes fadeInLeft {
-  0%   {opacity: 0; transform: translateX(-100px);}
-  100% {opacity: 1; transform: translateX(0px);}
+  0%   {opacity: 0; transform: translateX(-28px);}
+  100% {opacity: 1; transform: translateX(0);}
 }
 
 .trust-line-animation {
-  animation: fadeInTrustLine 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+  animation: fadeInTrustLine 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
 }
 
 @keyframes fadeInTrustLine {
   0% {
     opacity: 0;
-    transform: translateY(30px) scale(0.98);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-8px) scale(1.03);
+    transform: translateY(14px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-title-animation,
+  .subtitle-animation,
+  .right-button-animation,
+  .left-button-animation,
+  .trust-line-animation {
+    animation: none !important;
   }
 }
