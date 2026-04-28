@@ -58,13 +58,13 @@
       ]
     },
     "uiux": {
-      "title": "UI/UX Designering",
-      "description": "Snygga, användarcentrerade designeringar som skapar engagerande upplevelser och driver konverteringar.",
+      "title": "SMS-tjänst",
+      "description": "Tillförlitliga SMS-lösningar för aviseringar, påminnelser och kundkommunikation.",
       "features": [
-        "Användarforskning",
-        "Wireframing",
-        "Prototyping",
-        "Design Systemer"
+        "Transaktionella SMS",
+        "Massutskick",
+        "Leveransrapporter",
+        "SMS-automation"
       ]
     },
     "cloud": {
@@ -95,6 +95,26 @@
         "GraphQL",
         "Autentisering",
         "Dokumentation"
+      ]
+    },
+    "email": {
+      "title": "E-posttjänst",
+      "description": "Professionell e-postinstallation och automation som förbättrar kommunikation och kundengagemang.",
+      "features": [
+        "Företagsmejl",
+        "E-postautomation",
+        "Mallar",
+        "Leveransövervakning"
+      ]
+    },
+    "booking": {
+      "title": "Bokningssystem",
+      "description": "Onlinebokning som gör schemaläggning enkel för både ditt team och dina kunder.",
+      "features": [
+        "Kalenderintegration",
+        "Automatiska påminnelser",
+        "Tillgänglighetshantering",
+        "Självbokning för kunder"
       ]
     }
   },

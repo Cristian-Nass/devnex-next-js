@@ -8,12 +8,14 @@ const ubuntu = Ubuntu({
 })
 // List of service IDs
 const serviceIds = [
-  "mobile",
   "web",
-  "uiux",
+  "mobile",
   "cloud",
   "database",
   "api",
+  "email",
+  "uiux",
+  "booking",
 ] as const;
 
 // Static SVG icons for each service
@@ -78,6 +80,26 @@ const serviceIcons: Record<(typeof serviceIds)[number], ReactNode> = {
       />
     </svg>
   ),
+  email: (
+    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+      />
+    </svg>
+  ),
+  booking: (
+    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M8 7V3m8 4V3m-9 8h10m-11 9h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2z"
+      />
+    </svg>
+  ),
 };
 
 // Next.js server component for rendering the Our Services section
@@ -110,13 +132,13 @@ export default async function OurServices() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {services.map((service, index) => (
             <div
               key={service.title?.toString() || index}
-              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default"
+              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 transition-colors duration-200 cursor-default"
             >
-              <div className="text-blue-600 mb-4 group-hover:scale-110 transition-transform">
+              <div className="text-cyan-700 mb-4">
                 {service.icon}
               </div>
               <h3 className={cn("text-2xl font-bold text-gray-900 mb-3", ubuntu.className)}>{service.title}</h3>

@@ -58,13 +58,13 @@
       ]
     },
     "uiux": {
-      "title": "UI/UX Design",
-      "description": "Beautiful, user-centered designs that create engaging experiences and drive conversions.",
+      "title": "SMS Service",
+      "description": "Reliable SMS messaging solutions for alerts, reminders, and customer communication.",
       "features": [
-        "User Research",
-        "Wireframing",
-        "Prototyping",
-        "Design Systems"
+        "Transactional SMS",
+        "Bulk Messaging",
+        "Delivery Reports",
+        "SMS Automation"
       ]
     },
     "cloud": {
@@ -95,6 +95,26 @@
         "GraphQL",
         "Authentication",
         "Documentation"
+      ]
+    },
+    "email": {
+      "title": "Email Service",
+      "description": "Professional email setup and automation to improve communication and customer engagement.",
+      "features": [
+        "Business Email Setup",
+        "Email Automation",
+        "Template Design",
+        "Delivery Monitoring"
+      ]
+    },
+    "booking": {
+      "title": "Booking System",
+      "description": "Online booking solutions that make scheduling easy for your team and your customers.",
+      "features": [
+        "Calendar Integration",
+        "Automated Reminders",
+        "Availability Management",
+        "Customer Self-Booking"
       ]
     }
   },
