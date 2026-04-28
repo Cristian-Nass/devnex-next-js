@@ -139,3 +139,27 @@ body {
     }
   }
 }
+
+
+.main-title-animation {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-delay: 0s;
+
+}
+
+@keyframes fadeIn {
+  0%   {opacity: 0; transform: translateY(100px);}
+  100% {opacity: 1; transform: translateY(0px);}
+}
+
+.subtitle-animation {
+  animation-name: fadeInUp;
+  animation-duration: 1s;
+  animation-delay: 0s;
+}
+
+@keyframes fadeInUp {
+  0%   {opacity: 0; transform: translateY(-100px);}
+  100% {opacity: 1; transform: translateY(0px);}
+}

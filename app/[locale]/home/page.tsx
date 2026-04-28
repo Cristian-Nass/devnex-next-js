@@ -119,7 +119,7 @@ export default async function HomePage({ params }: HomePageProps) {
           <h1
             id="hero-heading"
             className={cn(
-              "text-4xl sm:text-6xl font-bold text-center text-gray-900 tracking-tight",
+              "text-4xl sm:text-6xl font-bold text-center text-gray-900 tracking-tight main-title-animation",
               ubuntu.className
             )}
           >
@@ -127,7 +127,7 @@ export default async function HomePage({ params }: HomePageProps) {
           </h1>
           <p
             className={cn(
-              "text-lg sm:text-2xl text-center font-medium text-gray-500 max-w-3xl pt-4",
+              "text-lg sm:text-2xl text-center font-medium text-gray-500 max-w-3xl pt-4 subtitle-animation",
               ubuntu.className
             )}
           >
