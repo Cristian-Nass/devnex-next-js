@@ -8,16 +8,17 @@
     "aboutHeading": "Om Devnex",
     "aboutDescription": "Vi är ett utvecklingsteam med fokus på snabb leverans, ren arkitektur och mätbara affärsresultat för startups och små företag.",
     "aboutGoalHeading": "Vårt Mål",
-    "aboutGoalIntro": "Vårt mål är inte bara att bygga och leverera en webbplats eller en app. När din produkt är lanserad har vårt uppdrag bara börjat.",
+    "aboutGoalIntro": "Vårt mål är inte bara att bygga och leverera en webbplats eller en app.",
+    "aboutGoalIntroSecond": "När din produkt är lanserad har vårt uppdrag bara börjat.",
     "aboutGoalPoint1": "Analysera hur din webbplats eller app presterar och hitta nya möjligheter för tillväxt.",
     "aboutGoalPoint2": "Förbättra din SEO och digitala synlighet så att fler upptäcker ditt företag.",
     "aboutGoalPoint3": "Stötta dig steg för steg med praktiska förbättringar som ger verkliga affärsresultat.",
     "contactHeading": "Kontakta oss",
     "contactDescription": "Berätta om ditt projekt så återkommer vi med ett tydligt förslag och en realistisk tidsplan.",
     "contactEmail": "hello@devnex.app",
-    "trustLine": "Tydliga tidsplaner - SEO-redo - Mobilanpassad",
-    "currentLocale": "Nuvarande sprak: {locale}",
-    "switchLabel": "Byt sprak"
+    "trustLine": "Tydliga tidsplaner • SEO-redo • Mobilanpassad",
+    "currentLocale": "Nuvarande språk: {locale}",
+    "switchLabel": "Byt språk"
   },
   "HomePageSeo": {
     "title": "Tjänster inom webb- och apputveckling",
@@ -43,23 +44,23 @@
     "heading": "Våra Tjänster",
     "subheading": "Vi erbjuder ett brett utbud av tjänster för att hjälpa dig att växa ditt företag",
     "mobile": {
-      "title": "Mobil App Utveckling",
-      "description": "Native och korsplattformsuppvecklade mobilapplikationer byggda med de senaste teknologierna för iOS och Android.",
+      "title": "Mobilapputveckling",
+      "description": "Nativa och plattformsoberoende mobilappar byggda med modern teknik för iOS och Android.",
       "features": [
         "React Native",
         "Flutter",
         "Native iOS/Android",
-        "App Store Optimering"
+        "App Store-optimering"
       ]
     },
     "web": {
-      "title": "Webbapplikation Utveckling",
-      "description": "Moderna, responsiva webbapplikationer anpassade till dina företagsskulor med avancerade ramverk.",
+      "title": "Webbapplikationsutveckling",
+      "description": "Moderna och responsiva webbapplikationer anpassade efter ditt företags behov med avancerade ramverk.",
       "features": [
         "React/Vue/Angular",
-        "Node.js Bakend",
-        "Cloud Deployment",
-        "Responsive Web Design"
+        "Node.js-backend",
+        "Cloud-deployment",
+        "Responsiv webbdesign"
       ]
     },
     "uiux": {
@@ -73,22 +74,22 @@
       ]
     },
     "cloud": {
-      "title": "Cloud Lösningar",
-      "description": "Skalbar cloud infrastruktur och distribution lösningar för dina applikationer.",
+      "title": "Molnlösningar",
+      "description": "Skalbar molninfrastruktur och driftsättningslösningar för dina applikationer.",
       "features": [
         "AWS/Azure/GCP",
         "DevOps",
         "CI/CD Pipelines",
-        "Monitoring"
+        "Övervakning"
       ]
     },
     "database": {
-      "title": "Database Designering",
-      "description": "Robust database arkitektur och optimering för högpresterande applikationer.",
+      "title": "Databasdesign",
+      "description": "Robust databasarkitektur och optimering för högpresterande applikationer.",
       "features": [
         "SQL/NoSQL",
-        "Data Modellering",
-        "Prestandatuning",
+        "Datamodellering",
+        "Prestandaoptimering",
         "Migration"
       ]
     },
@@ -124,7 +125,7 @@
     }
   },
   "Products": {
-    "heading": "Våra Produkter",
+    "heading": "Våra produkter",
     "subheading": "Våra produkter är designade för att hjälpa dig att växa ditt företag",
     "products": [
       {

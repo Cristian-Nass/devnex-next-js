@@ -30,6 +30,8 @@ export default async function About() {
           </h3>
           <p className={cn("mt-3 text-base md:text-lg text-gray-700", ubuntu.className)}>
             {t("aboutGoalIntro")}
+            <br />
+            {t("aboutGoalIntroSecond")}
           </p>
           <ul className="mt-4 space-y-3">
             <li className={cn("flex items-start text-base md:text-lg text-gray-700", ubuntu.className)}>
