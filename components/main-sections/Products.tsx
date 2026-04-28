@@ -99,6 +99,7 @@ type ProductsProps = {
 };
 
 export default function Products({ locale }: ProductsProps) {
+  const readMoreCta = locale === "sv" ? "Se paketdetaljer" : "View Package Details";
 
   return (
     <section
@@ -145,7 +146,7 @@ export default function Products({ locale }: ProductsProps) {
                 ))}
               </ul>
                 <ClickToLink href={`/${locale}/products/create-website`}>
-                    <span className={cn("text-gray-100", ubuntu.className)}>Read More</span>
+                    <span className={cn("text-gray-100", ubuntu.className)}>{readMoreCta}</span>
                     <ArrowRightIcon className="w-4 h-4" />
                 </ClickToLink>
             </div>
