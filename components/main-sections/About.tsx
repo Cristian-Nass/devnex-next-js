@@ -33,15 +33,15 @@ export default async function About() {
           </p>
           <ul className="mt-4 space-y-3">
             <li className={cn("flex items-start text-base md:text-lg text-gray-700", ubuntu.className)}>
-              <span className="mr-2 mt-1 h-2 w-2 rounded-full bg-cyan-700" aria-hidden="true" />
+              <span className="mr-2 h-2 w-2 rounded-full bg-cyan-700" style={{ marginTop: "10px" }} aria-hidden="true" />
               <span>{t("aboutGoalPoint1")}</span>
             </li>
             <li className={cn("flex items-start text-base md:text-lg text-gray-700", ubuntu.className)}>
-              <span className="mr-2 mt-1 h-2 w-2 rounded-full bg-cyan-700" aria-hidden="true" />
+              <span className="mr-2 h-2 w-2 rounded-full bg-cyan-700" style={{ marginTop: "10px" }} aria-hidden="true" />
               <span>{t("aboutGoalPoint2")}</span>
             </li>
             <li className={cn("flex items-start text-base md:text-lg text-gray-700", ubuntu.className)}>
-              <span className="mr-2 mt-1 h-2 w-2 rounded-full bg-cyan-700" aria-hidden="true" />
+              <span className="mr-2 h-2 w-2 rounded-full bg-cyan-700" style={{ marginTop: "10px" }} aria-hidden="true" />
               <span>{t("aboutGoalPoint3")}</span>
             </li>
           </ul>
