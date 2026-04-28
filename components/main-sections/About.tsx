@@ -17,10 +17,24 @@ export default async function About() {
       aria-labelledby="about-heading"
     >
       <div>
-      <h2 id="about-heading" className={cn("text-3xl font-bold text-gray-900", ubuntu.className)}>
-        {t("aboutHeading")}
-      </h2>
-      <p className={cn("mt-4 text-lg text-gray-700 max-w-3xl", ubuntu.className)}>{t("aboutDescription")}</p>
+        <h2 id="about-heading" className={cn("text-3xl font-bold text-gray-900", ubuntu.className)}>
+          {t("aboutHeading")}
+        </h2>
+        <p className={cn("mt-4 text-lg text-gray-700 max-w-3xl", ubuntu.className)}>
+          {t("aboutDescription")}
+        </p>
+
+        <div className="mt-8 max-w-4xl rounded-xl border border-gray-200 bg-white p-6 md:p-8">
+          <h3 className={cn("text-2xl font-bold text-gray-900", ubuntu.className)}>
+            {t("aboutGoalHeading")}
+          </h3>
+          <p className={cn("mt-3 text-base md:text-lg text-gray-700", ubuntu.className)}>
+            {t("aboutGoalIntro")}
+          </p>
+          <p className={cn("mt-3 text-base md:text-lg text-gray-700", ubuntu.className)}>
+            {t("aboutGoalBody")}
+          </p>
+        </div>
       </div>
     </section>
   );
