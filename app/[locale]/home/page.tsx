@@ -127,13 +127,12 @@ export default async function HomePage({ params }: HomePageProps) {
           </h1>
           <p
             className={cn(
-              "text-lg sm:text-2xl text-center font-medium text-gray-700 max-w-3xl",
+              "text-lg sm:text-2xl text-center font-medium text-gray-500 max-w-3xl pt-4",
               ubuntu.className
             )}
           >
             {t("description")}
-          </p>
-          <p className={cn("text-lg sm:text-xl text-center font-medium text-gray-700 max-w-3xl", ubuntu.className)}>
+            <br />
             {t("descriptionTwo")}
           </p>
           <div className="flex items-center gap-8 sm:flex-row flex-col">
