@@ -139,7 +139,7 @@ export default async function HomePage({ params }: HomePageProps) {
             <Button
               variant="default"
               className={cn(
-                "text-lg text-center py-6 mt-8 w-56 cursor-pointer",
+                "text-lg text-center py-6 mt-8 w-56 cursor-pointer left-button-animation",
                 ubuntu.className
               )}
               size="lg"
@@ -150,7 +150,7 @@ export default async function HomePage({ params }: HomePageProps) {
             <Button
               variant="outline"
               className={cn(
-                "text-lg text-center py-6 mt-8 w-56 cursor-pointer",
+                "text-lg text-center py-6 mt-8 w-56 cursor-pointer right-button-animation",
                 ubuntu.className
               )}
               size="lg"
@@ -159,7 +159,7 @@ export default async function HomePage({ params }: HomePageProps) {
               <Link href={`/${locale}/home#services`}>{t("exploreOurServices")}</Link>
             </Button>
           </div>
-          <p className={cn("mt-2 text-sm sm:text-base text-gray-600", ubuntu.className)}>
+          <p className={cn("mt-2 text-sm sm:text-base text-gray-600 trust-line-animation", ubuntu.className)}>
             {t("trustLine")}
           </p>
         </div>

@@ -163,3 +163,44 @@ body {
   0%   {opacity: 0; transform: translateY(-100px);}
   100% {opacity: 1; transform: translateY(0px);}
 }
+
+.right-button-animation {
+  animation-name: fadeInRight;
+  animation-duration: 1s;
+  animation-delay: 0s;
+}
+
+@keyframes fadeInRight {
+  0%   {opacity: 0; transform: translateX(100px);}
+  100% {opacity: 1; transform: translateX(0px);}
+}
+
+.left-button-animation {
+  animation-name: fadeInLeft;
+  animation-duration: 1s;
+  animation-delay: 0s;
+}
+
+@keyframes fadeInLeft {
+  0%   {opacity: 0; transform: translateX(-100px);}
+  100% {opacity: 1; transform: translateX(0px);}
+}
+
+.trust-line-animation {
+  animation: fadeInTrustLine 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+@keyframes fadeInTrustLine {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
