@@ -110,11 +110,6 @@ export default async function HomePage({ params }: HomePageProps) {
         className="w-full max-w-[1440px] p-10 mx-auto min-h-screen snap-start scroll-mt-24 flex items-center justify-center"
         aria-labelledby="hero-heading"
       >
-      {/* <section
-        className="w-full max-w-[1440px] p-10 mx-auto min-h-screen snap-start scroll-mt-24 flex items-center justify-center bg-gradient-to-b from-white to-gray-50"
-        aria-labelledby="hero-heading"
-      > */}
-
         <div className="flex flex-col items-center justify-center mb-32 gap-4 text-center">
           <h1
             id="hero-heading"
