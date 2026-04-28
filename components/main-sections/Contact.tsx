@@ -16,7 +16,7 @@ export default async function Contact() {
       className="mx-auto w-full max-w-6xl min-h-screen snap-start scroll-mt-24 px-6 py-16 flex items-center"
       aria-labelledby="contact-heading"
     >
-      <div>
+      <div className="mx-auto">
       <h2 id="contact-heading" className={cn("text-3xl font-bold text-gray-900", ubuntu.className)}>
         {t("contactHeading")}
       </h2>

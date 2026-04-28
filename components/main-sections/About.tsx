@@ -16,7 +16,7 @@ export default async function About() {
       className="mx-auto w-full max-w-6xl min-h-screen snap-start scroll-mt-24 px-6 py-16 flex items-center"
       aria-labelledby="about-heading"
     >
-      <div>
+      <div className="mx-auto">
         <h2 id="about-heading" className={cn("text-3xl font-bold text-gray-900", ubuntu.className)}>
           {t("aboutHeading")}
         </h2>
