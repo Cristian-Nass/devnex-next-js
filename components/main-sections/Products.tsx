@@ -17,7 +17,7 @@ const productIds = [
 
 const productIcons: Record<(typeof productIds)[number], ReactNode> = {
   shop: (
-    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -27,7 +27,7 @@ const productIcons: Record<(typeof productIds)[number], ReactNode> = {
     </svg>
   ),
   restaurant: (
-    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -37,7 +37,7 @@ const productIcons: Record<(typeof productIds)[number], ReactNode> = {
     </svg>
   ),
   enterprise: (
-    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -47,7 +47,7 @@ const productIcons: Record<(typeof productIds)[number], ReactNode> = {
     </svg>
   ),
   wordPress: (
-    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -124,10 +124,14 @@ export default function Products({ locale }: ProductsProps) {
           {products.map((product, index) => (
             <div
               key={product.title?.toString() || index}
-              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default"
+              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default flex flex-col justify-between"
             >
-              <div className="text-blue-600 mb-4 group-hover:scale-110 transition-transform">{product.icon}</div>
-              <h3 className={cn("text-2xl font-bold text-gray-900 mb-3", ubuntu.className)}>{product.title}</h3>
+              <div className="flex items-center gap-2 justify-left">
+                <div className="text-cyan-700 mb-4">{product.icon}</div>
+                <h3 className={cn("text-2xl font-bold text-gray-900 mb-3", ubuntu.className)}>{product.title}</h3>
+              </div>
+              <div>
+
               <p className={cn("text-gray-600 mb-4", ubuntu.className)}>{product.description}</p>
               <ul className="space-y-2 h-[240px] overflow-y-auto">
                 {(Array.isArray(product.features) ? product.features : []).map((feature, idx) => (
@@ -138,13 +142,14 @@ export default function Products({ locale }: ProductsProps) {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                       aria-hidden="true"
-                    >
+                      >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     <span className={cn("text-gray-700", ubuntu.className)}>{feature}</span>
                   </li>
                 ))}
               </ul>
+                </div>
                 <ClickToLink href={`/${locale}/products/create-website`}>
                     <span className={cn("text-gray-100", ubuntu.className)}>{readMoreCta}</span>
                     <ArrowRightIcon className="w-4 h-4" />
