@@ -1,7 +1,8 @@
 {
   "HomePage": {
-    "title": "Lansera din hemsida på 48 timmar",
-    "description": "Ingen stress. Inga tekniska problem. Vi sköter allt.",
+    "title": "Lansera en hemsida byggd för ditt företag",
+    "description": "Ingen stress. Inga tekniska problem.",
+    "descriptionTwo": "Vi hanterar allt från strategi till lansering.",
     "getStarted": "Komma igång",
     "exploreOurServices": "Utforska våra tjänster",
     "aboutHeading": "Om Devnex",
@@ -9,7 +10,7 @@
     "contactHeading": "Kontakta oss",
     "contactDescription": "Berätta om ditt projekt så återkommer vi med ett tydligt förslag och en realistisk tidsplan.",
     "contactEmail": "hello@devnex.app",
-    "trustLine": "Levererat inom 48 timmar - SEO-redo - Mobilanpassad",
+    "trustLine": "Tydliga tidsplaner - SEO-redo - Mobilanpassad",
     "currentLocale": "Nuvarande sprak: {locale}",
     "switchLabel": "Byt sprak"
   },

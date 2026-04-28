@@ -133,6 +133,9 @@ export default async function HomePage({ params }: HomePageProps) {
           >
             {t("description")}
           </p>
+          <p className={cn("text-lg sm:text-xl text-center font-medium text-gray-700 max-w-3xl", ubuntu.className)}>
+            {t("descriptionTwo")}
+          </p>
           <div className="flex items-center gap-8 sm:flex-row flex-col">
             <Button
               variant="default"
