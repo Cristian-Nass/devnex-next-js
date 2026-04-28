@@ -127,8 +127,8 @@ export default function Products({ locale }: ProductsProps) {
               className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default flex flex-col justify-between"
             >
               <div className="flex items-center gap-2 justify-left">
-                <div className="text-cyan-700 mb-4">{product.icon}</div>
-                <h3 className={cn("text-2xl font-bold text-gray-900 mb-3", ubuntu.className)}>{product.title}</h3>
+                <div className="text-cyan-700">{product.icon}</div>
+                <h3 className={cn("text-2xl font-bold text-gray-900", ubuntu.className)}>{product.title}</h3>
               </div>
               <div>
 
