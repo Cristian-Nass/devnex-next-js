@@ -8,16 +8,17 @@ const ubuntu = Ubuntu({
   weight: ["400", "500", "700"],
 });
 
-const productIds = [
-  "shop",
-  "restaurant",
-  "enterprise",
-  "wordPress",
-] as const;
+const productIds = ["shop", "restaurant", "enterprise", "wordPress"] as const;
 
 const productIcons: Record<(typeof productIds)[number], ReactNode> = {
   shop: (
-    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg
+      className="w-8 h-8"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -27,7 +28,13 @@ const productIcons: Record<(typeof productIds)[number], ReactNode> = {
     </svg>
   ),
   restaurant: (
-    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg
+      className="w-8 h-8"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -37,7 +44,13 @@ const productIcons: Record<(typeof productIds)[number], ReactNode> = {
     </svg>
   ),
   enterprise: (
-    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg
+      className="w-8 h-8"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -47,7 +60,13 @@ const productIcons: Record<(typeof productIds)[number], ReactNode> = {
     </svg>
   ),
   wordPress: (
-    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg
+      className="w-8 h-8"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -63,8 +82,13 @@ const products = productIds.map((id) => {
     return {
       icon: productIcons[id],
       title: "Online Shop",
-      description: "A complete storefront solution for selling products with modern UX and easy catalog management.",
-      features: ["Product catalog and variants", "Fast checkout experience", "Simple order tracking dashboard"],
+      description:
+        "A complete storefront solution for selling products with modern UX and easy catalog management.",
+      features: [
+        "Product catalog and variants",
+        "Fast checkout experience",
+        "Simple order tracking dashboard",
+      ],
     };
   }
 
@@ -72,8 +96,13 @@ const products = productIds.map((id) => {
     return {
       icon: productIcons[id],
       title: "Pizza Bar",
-      description: "A restaurant-focused website package optimized for menu display, quick ordering, and local delivery.",
-      features: ["Menu sections and item customization", "Table booking and order requests", "Built-in campaign banners"],
+      description:
+        "A restaurant-focused website package optimized for menu display, quick ordering, and local delivery.",
+      features: [
+        "Menu sections and item customization",
+        "Table booking and order requests",
+        "Built-in campaign banners",
+      ],
     };
   }
 
@@ -81,16 +110,28 @@ const products = productIds.map((id) => {
     return {
       icon: productIcons[id],
       title: "Enterprise Website",
-      description: "A scalable business website template with sections for teams, services, and corporate communication.",
-      features: ["Multi-page corporate structure", "Lead capture contact modules", "Performance-focused page templates", "SEO-friendly article layout", "PWA Compatible With All Desktop and Mobile Devices"],
+      description:
+        "A scalable business website template with sections for teams, services, and corporate communication.",
+      features: [
+        "Multi-page corporate structure",
+        "Lead capture contact modules",
+        "Performance-focused page templates",
+        "SEO-friendly article layout",
+        "PWA Compatible With All Desktop and Mobile Devices",
+      ],
     };
   }
 
   return {
     icon: productIcons[id],
     title: "WordPress",
-    description: "A content-ready publishing product to share updates, stories, and news with a clean reading experience. WordPress is a content management system (CMS) that allows you to create and manage your website.",
-    features: ["Category and tag organization", "Author and post highlight blocks", "SEO-friendly article layout"],
+    description:
+      "A content-ready publishing product to share updates, stories, and news with a clean reading experience. WordPress is a content management system (CMS) that allows you to create and manage your website.",
+    features: [
+      "Category and tag organization",
+      "Author and post highlight blocks",
+      "SEO-friendly article layout",
+    ],
   };
 });
 
@@ -99,24 +140,34 @@ type ProductsProps = {
 };
 
 export default function Products({ locale }: ProductsProps) {
-  const readMoreCta = locale === "sv" ? "Se paketdetaljer" : "View Package Details";
+  const readMoreCta =
+    locale === "sv" ? "Se paketdetaljer" : "View Package Details";
 
   return (
     <section
       id="products"
-      className="min-h-screen snap-start scroll-mt-24 py-16 md:py-20 lg:py-24 bg-gray-50 flex items-center"
+      className="min-h-screen snap-start scroll-mt-14 py-16 md:py-20 lg:py-24 bg-gray-50 flex items-center"
       aria-labelledby="products-heading"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 md:mb-16">
           <h2
             id="products-heading"
-            className={cn("text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4", ubuntu.className)}
+            className={cn(
+              "text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4",
+              ubuntu.className,
+            )}
           >
             Our Products
           </h2>
-          <p className={cn("text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4", ubuntu.className)}>
-            Explore ready-to-launch product packages built for online selling, service businesses, and content growth.
+          <p
+            className={cn(
+              "text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4",
+              ubuntu.className,
+            )}
+          >
+            Explore ready-to-launch product packages built for online selling,
+            service businesses, and content growth.
           </p>
         </div>
 
@@ -124,36 +175,64 @@ export default function Products({ locale }: ProductsProps) {
           {products.map((product, index) => (
             <div
               key={product.title?.toString() || index}
-              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default flex flex-col justify-between"
+              className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default flex flex-col"
             >
-              <div className="flex items-center gap-2 justify-left">
+              <div className="mb-4 flex items-center gap-2 justify-left">
                 <div className="text-cyan-700">{product.icon}</div>
-                <h3 className={cn("text-2xl font-bold text-gray-900", ubuntu.className)}>{product.title}</h3>
+                <h3
+                  className={cn(
+                    "text-2xl font-bold text-gray-900",
+                    ubuntu.className,
+                  )}
+                >
+                  {product.title}
+                </h3>
               </div>
-              <div>
-
-              <p className={cn("text-gray-600 mb-4", ubuntu.className)}>{product.description}</p>
-              <ul className="space-y-2 h-[240px] overflow-y-auto">
-                {(Array.isArray(product.features) ? product.features : []).map((feature, idx) => (
-                  <li key={idx} className={cn("flex items-center text-gray-700", ubuntu.className)}>
-                    <svg
-                      className="w-5 h-5 text-green-500 mr-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
+              <div className="flex-1 min-h-0">
+                <p className={cn("text-gray-600 mb-4", ubuntu.className)}>
+                  {product.description}
+                </p>
+                <ul className="space-y-2 h-[240px] overflow-y-auto">
+                  {(Array.isArray(product.features)
+                    ? product.features
+                    : []
+                  ).map((feature, idx) => (
+                    <li
+                      key={idx}
+                      className={cn(
+                        "flex items-center text-gray-700",
+                        ubuntu.className,
+                      )}
+                    >
+                      <svg
+                        className="w-5 h-5 text-green-500 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
                       >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className={cn("text-gray-700", ubuntu.className)}>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-                </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      <span className={cn("text-gray-700", ubuntu.className)}>
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-6">
                 <ClickToLink href={`/${locale}/products/create-website`}>
-                    <span className={cn("text-gray-100", ubuntu.className)}>{readMoreCta}</span>
-                    <ArrowRightIcon className="w-4 h-4" />
+                  <span className={cn("text-gray-100", ubuntu.className)}>
+                    {readMoreCta}
+                  </span>
+                  <ArrowRightIcon className="w-4 h-4" />
                 </ClickToLink>
+              </div>
             </div>
           ))}
         </div>
