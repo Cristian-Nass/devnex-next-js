@@ -1,11 +1,11 @@
 import Link from "next/link"
 import { LanguageSwitch } from "./LanguageSwitch";
-import { Ubuntu } from 'next/font/google'
 import { cn } from "@/lib/utils";
 import MainMenuBar from "./MainMenuBar";
 import { MenuIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { getMenuItems } from "./menuItems";
+import { Ubuntu } from 'next/font/google'
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
