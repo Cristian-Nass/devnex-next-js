@@ -12,8 +12,8 @@ const WebsiteProductsPage = () => {
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
-        <h1 className={cn("text-4xl font-bold text-center mb-4 pt-28", ubuntu.className)}>Order Your Website/WebApplication</h1>
-        <p className={cn("text-lg text-center mb-4 pb-12", ubuntu.className)} >We will help you create your website</p>
+        <h1 className={cn("text-4xl font-bold text-center mb-4 pt-28", ubuntu.className)}>Order Your Website/Web Application</h1>
+        <p className={cn("text-lg text-center mb-4 pb-12", ubuntu.className)} >We help you create your website.</p>
         <div className="flex flex-row gap-6 w-full">
             <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600 flex flex-col justify-between">
                 <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Launch</h2>
@@ -26,7 +26,6 @@ const WebsiteProductsPage = () => {
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Security</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Support</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Updates</li>
-                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Maintenance</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Email Support</li>
                 </ul>
                 <Button asChild className={cn("w-1/2 h-10 mx-auto mt-4", ubuntu.className)}>
@@ -44,7 +43,6 @@ const WebsiteProductsPage = () => {
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Security</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Support</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Updates</li>
-                    <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Maintenance</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Maintenance</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Email Support</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Analytics and Reporting</li>
@@ -83,7 +81,7 @@ const WebsiteProductsPage = () => {
                 <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Custom</h2>
                 <ul className={cn("list-none text-left text-gray-800 space-y-1.5 h-full", ubuntu.className)}>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Web Application / Mobile App</li>
-                    <p className="text-gray-800">Create Web/Mobile Application for you, fully customizable for you and your needs</p>
+                    <p className="text-gray-800">We build a custom web or mobile application based on your goals, workflows, and business needs.</p>
                 </ul>
                 <Button asChild className={cn("w-1/2 h-10 mx-auto mt-4", ubuntu.className)}>
                     <Link href="/products/create-website/custom">Order Now</Link>

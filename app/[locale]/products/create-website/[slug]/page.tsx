@@ -23,7 +23,13 @@ const CreateWebsitePage = async ({ params }: CreateWebsitePageProps) => {
     <section id="plans" className="min-h-screen snap-start scroll-mt-24 py-16 md:py-20 bg-cyan-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-gray-100">
         <h1 className={cn("text-4xl font-bold text-left mb-4 pt-28", ubuntu.className)}>{plan.name}</h1>
-        <p className={cn("text-lg text-left mb-4 pb-12", ubuntu.className)}>{plan.description}</p>
+        <div className={cn("text-lg text-left mb-4 pb-12 space-y-2", ubuntu.className)}>
+          {Array.isArray(plan.description) ? (
+            plan.description.map((sentence, index) => <p key={index}>{sentence}</p>)
+          ) : (
+            <p>{plan.description}</p>
+          )}
+        </div>
         <ul className={cn("list-none text-left text-gray-100 space-y-1.5 h-full", ubuntu.className)}>
             {Object.entries(plan.features).map(([key, value]) => (
                 <li key={key} className="flex items-center gap-2">
