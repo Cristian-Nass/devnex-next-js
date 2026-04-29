@@ -146,7 +146,7 @@ export default function Products({ locale }: ProductsProps) {
   return (
     <section
       id="products"
-      className="min-h-screen snap-start scroll-mt-14 py-16 md:py-20 lg:py-24 bg-gray-50 flex items-center"
+      className="min-h-screen snap-start scroll-mt-14 py-16 md:py-20 lg:py-24 flex items-center bg-blue-100"
       aria-labelledby="products-heading"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
