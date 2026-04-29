@@ -1,0 +1,35 @@
+{
+  "HomePage": {
+    "title": "Lansera en hemsida byggd för ditt företag",
+    "description": "Ingen stress. Inga tekniska problem.",
+    "descriptionTwo": "Vi hanterar allt från strategi till lansering och vidare.",
+    "getStarted": "Starta ditt projekt",
+    "exploreOurServices": "Se våra tjänster",
+    "aboutHeading": "Om Devnex",
+    "aboutDescription": "Vi är ett utvecklingsteam med fokus på snabb leverans, ren arkitektur och mätbara affärsresultat för startups och små företag.",
+    "aboutGoalHeading": "Vårt Mål",
+    "aboutGoalIntro": "Vårt mål är inte bara att bygga och leverera en webbplats eller en app.",
+    "aboutGoalIntroSecond": "När din produkt är lanserad har vårt uppdrag bara börjat.",
+    "aboutGoalPoint1": "Analysera hur din webbplats eller app presterar och hitta nya möjligheter för tillväxt.",
+    "aboutGoalPoint2": "Förbättra din SEO och digitala synlighet så att fler upptäcker ditt företag.",
+    "aboutGoalPoint3": "Stötta dig steg för steg med praktiska förbättringar som ger verkliga affärsresultat.",
+    "contactHeading": "Kontakta oss",
+    "contactDescription": "Berätta om ditt projekt så återkommer vi med ett tydligt förslag och en realistisk tidsplan.",
+    "contactEmail": "hello@devnex.app",
+    "trustLine": "Tydliga tidsplaner • SEO-redo • Mobilanpassad",
+    "currentLocale": "Nuvarande språk: {locale}",
+    "switchLabel": "Byt språk"
+  },
+  "HomePageSeo": {
+    "title": "Tjänster inom webb- och apputveckling",
+    "description": "Devnex hjälper företag att snabbt lansera webbplatser och applikationer med modern teknik, SEO-anpassning och skalbar arkitektur.",
+    "keywords": [
+      "webbutveckling",
+      "apputveckling",
+      "digital byrå",
+      "seo-vänliga webbplatser",
+      "next.js utveckling",
+      "företagshemsida"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "HomePage": {
+    "title": "Launch a website built for your business",
+    "description": "No stress. No tech headaches.",
+    "descriptionTwo": "From strategy to launch and beyond, we handle everything.",
+    "getStarted": "Start Your Project",
+    "exploreOurServices": "View Our Services",
+    "aboutHeading": "About Devnex",
+    "aboutDescription": "We are a development team focused on fast delivery, clean architecture, and measurable outcomes for startups and small businesses.",
+    "aboutGoalHeading": "Our Goal",
+    "aboutGoalIntro": "Our goal is not only to build and deliver a website or an app.",
+    "aboutGoalIntroSecond": "Once your product is launched, our mission is just getting started.",
+    "aboutGoalPoint1": "Analyze your website or app performance and identify growth opportunities.",
+    "aboutGoalPoint2": "Improve your SEO and digital visibility so more people can discover your business.",
+    "aboutGoalPoint3": "Support you step by step with practical updates that drive real business results.",
+    "contactHeading": "Contact Us",
+    "contactDescription": "Tell us about your project, and we will get back to you with a clear proposal and timeline.",
+    "contactEmail": "hello@devnex.app",
+    "trustLine": "Clear timelines • SEO-ready • Mobile-first",
+    "currentLocale": "Current locale: {locale}",
+    "switchLabel": "Change language"
+  },
+  "HomePageSeo": {
+    "title": "Web and App Development Services",
+    "description": "Devnex helps businesses launch websites and applications quickly with modern technology, SEO best practices, and scalable architecture.",
+    "keywords": [
+      "web development",
+      "mobile app development",
+      "software agency",
+      "seo friendly websites",
+      "next.js development",
+      "business websites"
+    ]
+  }
+}

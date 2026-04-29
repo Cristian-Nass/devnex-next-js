@@ -1,0 +1,10 @@
+{
+  "NavigationBar": {
+    "navLabel": "Huvudnavigering",
+    "home": "Hem",
+    "services": "Tjänster",
+    "about": "Om Oss",
+    "contact": "Kontakta Oss",
+    "products": "Produkter"
+  }
+}
