@@ -30,7 +30,7 @@ const WebsiteProductsPage = () => {
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Email Support</li>
                 </ul>
                 <Button asChild className={cn("w-1/2 h-10 mx-auto mt-4", ubuntu.className)}>
-                    <Link href="/products/create-website/plan-a">Order Now</Link>
+                    <Link href="/products/create-website/launch">Order Now</Link>
                 </Button>
             </div>
             <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600 flex flex-col justify-between">
@@ -50,7 +50,7 @@ const WebsiteProductsPage = () => {
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Analytics and Reporting</li>
                 </ul>
                 <Button asChild className={cn("w-1/2 h-10 mx-auto mt-4", ubuntu.className)}>
-                    <Link href="/products/create-website/plan-b">Order Now</Link>
+                    <Link href="/products/create-website/growth">Order Now</Link>
                 </Button>
 
             </div>
@@ -75,7 +75,7 @@ const WebsiteProductsPage = () => {
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Multiple Language Support</li>
                 </ul>
                 <Button asChild className={cn("w-1/2 h-10 mx-auto mt-4", ubuntu.className)}>
-                    <Link href="/products/create-website/plan-c">Order Now</Link>
+                    <Link href="/products/create-website/scale">Order Now</Link>
                 </Button>
 
             </div>
@@ -86,7 +86,7 @@ const WebsiteProductsPage = () => {
                     <p className="text-gray-800">Create Web/Mobile Application for you, fully customizable for you and your needs</p>
                 </ul>
                 <Button asChild className={cn("w-1/2 h-10 mx-auto mt-4", ubuntu.className)}>
-                    <Link href="/products/create-website/plan-d">Order Now</Link>
+                    <Link href="/products/create-website/custom">Order Now</Link>
                 </Button>
 
             </div>
