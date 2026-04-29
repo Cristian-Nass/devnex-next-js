@@ -16,7 +16,7 @@ export const selectedPlan = (plan: string) => {
 
 
 const planA = {
-    name: "Plan A",
+    name: "Launch",
     description: "Plan A description",
     features: {
         customizable: "The website can be tailored to your brand and needs (colors, layout, sections, features, content style).",
@@ -27,7 +27,7 @@ const planA = {
     }
 
 const planB = {
-    name: "Plan B",
+    name: "Growth",
     description: "Plan B description",
     features: {
         customizable: "The website can be tailored to your brand and needs (colors, layout, sections, features, content style).",
@@ -38,7 +38,7 @@ const planB = {
 }
 
 const planC = {
-    name: "Plan C",
+    name: "Scale",
     description: "Plan C description",
     features: {
         customizable: "The website can be tailored to your brand and needs (colors, layout, sections, features, content style).",
@@ -50,7 +50,7 @@ const planC = {
 
 const planD = {
 
-    name: "Plan D",
+    name: "Custom",
     description: "Plan D description",
     features: {
         webApplication: "The website can be tailored to your brand and needs (colors, layout, sections, features, content style).",
