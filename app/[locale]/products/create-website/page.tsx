@@ -1,6 +1,8 @@
 import { CheckIcon } from "lucide-react";
 import { Ubuntu } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";   
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/routing";
 const ubuntu = Ubuntu({
     subsets: ["latin"],
     weight: ["400", "500", "700"],
@@ -27,6 +29,9 @@ const WebsiteProductsPage = () => {
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Maintenance</li>
                     <li className="flex items-center gap-2"><CheckIcon className="w-4 h-4" />Email Support</li>
                 </ul>
+                <Button asChild className="w-full mt-4">
+                    <Link href="/products/create-website/plan-a">Order Now</Link>
+                </Button>
             </div>
             <div className="w-1/4 text-center p-4 rounded-lg border-1 border-cyan-600">
                 <h2 className={cn("text-2xl font-bold mb-4", ubuntu.className)}>Plan B</h2>
