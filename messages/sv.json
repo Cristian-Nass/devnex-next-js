@@ -133,5 +133,59 @@
         "description": "Devnex är ett webbplatsbyggverktyg som låter dig bygga webbplatser snabbt och enkelt."
       }
     ]
+  },
+  "CreateWebsiteDetails": {
+    "metaTitle": "{plan} webbplatsplan | Devnex",
+    "planTitle": "{plan}-plan",
+    "includedFeatures": "Detta ingår",
+    "CreateWebsitePlans": {
+      "launch": {
+        "name": "Launch",
+        "description": [
+          "Perfekt för startups, frilansare och lokala företag som snabbt behöver en stark närvaro online.",
+          "Det här paketet passar när du vill ha en ren och professionell webbplats för att presentera dina tjänster och börja få leads."
+        ]
+      },
+      "growth": {
+        "name": "Growth",
+        "description": [
+          "Skapat för små och medelstora företag som redan är igång och vill öka trafik och konverteringar.",
+          "Ett bra val för företag som behöver mer innehåll, starkare SEO och bättre marknadsföringsresultat."
+        ]
+      },
+      "scale": {
+        "name": "Scale",
+        "description": [
+          "Byggt för växande företag med högre trafik och mer komplexa behov.",
+          "Passar team som behöver avancerade funktioner, integrationer, analys och flerspråksstöd för att skala verksamheten och nå fler marknader."
+        ]
+      },
+      "custom": {
+        "name": "Custom",
+        "description": [
+          "Bäst för etablerade företag med unika arbetsflöden som kräver en skräddarsydd lösning.",
+          "Välj det här paketet när du behöver en specialbyggd webbapplikation eller mobilapp anpassad efter era processer, system och långsiktiga mål."
+        ]
+      },
+      "features": {
+        "customizable": "Webbplatsen kan anpassas efter ditt varumärke och dina behov (färger, layout, sektioner, funktioner och innehållsstil).",
+        "editable": "Du kan enkelt uppdatera text, bilder och viktigt innehåll senare utan att bygga om hela webbplatsen.",
+        "responsive": "Webbplatsen är helt responsiv och fungerar smidigt på alla enheter.",
+        "seoFriendly": "Webbplatsen är SEO-vänlig och enklare för sökmotorer att indexera.",
+        "performanceOptimized": "Sajten byggs för snabb laddning och stabil prestanda (optimerad kod/bilder, bra Core Web Vitals, bättre användarupplevelse och SEO).",
+        "security": "Webbplatsen är säker och skyddad mot vanliga attacker.",
+        "support": "Du får löpande support efter lansering för frågor och förbättringar.",
+        "updates": "Webbplatsen uppdateras regelbundet för att vara säker och tillförlitlig.",
+        "maintenance": "Löpande underhåll håller sajten i gott skick med buggrättningar, övervakning, backuper och mindre förbättringar.",
+        "emailSupport": "E-postsupport som hjälper dig med frågor eller problem.",
+        "sendSms": "Skicka SMS till kunder för uppdateringar, påminnelser eller kampanjer.",
+        "payOnline": "Ta emot onlinebetalningar för dina tjänster eller produkter.",
+        "analyticsAndReporting": "Analys och rapportering för att följa webbplatsens resultat och tillväxt.",
+        "bookingSystemAndReporting": "Bokningssystem och rapportering för att hantera tider och tillgänglighet.",
+        "multipleLanguageSupport": "Flerspråksstöd för att hjälpa dig nå en bredare målgrupp.",
+        "webApplication": "Specialutvecklad webbapplikation anpassad efter dina affärsflöden och operativa behov.",
+        "mobileApplication": "Specialutvecklad mobilapp för iOS och Android, anpassad efter dina affärsmål."
+      }
+    }
   }
 }
