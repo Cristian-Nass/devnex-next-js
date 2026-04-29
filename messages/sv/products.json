@@ -1,4 +1,87 @@
 {
+  "ProductsSection": {
+    "heading": "Våra produkter",
+    "subheading": "Utforska färdiga produktpaket för e-handel, tjänsteföretag och innehållstillväxt.",
+    "readMoreCta": "Se paketdetaljer",
+    "items": {
+      "shop": {
+        "title": "Webbshop",
+        "description": "En komplett butikslösning för att sälja produkter med modern användarupplevelse och enkel kataloghantering.",
+        "features": [
+          "Produktkatalog och varianter",
+          "Snabb och smidig checkout",
+          "Enkel instrumentpanel för orderhantering"
+        ]
+      },
+      "restaurant": {
+        "title": "Pizzabar",
+        "description": "Ett restauranganpassat webbpaket optimerat för menyvisning, snabba beställningar och lokal leverans.",
+        "features": [
+          "Menysektioner och anpassning av rätter",
+          "Bordsbokning och beställningsförfrågningar",
+          "Inbyggda kampanjbanners"
+        ]
+      },
+      "enterprise": {
+        "title": "Företagswebbplats",
+        "description": "En skalbar företagswebbplats med sektioner för team, tjänster och företagskommunikation.",
+        "features": [
+          "Struktur för flera företagssidor",
+          "Kontaktmoduler för leadinsamling",
+          "Prestandaoptimerade sidmallar",
+          "SEO-vänlig artikellayout",
+          "PWA-kompatibel för dator och mobil"
+        ]
+      },
+      "wordPress": {
+        "title": "WordPress",
+        "description": "En innehållsfokuserad lösning för att publicera uppdateringar, berättelser och nyheter med en ren läsupplevelse.",
+        "features": [
+          "Kategorier och taggstruktur",
+          "Författar- och inläggssektioner",
+          "SEO-vänlig artikellayout"
+        ]
+      }
+    }
+  },
+  "CreateWebsiteLanding": {
+    "title": "Beställ din webbplats/webbapplikation",
+    "subtitle": "Vi hjälper dig att skapa din webbplats.",
+    "orderNow": "Beställ nu",
+    "plans": {
+      "launch": {
+        "name": "Launch"
+      },
+      "growth": {
+        "name": "Growth"
+      },
+      "scale": {
+        "name": "Scale"
+      },
+      "custom": {
+        "name": "Custom",
+        "description": "Vi bygger en skräddarsydd webb- eller mobilapplikation baserad på dina mål, arbetsflöden och affärsbehov."
+      }
+    },
+    "features": {
+      "customizable": "Anpassningsbar",
+      "editable": "Redigerbar",
+      "responsive": "Responsiv",
+      "seoFriendly": "SEO-vänlig",
+      "performanceOptimized": "Prestandaoptimerad",
+      "security": "Säkerhet",
+      "support": "Support",
+      "updates": "Uppdateringar",
+      "maintenance": "Underhåll",
+      "emailSupport": "E-postsupport",
+      "analyticsAndReporting": "Analys och rapportering",
+      "sendSms": "Skicka SMS",
+      "payOnline": "Betala online",
+      "bookingSystemAndReporting": "Bokningssystem och rapportering",
+      "multipleLanguageSupport": "Stöd för flera språk",
+      "webApplicationMobile": "Webbapplikation / Mobilapp"
+    }
+  },
   "Products": {
     "heading": "Våra produkter",
     "subheading": "Våra produkter är designade för att hjälpa dig att växa ditt företag",

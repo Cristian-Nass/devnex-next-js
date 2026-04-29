@@ -3,6 +3,7 @@ import { Ubuntu } from "next/font/google";
 import { cn } from "@/lib/utils";
 import ClickToLink from "@/components/main-sections/ClickToLink";
 import { ArrowRightIcon } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 const ubuntu = Ubuntu({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -77,71 +78,18 @@ const productIcons: Record<(typeof productIds)[number], ReactNode> = {
   ),
 };
 
-const products = productIds.map((id) => {
-  if (id === "shop") {
-    return {
-      icon: productIcons[id],
-      title: "Online Shop",
-      description:
-        "A complete storefront solution for selling products with modern UX and easy catalog management.",
-      features: [
-        "Product catalog and variants",
-        "Fast checkout experience",
-        "Simple order tracking dashboard",
-      ],
-    };
-  }
-
-  if (id === "restaurant") {
-    return {
-      icon: productIcons[id],
-      title: "Pizza Bar",
-      description:
-        "A restaurant-focused website package optimized for menu display, quick ordering, and local delivery.",
-      features: [
-        "Menu sections and item customization",
-        "Table booking and order requests",
-        "Built-in campaign banners",
-      ],
-    };
-  }
-
-  if (id === "enterprise") {
-    return {
-      icon: productIcons[id],
-      title: "Enterprise Website",
-      description:
-        "A scalable business website template with sections for teams, services, and corporate communication.",
-      features: [
-        "Multi-page corporate structure",
-        "Lead capture contact modules",
-        "Performance-focused page templates",
-        "SEO-friendly article layout",
-        "PWA Compatible With All Desktop and Mobile Devices",
-      ],
-    };
-  }
-
-  return {
-    icon: productIcons[id],
-    title: "WordPress",
-    description:
-      "A content-ready publishing product to share updates, stories, and news with a clean reading experience. WordPress is a content management system (CMS) that allows you to create and manage your website.",
-    features: [
-      "Category and tag organization",
-      "Author and post highlight blocks",
-      "SEO-friendly article layout",
-    ],
-  };
-});
+const products = productIds.map((id) => ({
+  id,
+  icon: productIcons[id],
+}));
 
 type ProductsProps = {
   locale: string;
 };
 
-export default function Products({ locale }: ProductsProps) {
-  const readMoreCta =
-    locale === "sv" ? "Se paketdetaljer" : "View Package Details";
+export default async function Products({ locale }: ProductsProps) {
+  const t = await getTranslations("ProductsSection");
+  const readMoreCta = t("readMoreCta");
 
   return (
     <section
@@ -158,7 +106,7 @@ export default function Products({ locale }: ProductsProps) {
               ubuntu.className,
             )}
           >
-            Our Products
+            {t("heading")}
           </h2>
           <p
             className={cn(
@@ -166,15 +114,14 @@ export default function Products({ locale }: ProductsProps) {
               ubuntu.className,
             )}
           >
-            Explore ready-to-launch product packages built for online selling,
-            service businesses, and content growth.
+            {t("subheading")}
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-4">
           {products.map((product, index) => (
             <div
-              key={product.title?.toString() || index}
+              key={product.id}
               className="bg-white rounded-xl p-6 md:p-8 border border-gray-200 hover:border-primary transition-all duration-300 hover:-translate-y-2 group cursor-default flex flex-col"
             >
               <div className="mb-4 flex items-center gap-2 justify-left">
@@ -185,18 +132,15 @@ export default function Products({ locale }: ProductsProps) {
                     ubuntu.className,
                   )}
                 >
-                  {product.title}
+                  {t(`items.${product.id}.title`)}
                 </h3>
               </div>
               <div className="flex-1 min-h-0">
                 <p className={cn("text-gray-600 mb-4", ubuntu.className)}>
-                  {product.description}
+                  {t(`items.${product.id}.description`)}
                 </p>
                 <ul className="space-y-2 h-[240px] overflow-y-auto">
-                  {(Array.isArray(product.features)
-                    ? product.features
-                    : []
-                  ).map((feature, idx) => (
+                  {Array.from({ length: t.raw(`items.${product.id}.features`).length }).map((_, idx) => (
                     <li
                       key={idx}
                       className={cn(
@@ -219,7 +163,7 @@ export default function Products({ locale }: ProductsProps) {
                         />
                       </svg>
                       <span className={cn("text-gray-700", ubuntu.className)}>
-                        {feature}
+                        {t(`items.${product.id}.features.${idx}`)}
                       </span>
                     </li>
                   ))}

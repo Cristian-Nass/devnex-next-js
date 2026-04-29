@@ -1,4 +1,87 @@
 {
+  "ProductsSection": {
+    "heading": "Our Products",
+    "subheading": "Explore ready-to-launch product packages built for online selling, service businesses, and content growth.",
+    "readMoreCta": "View Package Details",
+    "items": {
+      "shop": {
+        "title": "Online Shop",
+        "description": "A complete storefront solution for selling products with modern UX and easy catalog management.",
+        "features": [
+          "Product catalog and variants",
+          "Fast checkout experience",
+          "Simple order tracking dashboard"
+        ]
+      },
+      "restaurant": {
+        "title": "Pizza Bar",
+        "description": "A restaurant-focused website package optimized for menu display, quick ordering, and local delivery.",
+        "features": [
+          "Menu sections and item customization",
+          "Table booking and order requests",
+          "Built-in campaign banners"
+        ]
+      },
+      "enterprise": {
+        "title": "Enterprise Website",
+        "description": "A scalable business website template with sections for teams, services, and corporate communication.",
+        "features": [
+          "Multi-page corporate structure",
+          "Lead capture contact modules",
+          "Performance-focused page templates",
+          "SEO-friendly article layout",
+          "PWA compatible with desktop and mobile devices"
+        ]
+      },
+      "wordPress": {
+        "title": "WordPress",
+        "description": "A content-ready publishing product to share updates, stories, and news with a clean reading experience.",
+        "features": [
+          "Category and tag organization",
+          "Author and post highlight blocks",
+          "SEO-friendly article layout"
+        ]
+      }
+    }
+  },
+  "CreateWebsiteLanding": {
+    "title": "Order Your Website/Web Application",
+    "subtitle": "We help you create your website.",
+    "orderNow": "Order Now",
+    "plans": {
+      "launch": {
+        "name": "Launch"
+      },
+      "growth": {
+        "name": "Growth"
+      },
+      "scale": {
+        "name": "Scale"
+      },
+      "custom": {
+        "name": "Custom",
+        "description": "We build a custom web or mobile application based on your goals, workflows, and business needs."
+      }
+    },
+    "features": {
+      "customizable": "Customizable",
+      "editable": "Editable",
+      "responsive": "Responsive",
+      "seoFriendly": "SEO Friendly",
+      "performanceOptimized": "Performance Optimized",
+      "security": "Security",
+      "support": "Support",
+      "updates": "Updates",
+      "maintenance": "Maintenance",
+      "emailSupport": "Email Support",
+      "analyticsAndReporting": "Analytics and Reporting",
+      "sendSms": "Send SMS",
+      "payOnline": "Pay Online",
+      "bookingSystemAndReporting": "Booking System and Reporting",
+      "multipleLanguageSupport": "Multiple Language Support",
+      "webApplicationMobile": "Web Application / Mobile App"
+    }
+  },
   "Products": {
     "heading": "Our Products",
     "subheading": "Ready-to-launch solutions designed to help your business grow",
