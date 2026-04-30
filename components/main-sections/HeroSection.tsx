@@ -16,15 +16,26 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
   const t = await getTranslations("HomePage");
   return (
     <section
-      className="w-full max-w-[1440px] p-10 mx-auto min-h-screen snap-start scroll-mt-24 flex items-center justify-center"
+      className="w-full max-w-[1440px] p-10 mx-auto min-h-screen snap-start scroll-mt-24 flex"
       aria-labelledby="hero-heading"
     >
-      <Image src="/computer.png" alt="Hero Image" width={1000} height={1000} className="w-1/2 h-1/2" />
+      <div className="absolute right-1/10 top-1/2 -translate-y-1/2 h-auto w-1/3 flex justify-end pointer-events-none">
+        <Image
+          src="/computer-hero.png"
+          alt="Hero Image"
+          width={700}
+          height={700}
+          className="w-full h-auto object-contain"
+          priority
+        />
+      </div>
+
+
       <div className="flex flex-col items-center justify-center mb-32 gap-4 text-center">
         <h1
           id="hero-heading"
           className={cn(
-            "text-4xl sm:text-6xl font-bold text-center text-gray-900 tracking-tight main-title-animation",
+            "text-4xl sm:text-6xl font-bold text-gray-900 tracking-tight main-title-animation",
             ubuntu.className,
           )}
         >
