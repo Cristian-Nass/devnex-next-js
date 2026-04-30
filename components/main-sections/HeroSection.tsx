@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Ubuntu } from "next/font/google";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 const ubuntu = Ubuntu({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -18,53 +19,61 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
       className="w-full max-w-[1440px] p-10 mx-auto min-h-screen snap-start scroll-mt-24 flex items-center justify-center"
       aria-labelledby="hero-heading"
     >
-<div className="flex flex-col items-center justify-center mb-32 gap-4 text-center">
-  <h1
-    id="hero-heading"
-    className={cn(
-      "text-4xl sm:text-6xl font-bold text-center text-gray-900 tracking-tight main-title-animation",
-      ubuntu.className
-    )}
-  >
-    {t("title")}
-  </h1>
-  <p
-    className={cn(
-      "text-lg sm:text-2xl text-center font-medium text-gray-500 max-w-3xl pt-4 subtitle-animation",
-      ubuntu.className
-    )}
-  >
-    {t("description")}
-    <br />
-    {t("descriptionTwo")}
-  </p>
-  <div className="flex items-center gap-8 sm:flex-row flex-col">
-    <Button
-      variant="default"
-      className={cn(
-        "text-lg text-center py-6 mt-8 w-56 cursor-pointer left-button-animation",
-        ubuntu.className
-      )}
-      size="lg"
-      asChild
-    >
-      <Link href={`/${locale}/home#contact`}>{t("getStarted")}</Link>
-    </Button>
-    <Button
-      variant="outline"
-      className={cn(
-        "text-lg text-center py-6 mt-8 w-56 cursor-pointer right-button-animation",
-        ubuntu.className
-      )}
-      size="lg"
-      asChild
-    >
-      <Link href={`/${locale}/home#services`}>{t("exploreOurServices")}</Link>
-    </Button>
-  </div>
-  <p className={cn("mt-2 text-sm sm:text-base text-gray-600 trust-line-animation", ubuntu.className)}>
-    {t("trustLine")}
-  </p>
+      <Image src="/computer.png" alt="Hero Image" width={1000} height={1000} className="w-1/2 h-1/2" />
+      <div className="flex flex-col items-center justify-center mb-32 gap-4 text-center">
+        <h1
+          id="hero-heading"
+          className={cn(
+            "text-4xl sm:text-6xl font-bold text-center text-gray-900 tracking-tight main-title-animation",
+            ubuntu.className,
+          )}
+        >
+          {t("title")}
+        </h1>
+        <p
+          className={cn(
+            "text-lg sm:text-2xl text-center font-medium text-gray-500 max-w-3xl pt-4 subtitle-animation",
+            ubuntu.className,
+          )}
+        >
+          {t("description")}
+          <br />
+          {t("descriptionTwo")}
+        </p>
+        <div className="flex items-center gap-8 sm:flex-row flex-col">
+          <Button
+            variant="default"
+            className={cn(
+              "text-lg text-center py-6 mt-8 w-56 cursor-pointer left-button-animation",
+              ubuntu.className,
+            )}
+            size="lg"
+            asChild
+          >
+            <Link href={`/${locale}/home#contact`}>{t("getStarted")}</Link>
+          </Button>
+          <Button
+            variant="outline"
+            className={cn(
+              "text-lg text-center py-6 mt-8 w-56 cursor-pointer right-button-animation",
+              ubuntu.className,
+            )}
+            size="lg"
+            asChild
+          >
+            <Link href={`/${locale}/home#services`}>
+              {t("exploreOurServices")}
+            </Link>
+          </Button>
+        </div>
+        <p
+          className={cn(
+            "mt-2 text-sm sm:text-base text-gray-600 trust-line-animation",
+            ubuntu.className,
+          )}
+        >
+          {t("trustLine")}
+        </p>
       </div>
     </section>
   );
