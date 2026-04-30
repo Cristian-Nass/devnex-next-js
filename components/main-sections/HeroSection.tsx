@@ -19,7 +19,7 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
       className="w-full max-w-[1440px] p-10 mx-auto min-h-screen snap-start scroll-mt-24 flex"
       aria-labelledby="hero-heading"
     >
-      <div className="absolute right-1/10 top-1/2 -translate-y-1/2 h-auto w-1/3 flex justify-end pointer-events-none xl:opacity-100 opacity-20">
+      <div className="absolute right-1/10 top-1/2 -translate-y-1/2 h-auto w-1/3 flex justify-end pointer-events-none opacity-0 sm:opacity-20 md:opacity-50 lg:opacity-100 transition-opacity duration-1000">
         <Image
           src="/hero-img.png"
           alt="Hero Image"
@@ -44,7 +44,7 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
         </h1>
         <p
           className={cn(
-            "text-lg sm:text-2xl text-center font-medium text-gray-500 max-w-3xl pt-4 subtitle-animation",
+            "text-lg sm:text-2xl text-left lg:text-center font-medium text-gray-500 max-w-3xl pt-4 subtitle-animation ",
             ubuntu.className,
           )}
         >
