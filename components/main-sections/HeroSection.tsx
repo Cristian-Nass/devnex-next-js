@@ -70,7 +70,7 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
             <Button
               variant="outline"
               className={cn(
-                "text-lg text-center py-6 mt-8 w-56 cursor-pointer right-button-animation",
+                "text-lg text-center py-6 mt-0 sm:mt-8 w-56 cursor-pointer right-button-animation",
                 ubuntu.className,
               )}
               size="lg"
