@@ -91,6 +91,13 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
           </p>
         </div>
       </div>
+      <div className={cn(
+        "absolute bottom-40 sm:left-1/2 sm:transform sm:-translate-x-1/2 text-2xl lg:text-4xl font-bold text-gray-700 text-center",
+        ubuntu.className
+      )}>
+        AI-Powered Development by Experienced Developers
+      </div>
+ 
     </section>
   );
 }
