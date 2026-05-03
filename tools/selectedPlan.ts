@@ -56,6 +56,7 @@ const scalePlan: PlanContent = {
     "CreateWebsitePlans.features.analyticsAndReporting",
     "CreateWebsitePlans.features.bookingSystemAndReporting",
     "CreateWebsitePlans.features.multipleLanguageSupport",
+    "CreateWebsitePlans.features.RegistrationAndLogin",
   ],
 };
 

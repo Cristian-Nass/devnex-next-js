@@ -79,7 +79,8 @@
       "payOnline": "Betala online",
       "bookingSystemAndReporting": "Bokningssystem och rapportering",
       "multipleLanguageSupport": "Stöd för flera språk",
-      "webApplicationMobile": "Webbapplikation / Mobilapp"
+      "webApplicationMobile": "Webbapplikation / Mobilapp",
+      "RegistrationAndLogin": "Registrering och inloggning"
     }
   },
   "Products": {
@@ -141,6 +142,7 @@
         "analyticsAndReporting": "Analys och rapportering för att följa webbplatsens resultat och tillväxt.",
         "bookingSystemAndReporting": "Bokningssystem och rapportering för att hantera tider och tillgänglighet.",
         "multipleLanguageSupport": "Flerspråksstöd för att hjälpa dig nå en bredare målgrupp.",
+        "RegistrationAndLogin": "Registrering och inloggning för att hjälpa dig hantera dina användare och deras data med en säker och användarvänlig gränssnitt.",
         "webApplication": "Specialutvecklad webbapplikation anpassad efter dina affärsflöden och operativa behov.",
         "mobileApplication": "Specialutvecklad mobilapp för iOS och Android, anpassad efter dina affärsmål."
       }

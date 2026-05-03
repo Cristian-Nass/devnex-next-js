@@ -79,7 +79,8 @@
       "payOnline": "Pay Online",
       "bookingSystemAndReporting": "Booking System and Reporting",
       "multipleLanguageSupport": "Multiple Language Support",
-      "webApplicationMobile": "Web Application / Mobile App"
+      "webApplicationMobile": "Web Application / Mobile App",
+      "RegistrationAndLogin": "Registration and Login"
     }
   },
   "Products": {
@@ -141,6 +142,7 @@
         "analyticsAndReporting": "Analytics and reporting to track your website performance and growth.",
         "bookingSystemAndReporting": "Booking system and reporting to manage appointments and availability.",
         "multipleLanguageSupport": "Multiple language support to help you reach a wider audience.",
+        "RegistrationAndLogin": "Registration and Login to help you manage your users and their data with a secure and user-friendly interface.",
         "webApplication": "Custom web application development tailored to your business workflows and operational needs.",
         "mobileApplication": "Custom mobile application development for iOS and Android, aligned with your business goals."
       }
