@@ -39,7 +39,7 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
           <h1
             id="hero-heading"
             className={cn(
-              "text-4xl sm:text-6xl font-bold text-gray-900 tracking-tight main-title-animation",
+              "text-3xl sm:text-6xl font-bold text-gray-900 tracking-tight main-title-animation",
               ubuntu.className,
             )}
           >
@@ -55,7 +55,7 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
             <br />
             {t("descriptionTwo")}
           </p>
-          <div className="flex items-center gap-8 sm:flex-row flex-col">
+          <div className="flex items-center gap-2 sm:gap-8 sm:flex-row flex-col">
             <Button
               variant="default"
               className={cn(
@@ -92,7 +92,7 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
         </div>
       </div>
       <div className={cn(
-        "absolute bottom-40 sm:left-1/2 sm:transform sm:-translate-x-1/2 text-2xl lg:text-4xl font-bold text-gray-700 text-center",
+        "absolute sm:bottom-40 bottom-30 sm:left-1/2 sm:transform sm:-translate-x-1/2 text-2xl lg:text-4xl font-bold text-gray-700 text-center",
         ubuntu.className
       )}>
         AI-Powered Development by Experienced Developers
