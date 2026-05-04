@@ -1,4 +1,4 @@
-import { SignupForm } from "@/components/signup-form"
+import { SignupForm } from "@/components/auth/signup-form"
 
 export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const resolvedParams = await Promise.resolve(params);

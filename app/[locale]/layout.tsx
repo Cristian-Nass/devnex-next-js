@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { NavigationBar } from "@/components/ui/navbar/NavigationBar";
-import { AuthStateSync } from "@/components/auth-state-sync";
+import { AuthStateSync } from "@/components/auth/auth-state-sync";
 
 type Props = {
   children: React.ReactNode;

@@ -8,7 +8,7 @@ import {
 import { cn } from "@/lib/utils"
 import { getTranslations } from "next-intl/server"
 import { Ubuntu } from "next/font/google"
-import { SignupFormClient } from "@/components/signup-form-client"
+import { SignupFormClient } from "@/components/auth/signup-form-client"
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
