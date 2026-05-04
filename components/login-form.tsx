@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Ubuntu } from "next/font/google"
 import { getTranslations } from "next-intl/server"
+import { Link } from "@/i18n/routing"
 const ubuntu = Ubuntu({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -65,7 +66,7 @@ export async function LoginForm({
                   Login with Google
                 </Button>
                 <FieldDescription className="text-center">
-                  {t("dontHaveAnAccount")} <a href="#">{t("signUp")}</a>
+                  {t("dontHaveAnAccount")} <Link href={`signup`}>{t("signUp")}</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

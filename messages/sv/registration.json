@@ -9,6 +9,22 @@
       "dontHaveAnAccount": "Har du inget konto?",
       "signUp": "Skapa konto",
       "emailPlaceholder": "m@exempel.com"
+    },
+    "SignupForm": {
+        "title": "Skapa ett konto",
+        "description": "Ange din information nedan för att skapa ditt konto",
+        "name": "Fullständigt namn",
+        "email": "E-post",
+        "emailPlaceholder": "m@exempel.com",
+        "emailDescription": "Vi kommer att använda detta för att kontakta dig. Vi kommer inte att dela din e-post",
+        "password": "Lösenord",
+        "passwordDescription": "Måste vara minst 8 tecken långt.",
+        "confirmPassword": "Bekräfta lösenord",
+        "confirmPasswordDescription": "Vänligen bekräfta ditt lösenord.",
+        "createAccount": "Skapa konto",
+        "signUpWithGoogle": "Skapa konto med Google",
+        "alreadyHaveAnAccount": "Har du redan ett konto?",
+        "signIn": "Logga in"
     }
   }
   
