@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { signInWithEmail } from "@/lib/firebase-auth";
 import { Link, useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,8 +39,8 @@ export function LoginFormClient({
     const email = String(form.get("email") ?? "");
     const password = String(form.get("password") ?? "");
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/home");
+      await signInWithEmail(email, password);
+      router.push("/");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Login failed");
     }

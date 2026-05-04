@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { User } from "firebase/auth";
-
+import { devtools } from "zustand/middleware";
 export type AuthUser = Pick<User, "uid" | "email">;
 
 type AuthStore = {
@@ -8,7 +8,7 @@ type AuthStore = {
   setUser: (user: User | null) => void;
 };
 
-export const useAuthStore = create<AuthStore>((set, get) => ({
+export const useAuthStore = create<AuthStore>()(devtools((set, get) => ({
   user: null,
   setUser: (user) => {
     const next = user
@@ -18,4 +18,4 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     if (prev?.uid === next?.uid && prev?.email === next?.email) return;
     set({ user: next });
   },
-}));
+})));

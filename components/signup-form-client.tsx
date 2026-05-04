@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { signUpWithEmail } from "@/lib/firebase-auth";
 import { Link, useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,7 +52,7 @@ export function SignupFormClient({
       return;
     }
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await signUpWithEmail(email, password);
       router.push("/home");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Sign up failed");
