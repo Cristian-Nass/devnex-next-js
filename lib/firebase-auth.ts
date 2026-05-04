@@ -14,5 +14,5 @@ export function signUpWithEmail(email: string, password: string) {
 }
 
 export function signOut() {
-  return signOut();
+  return firebaseSignOut(auth);
 }

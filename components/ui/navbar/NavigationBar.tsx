@@ -6,8 +6,7 @@ import {MenuIcon} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
 import {getMenuItems} from './menuItems';
 import {Ubuntu} from 'next/font/google';
-import {Button} from '../button';
-
+import {NavigationBarAuth} from './NavigationBarAuth';
 const ubuntu = Ubuntu({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
@@ -41,16 +40,15 @@ export async function NavigationBar({locale}: NavigationBarProps) {
 
         <div className="flex items-center gap-2 w-full">
           <MainMenuBar locale={locale} className="mx-auto hidden md:block" />
-          <Button
-            variant="outline"
-            size="lg"
+          <NavigationBarAuth
+            locale={locale}
+            loginLabel={t('logIn')}
+            logoutLabel={t('logOut')}
             className={cn(
               'text-base text-sm mr-2 hidden md:flex',
               ubuntu.className,
             )}
-            asChild>
-            <Link href={`/${locale}/login`}>{t('logIn')}</Link>
-          </Button>
+          />
           <LanguageSwitch locale={locale} />
           <details className="ml-auto relative md:hidden">
             <summary

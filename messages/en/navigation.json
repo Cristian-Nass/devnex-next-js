@@ -6,6 +6,7 @@
     "about": "About",
     "contact": "Contact",
     "products": "Products",
-    "logIn": "Log In"
+    "logIn": "Log In",
+    "logOut": "Log out"
   }
 }
