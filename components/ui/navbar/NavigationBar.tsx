@@ -1,63 +1,75 @@
-import Link from "next/link"
-import { LanguageSwitch } from "./LanguageSwitch";
-import { cn } from "@/lib/utils";
-import MainMenuBar from "./MainMenuBar";
-import { MenuIcon } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-import { getMenuItems } from "./menuItems";
-import { Ubuntu } from 'next/font/google'
+import Link from 'next/link';
+import {LanguageSwitch} from './LanguageSwitch';
+import {cn} from '@/lib/utils';
+import MainMenuBar from './MainMenuBar';
+import {MenuIcon} from 'lucide-react';
+import {getTranslations} from 'next-intl/server';
+import {getMenuItems} from './menuItems';
+import {Ubuntu} from 'next/font/google';
+import {Button} from '../button';
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
-})
+});
 
 type NavigationBarProps = {
   locale: string;
 };
 
-export async function NavigationBar({ locale }: NavigationBarProps) {
-  const t = await getTranslations("NavigationBar");
+export async function NavigationBar({locale}: NavigationBarProps) {
+  const t = await getTranslations('NavigationBar');
   const mobileMenuItems = getMenuItems(locale, {
-    home: t("home"),
-    services: t("services"),
-    products: t("products"),
-    about: t("about"),
-    contact: t("contact"),
+    home: t('home'),
+    services: t('services'),
+    products: t('products'),
+    about: t('about'),
+    contact: t('contact'),
   });
 
   return (
     <header className="sticky top-0 z-20 border-b border-black/10 bg-white/90 backdrop-blur dark:border-white/20 dark:bg-black/90">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-        <Link href={`/${locale}`} className={cn("text-2xl font-semibold text-cyan-700", ubuntu.className)}
-        >
-          <span style={{ letterSpacing: '-2px' }}>Devnex</span>
+        <Link
+          href={`/${locale}`}
+          className={cn(
+            'text-2xl font-semibold text-cyan-700',
+            ubuntu.className,
+          )}>
+          <span style={{letterSpacing: '-2px'}}>Devnex</span>
         </Link>
 
         <div className="flex items-center gap-2 w-full">
           <MainMenuBar locale={locale} className="mx-auto hidden md:block" />
+          <Button
+            variant="outline"
+            size="lg"
+            className={cn(
+              'text-base text-sm mr-2 hidden md:flex',
+              ubuntu.className,
+            )}
+            asChild>
+            <Link href={`/${locale}/login`}>{t('logIn')}</Link>
+          </Button>
           <LanguageSwitch locale={locale} />
           <details className="ml-auto relative md:hidden">
             <summary
               className="list-none rounded-lg border border-gray-200 bg-white p-2 text-gray-700 cursor-pointer"
-              aria-label={t("navLabel")}
-            >
+              aria-label={t('navLabel')}>
               <MenuIcon className="w-6 h-6" />
             </summary>
             <nav
               className="absolute right-0 mt-3 min-w-44 rounded-xl border border-gray-200 bg-white p-2 shadow-lg"
-              aria-label={t("navLabel")}
-            >
+              aria-label={t('navLabel')}>
               {mobileMenuItems.map((item) => (
                 <Link
                   key={item.id}
                   href={item.href}
                   prefetch={false}
                   className={cn(
-                    "block rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-100",
-                    ubuntu.className
-                  )}
-                >
+                    'block rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-100',
+                    ubuntu.className,
+                  )}>
                   {item.label}
                 </Link>
               ))}
