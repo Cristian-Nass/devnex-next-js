@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { signInWithEmail } from "@/lib/firebase-auth";
 import { Link, useRouter } from "@/i18n/routing";
@@ -31,6 +30,8 @@ export function LoginFormClient({
 }: Props) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [emailReadOnly, setEmailReadOnly] = useState(true);
+  const [passwordReadOnly, setPasswordReadOnly] = useState(true);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -47,7 +48,7 @@ export function LoginFormClient({
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} autoComplete="off">
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="email">{emailLabel}</FieldLabel>
@@ -57,9 +58,12 @@ export function LoginFormClient({
             type="email"
             placeholder={emailPlaceholder}
             required
-            autoComplete="email"
+            autoComplete="new-password"   // Tricks browser into skipping autofill
+            readOnly={emailReadOnly}
+            onFocus={() => setEmailReadOnly(false)}
           />
         </Field>
+
         <Field>
           <FieldLabel htmlFor="password">{passwordLabel}</FieldLabel>
           <Input
@@ -67,14 +71,18 @@ export function LoginFormClient({
             name="password"
             type="password"
             required
-            autoComplete="current-password"
+            autoComplete="new-password"   // Most reliable flag to block credential fill
+            readOnly={passwordReadOnly}
+            onFocus={() => setPasswordReadOnly(false)}
           />
         </Field>
+
         {error ? (
           <p className="text-destructive text-sm" role="alert">
             {error}
           </p>
         ) : null}
+
         <Field>
           <Button type="submit">{loginLabel}</Button>
           <FieldDescription className="text-center">
