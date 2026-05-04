@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { NavigationBar } from "@/components/ui/navbar/NavigationBar";
+import { AuthStateSync } from "@/components/auth-state-sync";
 
 type Props = {
   children: React.ReactNode;
@@ -46,6 +47,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider>
+      <AuthStateSync />
       <NavigationBar locale={locale} />
       {children}
     </NextIntlClientProvider>
