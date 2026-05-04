@@ -1,0 +1,14 @@
+{
+    "LoginForm": {
+      "title": "Logga in på ditt konto",
+      "description": "Ange din e-post nedan för att logga in på ditt konto",
+      "email": "E-post",
+      "password": "Lösenord",
+      "login": "Logga in",
+      "loginWithGoogle": "Logga in med Google",
+      "dontHaveAnAccount": "Har du inget konto?",
+      "signUp": "Skapa konto",
+      "emailPlaceholder": "m@exempel.com"
+    }
+  }
+  
