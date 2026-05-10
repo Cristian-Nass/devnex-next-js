@@ -14,7 +14,7 @@ async function bootstrap() {
     credentials: true,
   });
 
-  const port = Number(process.env.PORT) || 3001;
+  const port = Number(process.env.PORT) || 5000;
   await app.listen(port);
   Logger.log(
     `API listening at http://127.0.0.1:${port} (CORS → ${corsOrigins.join(', ')})`,
