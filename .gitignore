@@ -1,7 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
+# dependencies (all workspace packages / hoisted root install)
+node_modules/
+
+/backend/dist
+
 /.pnp
 .pnp.*
 .yarn/*
@@ -14,8 +17,11 @@
 /coverage
 
 # next.js
+/frontend/.next/
+/frontend/out/
+
+# stray old build dirs (legacy location)
 /.next/
-/out/
 
 # production
 /build
@@ -38,4 +44,3 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
