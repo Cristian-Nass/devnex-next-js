@@ -1,0 +1,46 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: ".,!.git"
+          target: ${{ secrets.DEPLOY_PATH }}
+          overwrite: true
+
+      - name: Build and deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            set -eu
+            cd ${{ secrets.DEPLOY_PATH }}
+
+            if ! [ -f frontend/.env.prod ] || ! [ -f backend/.env.prod ]; then
+              echo "Both frontend/.env.prod and backend/.env.prod must exist on the server (never commit them)."
+              exit 1
+            fi
+
+            ENV_FILES="--env-file frontend/.env.prod --env-file backend/.env.prod"
+
+            docker compose $ENV_FILES down --remove-orphans
+            docker compose $ENV_FILES build --no-cache web api
+            docker compose $ENV_FILES up -d --remove-orphans web api
+            docker image prune -f

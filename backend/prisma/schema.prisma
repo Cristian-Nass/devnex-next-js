@@ -1,0 +1,17 @@
+datasource db {
+  provider = "postgresql"
+}
+
+// Classic JS client wired to `@prisma/client`: works cleanly with Nest’s CommonJS compile output.
+// (The Rust-free `prisma-client` generator is ESM-first and gets mis-compiled by `nest build`.)
+generator client {
+  provider = "prisma-client-js"
+}
+
+/// Placeholder model so `prisma generate` and migrations work; extend or replace with your domain.
+model Todo {
+  id        String   @id @default(cuid())
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

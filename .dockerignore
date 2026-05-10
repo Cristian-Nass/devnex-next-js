@@ -1,0 +1,13 @@
+.git
+.github
+**/node_modules
+**/dist
+**/coverage
+**/.next
+*.md
+**/npm-debug.log*
+.DS_Store
+
+# Never bake secrets into image layers — supply env at runtime / compose env_file instead.
+.env*
+**/.env*
