@@ -11,10 +11,10 @@ services:
     build:
       context: .
       dockerfile: frontend/Dockerfile
-      container_name: devnex-frontend
       args:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-}
+    container_name: devnex-frontend
     ports:
       - "80"
     env_file:
@@ -27,7 +27,7 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-      container_name: devnex-api
+    container_name: devnex-api
     env_file:
       - backend/.env.prod
     environment:
