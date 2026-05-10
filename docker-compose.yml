@@ -20,6 +20,11 @@ services:
       - "3000"
     env_file:
       - frontend/.env.prod
+    # VIRTUAL_HOST / VIRTUAL_PORT must live in frontend/.env.prod (not here as ${VAR} — Compose
+    # resolves those before env_file, so unset shell vars would blank them out).
+    # Example values:
+    #   VIRTUAL_HOST=devnex.arvidn.dev
+    #   VIRTUAL_PORT=3000
     restart: unless-stopped
     networks:
       - my-bridge-network
@@ -31,8 +36,10 @@ services:
     container_name: devnex-api
     env_file:
       - backend/.env.prod
-    # VIRTUAL_HOST / VIRTUAL_PORT for nginx-proxy: set them in backend/.env.prod — Compose does not load
-    # env_file during ${...} substitution, so putting them here blanks out when the shell/root .env omit them.
+    # VIRTUAL_HOST / VIRTUAL_PORT must live in backend/.env.prod.
+    # Example values:
+    #   VIRTUAL_HOST=api-devnex.arvidn.dev
+    #   VIRTUAL_PORT=3001
     environment:
       - TZ=${TZ:-UTC}
       - NODE_ENV=production
