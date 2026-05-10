@@ -1,10 +1,11 @@
-# Virtual hosts (production):
-#   Frontend: https://devnex.arvidn.dev     (service: devnex)
-#   API:      https://api-devnex.arvidn.dev (service: api)
+# Virtual hosts (nginx-proxy / similar):
+#   web:  VIRTUAL_HOST + VIRTUAL_PORT in frontend/.env.prod  (e.g. devnex.arvidn.dev → 3000)
+#   api:  VIRTUAL_HOST + VIRTUAL_PORT in backend/.env.prod   (e.g. api-devnex.arvidn.dev → 3001)
 #
-# Server copies: backend/.env.prod, frontend/.env.prod (from *.example templates).
-# Ensure backend/.env.prod has CORS_ORIGIN=https://devnex.arvidn.dev and
-# frontend/.env.prod has NEXT_PUBLIC_SITE_URL / NEXT_PUBLIC_API_URL matching the URLs above.
+# Do not set VIRTUAL_* via compose `environment: ${VIRTUAL_HOST}` — Compose resolves that before
+# env_file and overrides with empty strings. Put them only in the *.env.prod files below.
+#
+# Also set CORS_ORIGIN and NEXT_PUBLIC_* in those files (see *.example).
 #
 services:
   web:
@@ -14,9 +15,9 @@ services:
       args:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-}
-    container_name: devnex-frontend
+    container_name: devnex-web
     ports:
-      - "80"
+      - "3000:3000"
     env_file:
       - frontend/.env.prod
     restart: unless-stopped
@@ -30,11 +31,11 @@ services:
     container_name: devnex-api
     env_file:
       - backend/.env.prod
+    # VIRTUAL_HOST / VIRTUAL_PORT for nginx-proxy: set them in backend/.env.prod — Compose does not load
+    # env_file during ${...} substitution, so putting them here blanks out when the shell/root .env omit them.
     environment:
       - TZ=${TZ:-UTC}
       - NODE_ENV=production
-      - VIRTUAL_HOST=${VIRTUAL_HOST}
-      - VIRTUAL_PORT=${VIRTUAL_PORT}
     restart: unless-stopped
     networks:
       - my-bridge-network
