@@ -16,8 +16,7 @@ services:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-}
     container_name: devnex-web
-    port:
-      - "80"
+  
     env_file:
       - frontend/.env.prod
     # VIRTUAL_HOST / VIRTUAL_PORT must live in frontend/.env.prod (not here as ${VAR} — Compose
