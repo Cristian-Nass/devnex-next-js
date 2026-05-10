@@ -7,12 +7,10 @@ const intlMiddleware = createMiddleware(routing);
 export default function middleware(request: NextRequest): NextResponse {
   // Behind a reverse-proxy (nginx-proxy + Cloudflare) the Host header can
   // include `:80` while X-Forwarded-Proto is `https`, so next-intl builds
-  // redirect URLs like https://devnex.arvidn.dev:80/sv. Strip the port when
-  // it is a default port for the forwarded protocol.
-  const proto = request.headers.get("x-forwarded-proto") ?? "https";
+  // redirect URLs like https://devnex.arvidn.dev:80/sv. Strip default web
+  // ports before handing the request to next-intl.
   const host = request.headers.get("host") ?? "";
-  const defaultPort = proto === "https" ? "443" : "80";
-  const cleanHost = host.replace(new RegExp(`:${defaultPort}$`), "");
+  const cleanHost = host.replace(/:(80|443)$/, "");
 
   if (cleanHost === host) {
     return intlMiddleware(request) as NextResponse;
