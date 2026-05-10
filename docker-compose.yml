@@ -7,7 +7,7 @@
 # frontend/.env.prod has NEXT_PUBLIC_SITE_URL / NEXT_PUBLIC_API_URL matching the URLs above.
 #
 services:
-  devnex:
+  web:
     build:
       context: .
       dockerfile: frontend/Dockerfile
