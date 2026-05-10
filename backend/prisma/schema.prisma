@@ -2,16 +2,113 @@ datasource db {
   provider = "postgresql"
 }
 
-// Classic JS client wired to `@prisma/client`: works cleanly with Nest’s CommonJS compile output.
+// Classic JS client wired to `@prisma/client`: works cleanly with Nest's CommonJS compile output.
 // (The Rust-free `prisma-client` generator is ESM-first and gets mis-compiled by `nest build`.)
 generator client {
   provider = "prisma-client-js"
 }
 
-/// Placeholder model so `prisma generate` and migrations work; extend or replace with your domain.
-model Todo {
-  id        String   @id @default(cuid())
-  title     String?
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  passwordHash    String
+  emailVerifiedAt DateTime?
+
+  // Soft Delete & Metadata
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  // Relationships
+  profile     Profile?
+  sessions    Session[]
+  roles       UsersOnRoles[]
+  resetTokens PasswordResetToken[]
+  accounts    Account[]
+
+  @@index([email])
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique // Hashed version of the raw token
+  expiresAt DateTime
+  revokedAt DateTime? // For invalidation without deletion
+
+  // Metadata for security audits
+  userAgent String?
+  ipAddress String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([tokenHash])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String    @unique // Ensures only ONE active request per user
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Account {
+  id                String @id @default(cuid())
+  userId            String
+  provider          String // e.g., "google", "github"
+  providerAccountId String // The ID from the provider
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+// RBAC: Roles and Permissions
+model Role {
+  id          String               @id @default(cuid())
+  name        String               @unique
+  users       UsersOnRoles[]
+  permissions RolesOnPermissions[]
+}
+
+model Permission {
+  id    String               @id @default(cuid())
+  name  String               @unique // e.g., "user:write"
+  roles RolesOnPermissions[]
+}
+
+model UsersOnRoles {
+  userId String
+  roleId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@index([userId])
+  @@index([roleId])
+}
+
+model RolesOnPermissions {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+}
+
+model Profile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
