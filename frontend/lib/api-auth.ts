@@ -1,5 +1,19 @@
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? 'http://localhost:5000/api';
+/**
+ * Nest uses global prefix `api` (backend `main.ts`). Browser calls must hit
+ * `/api/auth/...`. If `NEXT_PUBLIC_API_URL` is only the API host (e.g.
+ * `https://api-devnex.arvidn.dev`), we append `/api` automatically.
+ */
+function normalizeApiBaseUrl(): string {
+  const raw =
+    process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ??
+    'http://localhost:5000/api';
+  if (/\/api$/i.test(raw)) {
+    return raw;
+  }
+  return `${raw}/api`;
+}
+
+const API_URL = normalizeApiBaseUrl();
 export type AuthUser = {
   id: string;
   email: string;
