@@ -1,16 +1,22 @@
 "use client";
 
 import { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { apiGetMe, getToken } from "@/lib/api-auth";
 import { useAuthStore } from "@/stores/auth-store";
 
+/**
+ * Mounts once at the app root. Reads the stored access token from localStorage
+ * and hydrates the auth store by fetching the current user from the API.
+ * On failure (expired / revoked token) the token is cleared automatically.
+ */
 export function AuthStateSync() {
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
+    const token = getToken();
+    if (!token) return;
+
+    apiGetMe(token).then((user) => {
       useAuthStore.getState().setUser(user);
     });
-    return () => unsub();
   }, []);
 
   return null;

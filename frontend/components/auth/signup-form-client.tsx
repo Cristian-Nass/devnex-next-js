@@ -1,18 +1,23 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { signUpWithEmail } from "@/lib/firebase-auth";
-import { Link, useRouter } from "@/i18n/routing";
-import { Button } from "@/components/ui/button";
+import {useState} from 'react';
+import {useLocale, useTranslations} from 'next-intl';
+import {toast} from 'sonner';
+import {apiRegister, googleOAuthUrl} from '@/lib/api-auth';
+import {Link, useRouter} from '@/i18n/routing';
+import {Button} from '@/components/ui/button';
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+  FieldSeparator,
+} from '@/components/ui/field';
+import {Input} from '@/components/ui/input';
 
 type Props = {
+  signUpWithGoogleLabel: string;
+  orContinueWithLabel: string;
   emailLabel: string;
   emailPlaceholder: string;
   emailDescription: string;
@@ -26,6 +31,8 @@ type Props = {
 };
 
 export function SignupFormClient({
+  signUpWithGoogleLabel,
+  orContinueWithLabel,
   emailLabel,
   emailPlaceholder,
   emailDescription,
@@ -38,83 +45,105 @@ export function SignupFormClient({
   signIn,
 }: Props) {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations('SignupForm');
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
     const form = new FormData(e.currentTarget);
-    const email = String(form.get("email") ?? "");
-    const password = String(form.get("password") ?? "");
-    const confirm = String(form.get("confirm-password") ?? "");
+    const email = String(form.get('email') ?? '');
+    const password = String(form.get('password') ?? '');
+    const confirm = String(form.get('confirm-password') ?? '');
+
     if (password !== confirm) {
-      setError("Passwords do not match");
+      setError('Passwords do not match');
       return;
     }
+
+    setLoading(true);
     try {
-      await signUpWithEmail(email, password);
-      router.push("/home");
+      await apiRegister(email, password, locale);
+      toast.success(t('registerSuccessToast'));
+      router.replace('/verify-email');
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Sign up failed");
+      setError(err instanceof Error ? err.message : 'Sign up failed');
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <FieldGroup>
-        <Field>
-          <FieldLabel htmlFor="email">{emailLabel}</FieldLabel>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder={emailPlaceholder}
-            required
-            autoComplete="email"
-          />
-          <FieldDescription>{emailDescription}</FieldDescription>
-        </Field>
-        <Field>
-          <FieldLabel htmlFor="password">{passwordLabel}</FieldLabel>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            required
-            minLength={8}
-            autoComplete="new-password"
-          />
-          <FieldDescription>{passwordDescription}</FieldDescription>
-        </Field>
-        <Field>
-          <FieldLabel htmlFor="confirm-password">
-            {confirmPasswordLabel}
-          </FieldLabel>
-          <Input
-            id="confirm-password"
-            name="confirm-password"
-            type="password"
-            required
-            minLength={8}
-            autoComplete="new-password"
-          />
-          <FieldDescription>{confirmPasswordDescription}</FieldDescription>
-        </Field>
-        {error ? (
-          <p className="text-destructive text-sm" role="alert">
-            {error}
-          </p>
-        ) : null}
+    <div className="flex flex-col gap-5">
+      <Button variant="outline" className="w-full" asChild>
+        <a href={googleOAuthUrl(locale)}>{signUpWithGoogleLabel}</a>
+      </Button>
+
+      <FieldSeparator>{orContinueWithLabel}</FieldSeparator>
+
+      <form onSubmit={(e) => void onSubmit(e)}>
         <FieldGroup>
           <Field>
-            <Button type="submit">{createAccountLabel}</Button>
-            <FieldDescription className="px-6 text-center">
-              {alreadyHaveAnAccount}{" "}
-              <Link href="/login">{signIn}</Link>
-            </FieldDescription>
+            <FieldLabel htmlFor="email">{emailLabel}</FieldLabel>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder={emailPlaceholder}
+              required
+              autoComplete="email"
+            />
+            <FieldDescription>{emailDescription}</FieldDescription>
           </Field>
+
+          <Field>
+            <FieldLabel htmlFor="password">{passwordLabel}</FieldLabel>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              required
+              minLength={8}
+              autoComplete="new-password"
+            />
+            <FieldDescription>{passwordDescription}</FieldDescription>
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor="confirm-password">
+              {confirmPasswordLabel}
+            </FieldLabel>
+            <Input
+              id="confirm-password"
+              name="confirm-password"
+              type="password"
+              required
+              minLength={8}
+              autoComplete="new-password"
+            />
+            <FieldDescription>{confirmPasswordDescription}</FieldDescription>
+          </Field>
+
+          {error ? (
+            <p className="text-destructive text-sm" role="alert">
+              {error}
+            </p>
+          ) : null}
+
+          <FieldGroup>
+            <Field>
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Creating account…' : createAccountLabel}
+              </Button>
+              <FieldDescription className="px-6 text-center">
+                {alreadyHaveAnAccount} <Link href="/login">{signIn}</Link>
+              </FieldDescription>
+            </Field>
+          </FieldGroup>
         </FieldGroup>
-      </FieldGroup>
-    </form>
+      </form>
+    </div>
   );
 }

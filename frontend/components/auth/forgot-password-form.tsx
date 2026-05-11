@@ -8,36 +8,37 @@ import {
 } from "@/components/ui/card";
 import { Ubuntu } from "next/font/google";
 import { getTranslations } from "next-intl/server";
-import { LoginFormClient } from "@/components/auth/login-form-client";
+import { ForgotPasswordFormClient } from "@/components/auth/forgot-password-form-client";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
 });
 
-export async function LoginForm({
+export async function ForgotPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const t = await getTranslations("LoginForm");
+  const t = await getTranslations("ForgotPasswordForm");
+
   return (
-    <div className={cn("flex flex-col gap-6", ubuntu.className, className)} {...props}>
+    <div
+      className={cn("flex flex-col gap-6", ubuntu.className, className)}
+      {...props}
+    >
       <Card>
         <CardHeader>
           <CardTitle>{t("title")}</CardTitle>
           <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <LoginFormClient
-            loginWithGoogleLabel={t("loginWithGoogle")}
-            orContinueWithLabel={t("orContinueWith")}
-            forgotPasswordLabel={t("forgotPassword")}
+          <ForgotPasswordFormClient
             emailLabel={t("email")}
             emailPlaceholder={t("emailPlaceholder")}
-            passwordLabel={t("password")}
-            loginLabel={t("login")}
-            dontHaveAnAccount={t("dontHaveAnAccount")}
-            signUp={t("signUp")}
+            submitLabel={t("submit")}
+            backToLogin={t("backToLogin")}
+            successTitle={t("successTitle")}
+            successDescription={t("successDescription")}
           />
         </CardContent>
       </Card>

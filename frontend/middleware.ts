@@ -4,7 +4,7 @@ import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
-export default function proxy(request: NextRequest): NextResponse {
+export function middleware(request: NextRequest): NextResponse {
   const response = intlMiddleware(request) as NextResponse;
 
   // Behind nginx-proxy + Cloudflare the Host header can carry a default port

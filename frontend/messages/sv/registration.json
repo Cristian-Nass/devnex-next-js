@@ -1,14 +1,16 @@
 {
     "LoginForm": {
-      "title": "Logga in på ditt konto",
-      "description": "Ange din e-post nedan för att logga in på ditt konto",
-      "email": "E-post",
-      "password": "Lösenord",
-      "login": "Logga in",
-      "loginWithGoogle": "Logga in med Google",
-      "dontHaveAnAccount": "Har du inget konto?",
-      "signUp": "Skapa konto",
-      "emailPlaceholder": "m@exempel.com"
+        "title": "Logga in på ditt konto",
+        "description": "Ange din e-post nedan för att logga in på ditt konto",
+        "email": "E-post",
+        "password": "Lösenord",
+        "login": "Logga in",
+        "loginWithGoogle": "Fortsätt med Google",
+        "forgotPassword": "Glömt lösenordet?",
+        "orContinueWith": "Eller fortsätt med",
+        "dontHaveAnAccount": "Har du inget konto?",
+        "signUp": "Skapa konto",
+        "emailPlaceholder": "m@exempel.com"
     },
     "SignupForm": {
         "title": "Skapa ett konto",
@@ -22,9 +24,54 @@
         "confirmPassword": "Bekräfta lösenord",
         "confirmPasswordDescription": "Vänligen bekräfta ditt lösenord.",
         "createAccount": "Skapa konto",
-        "signUpWithGoogle": "Skapa konto med Google",
+        "signUpWithGoogle": "Fortsätt med Google",
+        "orContinueWith": "Eller fortsätt med",
         "alreadyHaveAnAccount": "Har du redan ett konto?",
-        "signIn": "Logga in"
+        "signIn": "Logga in",
+        "registerSuccessToast": "Kontot skapades. Kolla din e-post för att verifiera adressen."
+    },
+    "VerifyEmailSent": {
+        "title": "Kolla din e-post",
+        "description": "Vi har skickat en verifieringslänk till din inkorg. Öppna den för att aktivera kontot innan du loggar in.",
+        "checkSpam": "Om du inte ser meddelandet inom några minuter, kolla skräppost.",
+        "backToLogin": "Tillbaka till inloggning"
+    },
+    "ForgotPasswordForm": {
+        "title": "Glömt lösenord",
+        "description": "Ange din e-post så skickar vi en länk för att återställa lösenordet.",
+        "email": "E-post",
+        "emailPlaceholder": "m@exempel.com",
+        "submit": "Skicka återställningslänk",
+        "backToLogin": "Tillbaka till inloggning",
+        "successTitle": "Kolla din e-post",
+        "successDescription": "Om ett konto finns för den adressen får du en återställningslänk inom kort."
+    },
+    "AuthVerifyEmail": {
+        "loading": "Verifierar din e-post…",
+        "loadingFallback": "Laddar…",
+        "titleSuccess": "E-post verifierad",
+        "titleError": "Verifieringen misslyckades",
+        "missingToken": "Verifieringstoken saknas.",
+        "successDescription": "Din e-postadress är verifierad. Du kan logga in nu.",
+        "errorVerificationFailed": "Vi kunde inte verifiera din e-post. Länken kan ha gått ut.",
+        "continueToLogin": "Fortsätt till inloggning"
+    },
+    "AuthResetPassword": {
+        "loadingFallback": "Laddar…",
+        "invalidLink": "Den här återställningslänken är ogiltig. Begär en ny från inloggningssidan.",
+        "forgotPassword": "Glömt lösenord",
+        "successTitle": "Lösenord uppdaterat",
+        "successDescription": "Du kan nu logga in med ditt nya lösenord.",
+        "goToLogin": "Gå till inloggning",
+        "formTitle": "Ange nytt lösenord",
+        "formDescription": "Välj ett starkt lösenord som du inte använder någon annanstans.",
+        "newPassword": "Nytt lösenord",
+        "confirmPassword": "Bekräfta lösenord",
+        "errorTooShort": "Lösenordet måste vara minst 8 tecken.",
+        "errorMismatch": "Lösenorden matchar inte.",
+        "errorGeneric": "Något gick fel. Försök igen.",
+        "saving": "Sparar…",
+        "updatePassword": "Uppdatera lösenord"
     }
-  }
+}
   

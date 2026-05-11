@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/stores/auth-store";
-import { signOut as signOutFirebase } from "@/lib/firebase-auth";
+import { apiLogout, clearToken, getToken } from "@/lib/api-auth";
 
 type Props = {
   locale: string;
@@ -21,6 +21,13 @@ export function NavigationBarAuth({
 }: Props) {
   const user = useAuthStore((s) => s.user);
 
+  async function handleLogout() {
+    const token = getToken();
+    if (token) await apiLogout(token);
+    clearToken();
+    useAuthStore.getState().setUser(null);
+  }
+
   if (!user) {
     return (
       <Button variant="outline" size="lg" className={cn(className)} asChild>
@@ -35,7 +42,7 @@ export function NavigationBarAuth({
       variant="outline"
       size="lg"
       className={cn(className)}
-      onClick={() => void signOutFirebase()}
+      onClick={() => void handleLogout()}
     >
       {logoutLabel}
     </Button>
