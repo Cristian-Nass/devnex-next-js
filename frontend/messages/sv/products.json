@@ -41,6 +41,15 @@
           "Författar- och inläggssektioner",
           "SEO-vänlig artikellayout"
         ]
+      },
+      "easyWithoutDeveloper": {
+        "title": "Enkelt utan utvecklare",
+        "description": "En enkel lösning för att skapa en webbplats utan att behöva använda utvecklare.",
+        "features": [
+          "Enkel användargränssnitt",
+          "Enkel kataloghantering",
+          "Enkel beställningshantering"
+        ]
       }
     }
   },

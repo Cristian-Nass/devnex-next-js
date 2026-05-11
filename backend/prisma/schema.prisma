@@ -25,6 +25,7 @@ model User {
   roles       UsersOnRoles[]
   resetTokens PasswordResetToken[]
   accounts    Account[]
+  sites       Site[]
 
   @@index([email])
 }
@@ -111,4 +112,20 @@ model Profile {
   id     String @id @default(cuid())
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Site {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  slug      String
+  data      Json     @default("{}")
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, slug])
+  @@index([userId])
 }

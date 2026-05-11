@@ -41,6 +41,15 @@
           "Author and post highlight blocks",
           "SEO-friendly article layout"
         ]
+      },
+      "easyWithoutDeveloper": {
+        "title": "Easy Without Developer",
+        "description": "A simple solution to create a website without using a developer.",
+        "features": [
+          "Simple user interface",
+          "Simple catalog management",
+          "Simple order management"
+        ]
       }
     }
   },
