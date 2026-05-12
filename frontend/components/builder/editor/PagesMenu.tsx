@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { PlusIcon, Trash2Icon, EditIcon } from 'lucide-react';
+import { PlusIcon, Trash2Icon, EditIcon, XIcon, CheckIcon } from 'lucide-react';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 
 export function PagesMenu() {
@@ -69,16 +69,16 @@ export function PagesMenu() {
               <button
                 type="button"
                 onClick={handleSavePageEdit}
-                className="rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground"
+                className="rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground cursor-pointer hover:bg-green-500"
               >
-                Save
+                <CheckIcon className="h-4 w-3" />
               </button>
               <button
                 type="button"
                 onClick={handleCancelPageEdit}
-                className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:text-foreground"
+                className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:text-foreground cursor-pointer hover:bg-red-500"
               >
-                Cancel
+                <XIcon className="h-4 w-3" />
               </button>
             </div>
           ) : (
