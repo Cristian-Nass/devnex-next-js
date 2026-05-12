@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { PlusIcon, Trash2Icon } from 'lucide-react';
+import { PlusIcon, Trash2Icon, EditIcon } from 'lucide-react';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 
 export function PagesMenu() {
@@ -24,7 +24,7 @@ export function PagesMenu() {
         <div key={page.pageId} className="group relative flex items-center">
           <button
             onClick={() => setCurrentPage(page.pageId)}
-            className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+            className={`rounded-md text-sm font-medium transition-colors items-center py-2 px-4 ${
               currentPageId === page.pageId
                 ? 'bg-primary text-primary-foreground'
                 : 'text-muted-foreground hover:bg-accent hover:text-foreground'
@@ -32,14 +32,23 @@ export function PagesMenu() {
           >
             {page.label}
           </button>
-          {pages.length > 1 && (
+          {pages.length >= 1 && (
+            <>
             <button
               onClick={() => deletePage(page.pageId)}
-              className="absolute -right-1 -top-1 hidden rounded-full bg-destructive p-0.5 text-destructive-foreground group-hover:flex"
+              className="absolute -left-1 -top-[-18px] hidden rounded-full bg-destructive p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
               title="Delete page"
-            >
+              >
               <Trash2Icon className="h-2.5 w-2.5" />
-            </button>
+            </button> 
+             <button
+            //  onClick={() => deletePage(page.pageId)}
+             className="absolute -right-1 -top-[-18px] hidden rounded-full bg-green-500 p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
+             title="Edit page"
+             >
+             <EditIcon className="h-2.5 w-2.5" />
+           </button>
+             </>
           )}
         </div>
       ))}
