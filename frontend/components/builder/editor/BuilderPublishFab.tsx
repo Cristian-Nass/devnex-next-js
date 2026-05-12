@@ -11,7 +11,8 @@ export function BuilderPublishFab() {
     useBuilderStore();
   const [publishing, setPublishing] = useState(false);
 
-  const subdomainBase = process.env.NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE ?? '';
+  const subdomainBase =
+    process.env.NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE ?? 'arvidn.dev';
   const liveUrl =
     siteSlug && subdomainBase
       ? `https://${siteSlug}-web.${subdomainBase}`
