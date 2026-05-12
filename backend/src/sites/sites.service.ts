@@ -44,6 +44,35 @@ function normalizeRequestHost(raw: string): string {
 
 const SLUG_HOST_PATTERN = /^[a-z0-9-]+$/;
 
+/** DNS / edge hosts may live under a parent of `ROOT_DOMAIN_WEB_BUILDER` (e.g. `{slug}-web.arvidn.dev` while root is `web.arvidn.dev`). */
+function webBuilderHostSuffixes(rootDomain: string): string[] {
+  const r = rootDomain.trim().toLowerCase();
+  if (!r) return [];
+  const out: string[] = [];
+  let cur: string | null = r;
+  while (cur) {
+    if (!out.includes(cur)) out.push(cur);
+    const labels: string[] = cur.split('.');
+    if (labels.length <= 2) break;
+    cur = labels.slice(1).join('.');
+  }
+  return out;
+}
+
+/**
+ * Left label(s) before the public suffix, e.g. `shop-web` for `shop-web.arvidn.dev`.
+ * Tries the full prefix first (slug may contain hyphens), then `{slug}-web` → `slug` for the default edge record template.
+ */
+function subdomainSlugCandidates(prefix: string): string[] {
+  if (!prefix || !SLUG_HOST_PATTERN.test(prefix)) return [];
+  const out: string[] = [prefix];
+  if (prefix.endsWith('-web') && prefix.length > 4) {
+    const stripped = prefix.slice(0, -'-web'.length);
+    if (stripped && SLUG_HOST_PATTERN.test(stripped)) out.push(stripped);
+  }
+  return out;
+}
+
 @Injectable()
 export class SitesService {
   constructor(
@@ -111,7 +140,8 @@ export class SitesService {
 
   /**
    * Tenant host → site JSON for the edge Next deployer (`web-deployer/next-site-template`).
-   * Only **published** sites. Subdomain: `HOST` must be `{slug}.{ROOT_DOMAIN_WEB_BUILDER}`.
+   * Only **published** sites. Subdomain: `HOST` matches `{slug}.{ROOT_DOMAIN_WEB_BUILDER}` and variants used by DNS publish
+   * (`CLOUDFLARE_DNS_RECORD_NAME_TEMPLATE_WEB_BUILDER`, default `{slug}-{root_domain_web_builder}` under a parent zone).
    * Custom domain: `HOST` must match `customDomain` (lowercase).
    */
   async findPublicSitePayloadByHost(rawHost: string) {
@@ -126,16 +156,21 @@ export class SitesService {
 
     let site = null;
 
-    if (rootDomain && host.endsWith('.' + rootDomain)) {
-      const slug = host.slice(0, host.length - rootDomain.length - 1);
-      if (slug && SLUG_HOST_PATTERN.test(slug)) {
-        site = await this.prisma.site.findFirst({
-          where: {
-            slug,
-            published: true,
-            provisioningType: 'SUBDOMAIN',
-          },
-        });
+    if (rootDomain) {
+      for (const suffix of webBuilderHostSuffixes(rootDomain)) {
+        if (!host.endsWith('.' + suffix)) continue;
+        const prefix = host.slice(0, host.length - suffix.length - 1);
+        for (const slug of subdomainSlugCandidates(prefix)) {
+          site = await this.prisma.site.findFirst({
+            where: {
+              slug,
+              published: true,
+              provisioningType: 'SUBDOMAIN',
+            },
+          });
+          if (site) break;
+        }
+        if (site) break;
       }
     }
 
