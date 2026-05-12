@@ -1,19 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import { Loader2Icon, RocketIcon, ExternalLinkIcon } from 'lucide-react';
-import { useBuilderStore } from '@/stores/builder-store';
-import { apiPublishSubdomain } from '@/lib/api-sites';
-import { toast } from 'sonner';
+import {useState} from 'react';
+import {Loader2Icon, RocketIcon, ExternalLinkIcon} from 'lucide-react';
+import {useBuilderStore} from '@/stores/builder-store';
+import {apiPublishSubdomain} from '@/lib/api-sites';
+import {toast} from 'sonner';
 
 export function BuilderPublishFab() {
-  const { siteId, siteSlug, provisioningType, published, getSiteData, loadSite } =
+  const {siteId, siteSlug, provisioningType, published, getSiteData, loadSite} =
     useBuilderStore();
   const [publishing, setPublishing] = useState(false);
 
   const subdomainBase = process.env.NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE ?? '';
   const liveUrl =
-    siteSlug && subdomainBase ? `https://${siteSlug}-${subdomainBase}` : null;
+    siteSlug && subdomainBase
+      ? `https://${siteSlug}-web.${subdomainBase}`
+      : null;
 
   if (!siteId || provisioningType !== 'SUBDOMAIN') return null;
 
@@ -27,7 +29,9 @@ export function BuilderPublishFab() {
         provisioningType: site.provisioningType,
         slug: site.slug,
       });
-      toast.success(liveUrl ? `Published! Your site is live at ${liveUrl}` : 'Published!');
+      toast.success(
+        liveUrl ? `Published! Your site is live at ${liveUrl}` : 'Published!',
+      );
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Publish failed');
     } finally {
@@ -48,8 +52,7 @@ export function BuilderPublishFab() {
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-xs hover:bg-white/25"
-            >
+              className="flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-xs hover:bg-white/25">
               {liveUrl.replace('https://', '')}
               <ExternalLinkIcon className="h-3 w-3 shrink-0" />
             </a>
