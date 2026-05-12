@@ -25,6 +25,8 @@ export function BuilderToolbar({ locale }: BuilderToolbarProps) {
   const {
     siteId,
     siteName,
+    siteSlug,
+    published,
     setSiteName,
     isDirty,
     getSiteData,
@@ -35,6 +37,12 @@ export function BuilderToolbar({ locale }: BuilderToolbarProps) {
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
   const [settingsOpen, setSettingsOpen] = useState(false);
+
+  const subdomainBase = process.env.NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE ?? '';
+  const liveUrl =
+    published && siteSlug && subdomainBase
+      ? `https://${siteSlug}-${subdomainBase}`
+      : null;
 
   async function handleSave() {
     if (!siteId) return;
@@ -111,13 +119,12 @@ export function BuilderToolbar({ locale }: BuilderToolbarProps) {
         <PagesMenu />
 
         <div className="flex items-center gap-2">
-          {siteId && (
+          {liveUrl && (
             <a
-              href={`/${locale}/sites/${siteId}`}
+              href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium hover:bg-accent"
-              title="Open public site (SSR viewer)"
             >
               <GlobeIcon className="h-3.5 w-3.5" />
               View site

@@ -16,60 +16,41 @@ import { UpdateSiteDto } from './dto/update-site.dto';
 function makeInitialData(slug: string) {
   return {
     theme: { primaryColor: '#3B82F6', fontFamily: 'Inter' },
-    pages: [
-      {
-        pageId: `page-${Date.now()}`,
-        slug,
-        label: 'Home',
-        rows: [],
-      },
-    ],
+    pages: [{ pageId: `page-${Date.now()}`, slug, label: 'Home', rows: [] }],
   };
 }
 
-function stripOuterQuotes(s: string): string {
-  const t = s.trim();
-  if (
-    t.length >= 2 &&
-    ((t.startsWith('"') && t.endsWith('"')) || (t.startsWith("'") && t.endsWith("'")))
-  ) {
-    return t.slice(1, -1);
-  }
-  return t;
-}
-
-function normalizeRequestHost(raw: string): string {
+function normalizeHost(raw: string): string {
   return raw.split(':')[0].trim().toLowerCase();
 }
 
-const SLUG_HOST_PATTERN = /^[a-z0-9-]+$/;
+function stripQuotes(s: string): string {
+  const t = s.trim();
+  return t.length >= 2 &&
+    ((t[0] === '"' && t.at(-1) === '"') || (t[0] === "'" && t.at(-1) === "'"))
+    ? t.slice(1, -1)
+    : t;
+}
 
-/** DNS / edge hosts may live under a parent of `ROOT_DOMAIN_WEB_BUILDER` (e.g. `{slug}-web.arvidn.dev` while root is `web.arvidn.dev`). */
-function webBuilderHostSuffixes(rootDomain: string): string[] {
-  const r = rootDomain.trim().toLowerCase();
-  if (!r) return [];
-  const out: string[] = [];
-  let cur: string | null = r;
-  while (cur) {
-    if (!out.includes(cur)) out.push(cur);
-    const labels: string[] = cur.split('.');
-    if (labels.length <= 2) break;
-    cur = labels.slice(1).join('.');
-  }
-  return out;
+const SLUG_RE = /^[a-z0-9-]+$/;
+
+/**
+ * Suffixes to try when matching a request host against ROOT_DOMAIN_WEB_BUILDER.
+ * e.g. `web.arvidn.dev` → [`web.arvidn.dev`, `arvidn.dev`]
+ */
+function hostSuffixes(rootDomain: string): string[] {
+  const labels = rootDomain.split('.');
+  return labels.slice(0, -1).map((_, i) => labels.slice(i).join('.'));
 }
 
 /**
- * Left label(s) before the public suffix, e.g. `shop-web` for `shop-web.arvidn.dev`.
- * Tries the full prefix first (slug may contain hyphens), then `{slug}-web` → `slug` for the default edge record template.
+ * DB slug candidates for the left label of the request host.
+ * `shop-web` → [`shop-web`, `shop`] — strips the `-web` suffix from the default DNS template.
  */
-function subdomainSlugCandidates(prefix: string): string[] {
-  if (!prefix || !SLUG_HOST_PATTERN.test(prefix)) return [];
-  const out: string[] = [prefix];
-  if (prefix.endsWith('-web') && prefix.length > 4) {
-    const stripped = prefix.slice(0, -'-web'.length);
-    if (stripped && SLUG_HOST_PATTERN.test(stripped)) out.push(stripped);
-  }
+function slugCandidates(prefix: string): string[] {
+  if (!SLUG_RE.test(prefix)) return [];
+  const out = [prefix];
+  if (prefix.length > 4 && prefix.endsWith('-web')) out.push(prefix.slice(0, -4));
   return out;
 }
 
@@ -81,19 +62,14 @@ export class SitesService {
     private readonly config: ConfigService,
   ) {}
 
-  /** Case-insensitive uniqueness on LOWER(TRIM(name)) — see migration `Site_name_lower_trim_unique`. */
-  private async assertSiteNameAvailable(
-    name: string,
-    excludeSiteId?: string,
-  ): Promise<string> {
+  private async assertNameAvailable(name: string, excludeId?: string): Promise<string> {
     const trimmed = name.trim();
-    if (!trimmed) {
-      throw new BadRequestException('Site name cannot be empty');
-    }
-    const rows = excludeSiteId
+    if (!trimmed) throw new BadRequestException('Site name cannot be empty');
+
+    const rows = excludeId
       ? await this.prisma.$queryRaw<{ id: string }[]>`
           SELECT id FROM "Site"
-          WHERE LOWER(TRIM(name)) = LOWER(${trimmed}) AND id <> ${excludeSiteId}
+          WHERE LOWER(TRIM(name)) = LOWER(${trimmed}) AND id <> ${excludeId}
           LIMIT 1
         `
       : await this.prisma.$queryRaw<{ id: string }[]>`
@@ -101,9 +77,8 @@ export class SitesService {
           WHERE LOWER(TRIM(name)) = LOWER(${trimmed})
           LIMIT 1
         `;
-    if (rows.length > 0) {
-      throw new ConflictException('This site name is already taken');
-    }
+
+    if (rows.length > 0) throw new ConflictException('This site name is already taken');
     return trimmed;
   }
 
@@ -131,7 +106,6 @@ export class SitesService {
     return site;
   }
 
-  /** Latest saved JSON for this id (no publish gate — external publish/domain comes later). */
   async findPublic(id: string) {
     const site = await this.prisma.site.findUnique({ where: { id } });
     if (!site) throw new NotFoundException('Site not found');
@@ -139,58 +113,49 @@ export class SitesService {
   }
 
   /**
-   * Tenant host → site JSON for the edge Next deployer (`web-deployer/next-site-template`).
-   * Only **published** sites. Subdomain: `HOST` matches `{slug}.{ROOT_DOMAIN_WEB_BUILDER}` and variants used by DNS publish
-   * (`CLOUDFLARE_DNS_RECORD_NAME_TEMPLATE_WEB_BUILDER`, default `{slug}-{root_domain_web_builder}` under a parent zone).
-   * Custom domain: `HOST` must match `customDomain` (lowercase).
+   * Host → published site JSON for the edge Next deployer.
+   * Subdomain sites: resolves both `{slug}.{ROOT_DOMAIN_WEB_BUILDER}` and the default
+   * DNS record format `{slug}-{ROOT_DOMAIN_WEB_BUILDER}` (e.g. `shop-web.arvidn.dev`).
+   * Custom domain sites: host must equal `customDomain`.
    */
   async findPublicSitePayloadByHost(rawHost: string) {
-    const host = normalizeRequestHost(rawHost);
+    const host = normalizeHost(rawHost);
     if (!host) throw new NotFoundException('unknown_host');
 
-    const rootDomain = stripOuterQuotes(
+    const rootDomain = stripQuotes(
       this.config.get<string>('ROOT_DOMAIN_WEB_BUILDER') ?? '',
-    )
-      .trim()
-      .toLowerCase();
+    ).toLowerCase();
 
     let site = null;
 
     if (rootDomain) {
-      for (const suffix of webBuilderHostSuffixes(rootDomain)) {
+      outer: for (const suffix of hostSuffixes(rootDomain)) {
         if (!host.endsWith('.' + suffix)) continue;
-        const prefix = host.slice(0, host.length - suffix.length - 1);
-        for (const slug of subdomainSlugCandidates(prefix)) {
+        const prefix = host.slice(0, -(suffix.length + 1));
+        for (const slug of slugCandidates(prefix)) {
           site = await this.prisma.site.findFirst({
-            where: {
-              slug,
-              published: true,
-              provisioningType: 'SUBDOMAIN',
-            },
+            where: { slug, published: true, provisioningType: 'SUBDOMAIN' },
           });
-          if (site) break;
+          if (site) break outer;
         }
-        if (site) break;
       }
     }
 
     if (!site) {
       site = await this.prisma.site.findFirst({
-        where: {
-          published: true,
-          provisioningType: 'CUSTOM_DOMAIN',
-          customDomain: host,
-        },
+        where: { published: true, provisioningType: 'CUSTOM_DOMAIN', customDomain: host },
       });
     }
 
     if (!site) throw new NotFoundException('unknown_host');
 
-    const data =
-      site.data && typeof site.data === 'object' && !Array.isArray(site.data)
-        ? (site.data as Record<string, unknown>)
-        : {};
-    const theme = (data.theme as Record<string, unknown>) ?? {};
+    const data = (
+      site.data && !Array.isArray(site.data) && typeof site.data === 'object'
+        ? site.data
+        : {}
+    ) as Record<string, unknown>;
+
+    const theme = (data.theme ?? {}) as Record<string, unknown>;
     const pages = Array.isArray(data.pages) ? data.pages : [];
 
     return {
@@ -213,19 +178,16 @@ export class SitesService {
 
   async publishSubdomain(siteId: string, userId: string) {
     const site = await this.findOne(siteId, userId);
+
     if (site.provisioningType !== 'SUBDOMAIN') {
-      throw new BadRequestException(
-        'DNS publish is only available for subdomain provisioning.',
-      );
+      throw new BadRequestException('DNS publish is only available for subdomain provisioning.');
     }
     if (!this.cloudflareDns.isPublishConfigured()) {
       throw new BadRequestException(
         'Publishing is not configured. Set CLOUDFLARE_ZONE_ID_WEB_BUILDER, CLOUDFLARE_API_TOKEN_WEB_BUILDER, and SERVER_PUBLIC_IP_WEB_BUILDER.',
       );
     }
-    if (site.published && site.cloudflareDnsRecordId) {
-      return site;
-    }
+    if (site.published && site.cloudflareDnsRecordId) return site;
 
     let recordName: string;
     try {
@@ -233,6 +195,7 @@ export class SitesService {
     } catch (e) {
       throw new BadRequestException(e instanceof Error ? e.message : 'Invalid DNS record name');
     }
+
     try {
       const recordId = await this.cloudflareDns.createARecord(recordName);
       return await this.prisma.site.update({
@@ -240,32 +203,27 @@ export class SitesService {
         data: { published: true, cloudflareDnsRecordId: recordId },
       });
     } catch (e) {
-      const msg = e instanceof Error ? e.message : 'Unknown error';
-      throw new BadGatewayException(`Could not create DNS record: ${msg}`);
+      throw new BadGatewayException(
+        `Could not create DNS record: ${e instanceof Error ? e.message : 'Unknown error'}`,
+      );
     }
   }
 
   async create(userId: string, dto: CreateSiteDto) {
-    const count = await this.prisma.site.count({ where: { userId } });
-    if (count >= 1) {
+    if ((await this.prisma.site.count({ where: { userId } })) >= 1) {
       throw new ConflictException(
         'You already have a site. Delete it from site settings if you need a new one.',
       );
     }
-
     if (dto.provisioningType === 'CUSTOM_DOMAIN' && !dto.customDomain?.trim()) {
       throw new BadRequestException('customDomain is required for custom domain provisioning');
     }
 
-    const gtm = dto.gtmContainerId?.trim();
-    const metaTitle = dto.metaTitle?.trim();
-    const metaDescription = dto.metaDescription?.trim();
+    const name = await this.assertNameAvailable(dto.name);
     const customDomain =
       dto.provisioningType === 'CUSTOM_DOMAIN'
         ? dto.customDomain!.trim().toLowerCase()
         : null;
-
-    const name = await this.assertSiteNameAvailable(dto.name);
 
     try {
       return await this.prisma.site.create({
@@ -275,9 +233,9 @@ export class SitesService {
           slug: dto.slug,
           provisioningType: dto.provisioningType,
           customDomain,
-          metaTitle: metaTitle || null,
-          metaDescription: metaDescription || null,
-          gtmContainerId: gtm || null,
+          metaTitle: dto.metaTitle?.trim() || null,
+          metaDescription: dto.metaDescription?.trim() || null,
+          gtmContainerId: dto.gtmContainerId?.trim() || null,
           data: makeInitialData(dto.slug),
         },
       });
@@ -294,63 +252,35 @@ export class SitesService {
     if (!site) throw new NotFoundException('Site not found');
     if (site.userId !== userId) throw new ForbiddenException();
 
-    if (dto.name !== undefined && !dto.name.trim()) {
-      throw new BadRequestException('Site name cannot be empty');
-    }
+    const name =
+      dto.name !== undefined ? await this.assertNameAvailable(dto.name, id) : undefined;
 
-    let nextName: string | undefined;
-    if (dto.name !== undefined) {
-      nextName = await this.assertSiteNameAvailable(dto.name, id);
-    }
-
-    const provisioningType =
-      dto.provisioningType ?? site.provisioningType;
-
-    let customDomain = site.customDomain;
-    if (dto.customDomain !== undefined) {
-      customDomain = dto.customDomain.trim().toLowerCase() || null;
-    }
-    if (provisioningType === 'SUBDOMAIN') {
-      customDomain = null;
-    }
+    const provisioningType = dto.provisioningType ?? site.provisioningType;
+    let customDomain =
+      dto.customDomain !== undefined
+        ? dto.customDomain.trim().toLowerCase() || null
+        : site.customDomain;
+    if (provisioningType === 'SUBDOMAIN') customDomain = null;
     if (provisioningType === 'CUSTOM_DOMAIN' && !customDomain) {
       throw new BadRequestException(
         'customDomain is required when provisioning type is CUSTOM_DOMAIN',
       );
     }
 
-    const gtm =
-      dto.gtmContainerId !== undefined
-        ? dto.gtmContainerId.trim() || null
-        : undefined;
-    const metaTitle =
-      dto.metaTitle !== undefined ? dto.metaTitle.trim() || null : undefined;
-    const metaDescription =
-      dto.metaDescription !== undefined
-        ? dto.metaDescription.trim() || null
-        : undefined;
-
-    const shouldWriteCustom =
-      dto.customDomain !== undefined || dto.provisioningType !== undefined;
+    const patch: Prisma.SiteUpdateInput = {};
+    if (name !== undefined) patch.name = name;
+    if (dto.data !== undefined) patch.data = dto.data as Prisma.InputJsonValue;
+    if (dto.published !== undefined) patch.published = dto.published;
+    if (dto.provisioningType !== undefined || dto.customDomain !== undefined) {
+      patch.provisioningType = provisioningType;
+      patch.customDomain = customDomain;
+    }
+    if (dto.gtmContainerId !== undefined) patch.gtmContainerId = dto.gtmContainerId.trim() || null;
+    if (dto.metaTitle !== undefined) patch.metaTitle = dto.metaTitle.trim() || null;
+    if (dto.metaDescription !== undefined) patch.metaDescription = dto.metaDescription.trim() || null;
 
     try {
-      return await this.prisma.site.update({
-        where: { id },
-        data: {
-          ...(nextName !== undefined && { name: nextName }),
-          ...(dto.data !== undefined && {
-            data: dto.data as Prisma.InputJsonValue,
-          }),
-          ...(dto.published !== undefined && { published: dto.published }),
-          ...(dto.provisioningType !== undefined && {
-            provisioningType: dto.provisioningType,
-          }),
-          ...(shouldWriteCustom && { customDomain }),
-          ...(gtm !== undefined && { gtmContainerId: gtm }),
-          ...(metaTitle !== undefined && { metaTitle }),
-          ...(metaDescription !== undefined && { metaDescription }),
-        },
-      });
+      return await this.prisma.site.update({ where: { id }, data: patch });
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') {
         throw new ConflictException('This site name is already taken');
@@ -367,7 +297,6 @@ export class SitesService {
     if (site.cloudflareDnsRecordId) {
       await this.cloudflareDns.deleteDnsRecordSafe(site.cloudflareDnsRecordId);
     }
-
     await this.prisma.site.delete({ where: { id } });
     return { message: 'Site deleted' };
   }
