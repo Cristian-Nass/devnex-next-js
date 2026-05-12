@@ -1,3 +1,5 @@
+export type ProvisioningType = 'SUBDOMAIN' | 'CUSTOM_DOMAIN';
+
 export type BlockType = 'hero' | 'card' | 'image' | 'text' | 'cta';
 
 export interface Block {
@@ -35,6 +37,12 @@ export interface Site {
   slug: string;
   data: SiteData;
   published: boolean;
+  provisioningType: ProvisioningType;
+  customDomain: string | null;
+  metaTitle: string | null;
+  metaDescription: string | null;
+  gtmContainerId: string | null;
+  cloudflareDnsRecordId?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -44,6 +52,8 @@ export interface SiteSummary {
   name: string;
   slug: string;
   published: boolean;
+  provisioningType: ProvisioningType;
+  customDomain: string | null;
   createdAt: string;
   updatedAt: string;
 }

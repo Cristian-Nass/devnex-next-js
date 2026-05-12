@@ -1,11 +1,18 @@
 import createMiddleware from "next-intl/middleware";
-import type { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
 export function middleware(request: NextRequest): NextResponse {
-  const response = intlMiddleware(request) as NextResponse;
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", request.nextUrl.pathname);
+
+  const requestWithPath = new NextRequest(request.nextUrl, {
+    headers: requestHeaders,
+  });
+
+  const response = intlMiddleware(requestWithPath) as NextResponse;
 
   // Behind nginx-proxy + Cloudflare the Host header can carry a default port
   // (e.g. `devnex.arvidn.dev:80`) while X-Forwarded-Proto is `https`, which

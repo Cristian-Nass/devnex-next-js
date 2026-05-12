@@ -114,18 +114,30 @@ model Profile {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum ProvisioningType {
+  SUBDOMAIN
+  CUSTOM_DOMAIN
+}
+
 model Site {
-  id        String   @id @default(cuid())
-  userId    String
-  name      String
-  slug      String
-  data      Json     @default("{}")
-  published Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 String             @id @default(cuid())
+  userId             String
+  name               String
+  slug               String
+  data               Json               @default("{}")
+  published          Boolean            @default(false)
+  provisioningType   ProvisioningType   @default(SUBDOMAIN)
+  customDomain       String?
+  metaTitle             String?
+  metaDescription       String?
+  gtmContainerId        String?
+  cloudflareDnsRecordId String?
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, slug])
+  @@unique([userId])
   @@index([userId])
+  @@index([name])
 }

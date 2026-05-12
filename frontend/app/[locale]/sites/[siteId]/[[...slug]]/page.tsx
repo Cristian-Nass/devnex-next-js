@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { PageRenderer } from '@/components/builder/viewer/PageRenderer';
-import type { SiteData } from '@/lib/site-types';
+import { SiteGtm } from '@/components/site/SiteGtm';
 
 function normalizeApiBaseUrl(): string {
   const raw =
@@ -15,15 +15,15 @@ interface SiteViewerPageProps {
   params: Promise<{ locale: string; siteId: string; slug?: string[] }>;
 }
 
-async function fetchSite(
-  siteId: string,
-): Promise<{ name: string; data: SiteData } | null> {
+import type { Site } from '@/lib/site-types';
+
+async function fetchSite(siteId: string): Promise<Site | null> {
   try {
     const res = await fetch(`${normalizeApiBaseUrl()}/sites/public/${siteId}`, {
       cache: 'no-store',
     });
     if (!res.ok) return null;
-    return res.json();
+    return (await res.json()) as Site;
   } catch {
     return null;
   }
@@ -34,7 +34,9 @@ export async function generateMetadata({
 }: SiteViewerPageProps): Promise<Metadata> {
   const { siteId } = await params;
   const site = await fetchSite(siteId);
-  return { title: site?.name ?? 'Site' };
+  const title = site?.metaTitle?.trim() || site?.name || 'Site';
+  const description = site?.metaDescription?.trim() || undefined;
+  return { title, description };
 }
 
 export default async function SiteViewerPage({ params }: SiteViewerPageProps) {
@@ -53,6 +55,9 @@ export default async function SiteViewerPage({ params }: SiteViewerPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      {site.gtmContainerId?.trim() ? (
+        <SiteGtm containerId={site.gtmContainerId.trim()} />
+      ) : null}
       {site.data.pages.length > 1 && (
         <nav className="flex items-center gap-1 border-b px-6 py-3">
           {site.data.pages.map((p) => (

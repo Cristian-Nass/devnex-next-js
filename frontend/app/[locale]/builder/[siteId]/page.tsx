@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import { apiGetSite } from '@/lib/api-sites';
 import { useBuilderStore } from '@/stores/builder-store';
 import { BuilderToolbar } from '@/components/builder/editor/BuilderToolbar';
+import { BuilderPublishFab } from '@/components/builder/editor/BuilderPublishFab';
 import { BlockPanel } from '@/components/builder/editor/BlockPanel';
 import { BuilderCanvas } from '@/components/builder/editor/BuilderCanvas';
 import { PropsPanel } from '@/components/builder/editor/PropsPanel';
@@ -23,7 +24,13 @@ export default function BuilderEditorPage({ params }: BuilderEditorPageProps) {
 
   useEffect(() => {
     apiGetSite(siteId)
-      .then((site) => loadSite(site.id, site.name, site.data, site.published))
+      .then((site) =>
+        loadSite(site.id, site.name, site.data, {
+          published: site.published,
+          provisioningType: site.provisioningType,
+          slug: site.slug,
+        }),
+      )
       .catch(() => toast.error('Failed to load site'));
   }, [siteId, loadSite]);
 
@@ -55,6 +62,7 @@ export default function BuilderEditorPage({ params }: BuilderEditorPageProps) {
         />
         <PropsPanel />
       </div>
+      <BuilderPublishFab />
     </div>
   );
 }

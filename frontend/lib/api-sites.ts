@@ -1,4 +1,4 @@
-import type { Site, SiteData, SiteSummary } from './site-types';
+import type { ProvisioningType, Site, SiteData, SiteSummary } from './site-types';
 import { getToken } from './api-auth';
 
 function normalizeApiBaseUrl(): string {
@@ -20,7 +20,7 @@ async function authHeaders(): Promise<HeadersInit> {
 }
 
 async function extractError(res: Response): Promise<string> {
-  const data = await res.json().catch(() => ({})) as { message?: string };
+  const data = (await res.json().catch(() => ({}))) as { message?: string };
   if (Array.isArray(data.message)) return data.message.join(', ');
   return data.message ?? `Request failed (${res.status})`;
 }
@@ -49,24 +49,54 @@ export async function apiGetPublicSite(id: string): Promise<Site> {
   return res.json();
 }
 
-export async function apiCreateSite(name: string, slug: string): Promise<Site> {
+export interface CreateSitePayload {
+  name: string;
+  slug: string;
+  provisioningType: ProvisioningType;
+  metaTitle?: string;
+  metaDescription?: string;
+  gtmContainerId?: string;
+  customDomain?: string;
+}
+
+export async function apiCreateSite(payload: CreateSitePayload): Promise<Site> {
   const res = await fetch(`${API_URL}/sites`, {
     method: 'POST',
     headers: await authHeaders(),
-    body: JSON.stringify({ name, slug }),
+    body: JSON.stringify(payload),
   });
   if (!res.ok) throw new Error(await extractError(res));
   return res.json();
 }
 
+export interface UpdateSitePayload {
+  name?: string;
+  data?: SiteData;
+  published?: boolean;
+  provisioningType?: ProvisioningType;
+  metaTitle?: string;
+  metaDescription?: string;
+  gtmContainerId?: string;
+  customDomain?: string;
+}
+
 export async function apiUpdateSite(
   id: string,
-  payload: { name?: string; data?: SiteData; published?: boolean },
+  payload: UpdateSitePayload,
 ): Promise<Site> {
   const res = await fetch(`${API_URL}/sites/${id}`, {
     method: 'PATCH',
     headers: await authHeaders(),
     body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error(await extractError(res));
+  return res.json();
+}
+
+export async function apiPublishSubdomain(id: string): Promise<Site> {
+  const res = await fetch(`${API_URL}/sites/${id}/publish`, {
+    method: 'POST',
+    headers: await authHeaders(),
   });
   if (!res.ok) throw new Error(await extractError(res));
   return res.json();

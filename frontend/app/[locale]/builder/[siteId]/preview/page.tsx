@@ -38,7 +38,11 @@ export default function BuilderLivePreviewPage({
     apiGetSite(siteId)
       .then((site) => {
         if (cancelled) return;
-        loadSite(site.id, site.name, site.data, site.published);
+        loadSite(site.id, site.name, site.data, {
+          published: site.published,
+          provisioningType: site.provisioningType,
+          slug: site.slug,
+        });
         setHydrated(true);
       })
       .catch(() => {

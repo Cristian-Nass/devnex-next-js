@@ -1,14 +1,30 @@
 import { create } from 'zustand';
-import type { Block, BlockType, Page, Row, SiteData, Theme } from '@/lib/site-types';
+import type {
+  Block,
+  BlockType,
+  Page,
+  Row,
+  SiteData,
+  Theme,
+  ProvisioningType,
+} from '@/lib/site-types';
 import { devtools } from 'zustand/middleware';
 
 function uid(): string {
   return crypto.randomUUID().slice(0, 8);
 }
 
+export type LoadSiteMeta = {
+  published?: boolean;
+  provisioningType?: ProvisioningType;
+  slug?: string;
+};
+
 interface BuilderState {
   siteId: string | null;
   siteName: string;
+  siteSlug: string;
+  provisioningType: ProvisioningType;
   published: boolean;
   theme: Theme;
   pages: Page[];
@@ -16,7 +32,7 @@ interface BuilderState {
   selectedBlockId: string | null;
   isDirty: boolean;
 
-  loadSite: (id: string, name: string, data: SiteData, published?: boolean) => void;
+  loadSite: (id: string, name: string, data: SiteData, meta?: LoadSiteMeta) => void;
   setSiteName: (name: string) => void;
   setTheme: (theme: Partial<Theme>) => void;
 
@@ -46,6 +62,8 @@ export const useBuilderStore = create<BuilderState>()(
   devtools((set, get) => ({
     siteId: null,
     siteName: '',
+    siteSlug: '',
+    provisioningType: 'SUBDOMAIN',
     published: false,
     theme: { primaryColor: '#3B82F6', fontFamily: 'Inter' },
     pages: [],
@@ -53,11 +71,13 @@ export const useBuilderStore = create<BuilderState>()(
     selectedBlockId: null,
     isDirty: false,
 
-    loadSite(id, name, data, published = false) {
+    loadSite(id, name, data, meta) {
       set({
         siteId: id,
         siteName: name,
-        published,
+        siteSlug: meta?.slug ?? '',
+        provisioningType: meta?.provisioningType ?? 'SUBDOMAIN',
+        published: meta?.published ?? false,
         theme: data.theme ?? { primaryColor: '#3B82F6', fontFamily: 'Inter' },
         pages: data.pages ?? [],
         currentPageId: data.pages?.[0]?.pageId ?? null,

@@ -30,7 +30,15 @@ export class SitesController {
     return this.sitesService.create(user.id, dto);
   }
 
-  /** Must be registered before `@Get(':id')` so `/sites/public/...` is not captured as `:id`. */
+  /** Register before `public/:id` (single segment). */
+  @Public()
+  @Get('public/by-host/:hostname')
+  findPublicByHost(@Param('hostname') hostname: string) {
+    return this.sitesService.findPublicSitePayloadByHost(
+      decodeURIComponent(hostname),
+    );
+  }
+
   @Public()
   @Get('public/:id')
   findPublic(@Param('id') id: string) {
@@ -43,6 +51,14 @@ export class SitesController {
     @Param('id') id: string,
   ) {
     return this.sitesService.findOne(id, user.id);
+  }
+
+  @Post(':id/publish')
+  publishSubdomain(
+    @CurrentUser() user: { id: string },
+    @Param('id') id: string,
+  ) {
+    return this.sitesService.publishSubdomain(id, user.id);
   }
 
   @Patch(':id')
