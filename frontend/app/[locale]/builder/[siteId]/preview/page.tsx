@@ -6,7 +6,7 @@ import { ArrowLeftIcon } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { PageRenderer } from '@/components/builder/viewer/PageRenderer';
 import { apiGetSite } from '@/lib/api-sites';
-import { useBuilderStore } from '@/stores/builder-store';
+import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 import { toast } from 'sonner';
 
 interface BuilderLivePreviewPageProps {
@@ -26,7 +26,7 @@ export default function BuilderLivePreviewPage({
     currentPageId,
     setCurrentPage,
     loadSite,
-  } = useBuilderStore();
+  } = useWebBuilderStore();
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {

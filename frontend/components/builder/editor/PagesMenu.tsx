@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
-import { useBuilderStore } from '@/stores/builder-store';
+import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 
 export function PagesMenu() {
   const { pages, currentPageId, setCurrentPage, addPage, deletePage } =
-    useBuilderStore();
+    useWebBuilderStore();
   const [adding, setAdding] = useState(false);
   const [newLabel, setNewLabel] = useState('');
 

@@ -10,7 +10,7 @@ import {
   GlobeIcon,
 } from 'lucide-react';
 import { Link } from '@/i18n/routing';
-import { useBuilderStore } from '@/stores/builder-store';
+import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 import { apiUpdateSite } from '@/lib/api-sites';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -32,7 +32,7 @@ export function BuilderToolbar({ locale }: BuilderToolbarProps) {
     getSiteData,
     markSaved,
     loadSite,
-  } = useBuilderStore();
+  } = useWebBuilderStore();
   const [saving, setSaving] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');

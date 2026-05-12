@@ -2,13 +2,13 @@
 
 import {useState} from 'react';
 import {Loader2Icon, RocketIcon, ExternalLinkIcon} from 'lucide-react';
-import {useBuilderStore} from '@/stores/builder-store';
+import {useWebBuilderStore} from '@/stores/useWebBuilderStore';
 import {apiPublishSubdomain} from '@/lib/api-sites';
 import {toast} from 'sonner';
 
 export function BuilderPublishFab() {
   const {siteId, siteSlug, provisioningType, published, getSiteData, loadSite} =
-    useBuilderStore();
+    useWebBuilderStore();
   const [publishing, setPublishing] = useState(false);
 
   const subdomainBase =

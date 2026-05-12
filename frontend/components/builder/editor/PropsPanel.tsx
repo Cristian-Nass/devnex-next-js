@@ -1,10 +1,10 @@
 "use client";
 
-import { useBuilderStore } from '@/stores/builder-store';
+import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 import { BLOCK_LABELS, BLOCK_PROP_SCHEMA } from '@/components/builder/blocks/registry';
 import type { Block } from '@/lib/site-types';
 
-function findSelectedBlock(pages: ReturnType<typeof useBuilderStore.getState>['pages'], blockId: string): Block | null {
+function findSelectedBlock(pages: ReturnType<typeof useWebBuilderStore.getState>['pages'], blockId: string): Block | null {
   for (const page of pages) {
     for (const row of page.rows) {
       for (const block of row.blocks) {
@@ -17,7 +17,7 @@ function findSelectedBlock(pages: ReturnType<typeof useBuilderStore.getState>['p
 
 export function PropsPanel() {
   const { pages, selectedBlockId, updateBlock, setBlockColSpan, selectBlock } =
-    useBuilderStore();
+    useWebBuilderStore();
 
   if (!selectedBlockId) {
     return (

@@ -20,7 +20,7 @@ export type LoadSiteMeta = {
   slug?: string;
 };
 
-interface BuilderState {
+interface WebBuilderStateType {
   siteId: string | null;
   siteName: string;
   siteSlug: string;
@@ -58,7 +58,7 @@ interface BuilderState {
   markSaved: () => void;
 }
 
-export const useBuilderStore = create<BuilderState>()(
+export const useWebBuilderStore = create<WebBuilderStateType>()(
   devtools((set, get) => ({
     siteId: null,
     siteName: '',

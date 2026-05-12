@@ -28,7 +28,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { ChevronDownIcon, ChevronUpIcon, PlusIcon, Trash2Icon, GripHorizontalIcon } from 'lucide-react';
 import { BLOCK_DEFAULTS, BLOCK_LABELS, BLOCK_REGISTRY } from '@/components/builder/blocks/registry';
 import type { Block, BlockType, Row } from '@/lib/site-types';
-import { useBuilderStore } from '@/stores/builder-store';
+import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 
 /** Prefer blocks / palette over row shells so the pointer targets the grid, not the outer row box. */
 const canvasCollisionDetection: CollisionDetection = (args) => {
@@ -115,7 +115,7 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
     moveRow,
     deleteRow,
     getCurrentPage,
-  } = useBuilderStore();
+  } = useWebBuilderStore();
   const { active, over, collisions } = useDndContext();
   const page = getCurrentPage();
 
@@ -238,7 +238,7 @@ function BuilderCanvasDnd({ leftSidebar }: BuilderCanvasDndProps) {
     addBlock,
     moveBlockInRow,
     moveBlockBetweenRows,
-  } = useBuilderStore();
+  } = useWebBuilderStore();
 
   const [activeBlock, setActiveBlock] = useState<Block | null>(null);
   const [activeBlockType, setActiveBlockType] = useState<BlockType | null>(null);
@@ -288,7 +288,7 @@ function BuilderCanvasDnd({ leftSidebar }: BuilderCanvasDndProps) {
         addBlock(targetRow.rowId, blockType, BLOCK_DEFAULTS[blockType]);
       } else if (page.rows.length === 0) {
         addRow();
-        const updatedPage = useBuilderStore.getState().getCurrentPage();
+        const updatedPage = useWebBuilderStore.getState().getCurrentPage();
         const newRow = updatedPage?.rows[0];
         if (newRow) addBlock(newRow.rowId, blockType, BLOCK_DEFAULTS[blockType]);
       }

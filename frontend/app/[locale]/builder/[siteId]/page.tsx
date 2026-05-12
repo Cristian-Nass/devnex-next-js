@@ -3,7 +3,7 @@
 import { useEffect, use } from 'react';
 import { useLocale } from 'next-intl';
 import { apiGetSite } from '@/lib/api-sites';
-import { useBuilderStore } from '@/stores/builder-store';
+import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 import { BuilderToolbar } from '@/components/builder/editor/BuilderToolbar';
 import { BuilderPublishFab } from '@/components/builder/editor/BuilderPublishFab';
 import { BlockPanel } from '@/components/builder/editor/BlockPanel';
@@ -12,7 +12,11 @@ import { PropsPanel } from '@/components/builder/editor/PropsPanel';
 import { BLOCK_DEFAULTS } from '@/components/builder/blocks/registry';
 import type { BlockType } from '@/lib/site-types';
 import { toast } from 'sonner';
-
+import { Ubuntu } from 'next/font/google';
+const ubuntu = Ubuntu({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+})
 interface BuilderEditorPageProps {
   params: Promise<{ siteId: string }>;
 }
@@ -20,7 +24,7 @@ interface BuilderEditorPageProps {
 export default function BuilderEditorPage({ params }: BuilderEditorPageProps) {
   const { siteId } = use(params);
   const locale = useLocale();
-  const { loadSite, getCurrentPage, addRow, addBlock } = useBuilderStore();
+  const { loadSite, getCurrentPage, addRow, addBlock } = useWebBuilderStore();
 
   useEffect(() => {
     apiGetSite(siteId)
@@ -43,7 +47,7 @@ export default function BuilderEditorPage({ params }: BuilderEditorPageProps) {
     let targetRowId = page.rows[page.rows.length - 1]?.rowId;
     if (!targetRowId) {
       addRow();
-      const updatedPage = useBuilderStore.getState().getCurrentPage();
+      const updatedPage = useWebBuilderStore.getState().getCurrentPage();
       targetRowId = updatedPage?.rows[0]?.rowId ?? '';
     }
     if (targetRowId) {
@@ -52,7 +56,7 @@ export default function BuilderEditorPage({ params }: BuilderEditorPageProps) {
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
+    <div className={`flex h-screen flex-col overflow-hidden ${ubuntu.className}`}>
       <BuilderToolbar locale={locale} />
       <div className="flex min-h-0 flex-1 overflow-hidden">
         <BuilderCanvas
