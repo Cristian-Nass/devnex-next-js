@@ -5,10 +5,18 @@ import { PlusIcon, Trash2Icon, EditIcon } from 'lucide-react';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 
 export function PagesMenu() {
-  const { pages, currentPageId, setCurrentPage, addPage, deletePage } =
-    useWebBuilderStore();
+  const {
+    pages,
+    currentPageId,
+    setCurrentPage,
+    addPage,
+    deletePage,
+    updatePageLabel,
+  } = useWebBuilderStore();
   const [adding, setAdding] = useState(false);
   const [newLabel, setNewLabel] = useState('');
+  const [editingPageId, setEditingPageId] = useState<string | null>(null);
+  const [editLabel, setEditLabel] = useState('');
 
   function handleAdd() {
     const label = newLabel.trim() || 'New Page';
@@ -18,37 +26,95 @@ export function PagesMenu() {
     setAdding(false);
   }
 
+  function handleEditPageButton(pageId: string) {
+    const page = pages.find((p) => p.pageId === pageId);
+    if (!page) return;
+    setAdding(false);
+    setEditingPageId(pageId);
+    setEditLabel(page.label);
+    setCurrentPage(pageId);
+  }
+
+  function handleSavePageEdit() {
+    if (!editingPageId) return;
+    const label = editLabel.trim();
+    if (!label) return;
+    updatePageLabel(editingPageId, label);
+    setEditingPageId(null);
+    setEditLabel('');
+  }
+
+  function handleCancelPageEdit() {
+    setEditingPageId(null);
+    setEditLabel('');
+  }
+
   return (
     <div className="flex items-center gap-1 overflow-x-auto">
       {pages.map((page) => (
         <div key={page.pageId} className="group relative flex items-center">
-          <button
-            onClick={() => setCurrentPage(page.pageId)}
-            className={`rounded-md text-sm font-medium transition-colors items-center py-2 px-4 ${
-              currentPageId === page.pageId
-                ? 'bg-primary text-primary-foreground'
-                : 'text-muted-foreground hover:bg-accent hover:text-foreground'
-            }`}
-          >
-            {page.label}
-          </button>
-          {pages.length >= 1 && (
-            <>
-            <button
-              onClick={() => deletePage(page.pageId)}
-              className="absolute -left-1 -top-[-18px] hidden rounded-full bg-destructive p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
-              title="Delete page"
+          {page.pageId === editingPageId ? (
+            <div className="flex items-center gap-1">
+              <input
+                autoFocus
+                value={editLabel}
+                onChange={(e) => setEditLabel(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSavePageEdit();
+                  if (e.key === 'Escape') handleCancelPageEdit();
+                }}
+                placeholder="Page name"
+                className="h-7 w-28 rounded-md border bg-background px-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+              <button
+                type="button"
+                onClick={handleSavePageEdit}
+                className="rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground"
               >
-              <Trash2Icon className="h-2.5 w-2.5" />
-            </button> 
-             <button
-            //  onClick={() => deletePage(page.pageId)}
-             className="absolute -right-1 -top-[-18px] hidden rounded-full bg-green-500 p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
-             title="Edit page"
-             >
-             <EditIcon className="h-2.5 w-2.5" />
-           </button>
-             </>
+                Save
+              </button>
+              <button
+                type="button"
+                onClick={handleCancelPageEdit}
+                className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:text-foreground"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => setCurrentPage(page.pageId)}
+                className={`rounded-md text-sm font-medium transition-colors items-center py-2 px-4 ${
+                  currentPageId === page.pageId
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                }`}
+              >
+                {page.label}
+              </button>
+              {pages.length >= 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => deletePage(page.pageId)}
+                    className="absolute -left-1 -top-[-18px] hidden rounded-full bg-destructive p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
+                    title="Delete page"
+                  >
+                    <Trash2Icon className="h-2.5 w-2.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleEditPageButton(page.pageId)}
+                    className="absolute -right-1 -top-[-18px] hidden rounded-full bg-green-500 p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
+                    title="Edit page"
+                  >
+                    <EditIcon className="h-2.5 w-2.5" />
+                  </button>
+                </>
+              )}
+            </>
           )}
         </div>
       ))}
