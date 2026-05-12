@@ -1,6 +1,7 @@
 name: Sync blocks to web-viewer
 
-# Runs whenever a push to master changes a shared block or renderer file.
+# Runs whenever a push to master touches any file under the blocks folder
+# or the shared PageRenderer. New block files are picked up automatically.
 # Requires a secret WEB_VIEWER_SYNC_TOKEN — a GitHub PAT with `contents: write`
 # permission on the Ardi83/web-viewer repository.
 
@@ -8,11 +9,7 @@ on:
   push:
     branches: [main, master]
     paths:
-      - 'frontend/components/builder/blocks/HeroBlock.tsx'
-      - 'frontend/components/builder/blocks/TextBlock.tsx'
-      - 'frontend/components/builder/blocks/CardBlock.tsx'
-      - 'frontend/components/builder/blocks/ImageBlock.tsx'
-      - 'frontend/components/builder/blocks/CtaBlock.tsx'
+      - 'frontend/components/builder/blocks/**'
       - 'frontend/components/builder/viewer/PageRenderer.tsx'
 
 concurrency:
@@ -38,11 +35,14 @@ jobs:
           BLOCKS_SRC=frontend/components/builder/blocks
           BLOCKS_DST=web-viewer/next-site-template/components/blocks
 
-          cp "$BLOCKS_SRC/HeroBlock.tsx"  "$BLOCKS_DST/HeroBlock.tsx"
-          cp "$BLOCKS_SRC/TextBlock.tsx"  "$BLOCKS_DST/TextBlock.tsx"
-          cp "$BLOCKS_SRC/CardBlock.tsx"  "$BLOCKS_DST/CardBlock.tsx"
-          cp "$BLOCKS_SRC/ImageBlock.tsx" "$BLOCKS_DST/ImageBlock.tsx"
-          cp "$BLOCKS_SRC/CtaBlock.tsx"   "$BLOCKS_DST/CtaBlock.tsx"
+          # Copy every file in the blocks folder — new blocks are included automatically.
+          # registry.tsx is excluded: the web-viewer has its own registry (no builder metadata).
+          for f in "$BLOCKS_SRC"/*.tsx; do
+            filename=$(basename "$f")
+            if [ "$filename" != "registry.tsx" ]; then
+              cp "$f" "$BLOCKS_DST/$filename"
+            fi
+          done
 
           # PageRenderer is identical except for the BlockRenderer import path.
           sed "s|@/components/builder/blocks/registry|./blocks/registry|g" \
@@ -54,13 +54,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add \
-            next-site-template/components/blocks/HeroBlock.tsx \
-            next-site-template/components/blocks/TextBlock.tsx \
-            next-site-template/components/blocks/CardBlock.tsx \
-            next-site-template/components/blocks/ImageBlock.tsx \
-            next-site-template/components/blocks/CtaBlock.tsx \
-            next-site-template/components/PageRenderer.tsx
+          git add next-site-template/components/blocks/ next-site-template/components/PageRenderer.tsx
 
           if git diff --cached --quiet; then
             echo "No block changes to sync."
