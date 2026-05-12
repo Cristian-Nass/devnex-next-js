@@ -11,16 +11,29 @@ export function CardBlock({
   imageUrl,
 }: CardBlockProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-lg border bg-card p-5 shadow-sm">
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 12,
+        borderRadius: 12,
+        border: '1px solid #e2e8f0',
+        padding: 20,
+        background: '#ffffff',
+        boxShadow: '0 1px 2px rgba(15,23,42,0.06)',
+      }}
+    >
       {imageUrl && (
         <img
-          src={imageUrl as string}
-          alt={title as string}
-          className="h-40 w-full rounded-md object-cover"
+          src={String(imageUrl)}
+          alt={String(title)}
+          style={{ height: 160, width: '100%', borderRadius: 8, objectFit: 'cover' }}
         />
       )}
-      <h3 className="text-lg font-semibold">{title as string}</h3>
-      <p className="text-sm text-muted-foreground">{body as string}</p>
+      <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 600 }}>{String(title)}</h3>
+      <p style={{ margin: 0, color: '#475569', lineHeight: 1.6, fontSize: '0.875rem' }}>
+        {String(body)}
+      </p>
     </div>
   );
 }

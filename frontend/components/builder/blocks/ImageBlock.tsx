@@ -8,21 +8,31 @@ interface ImageBlockProps {
 export function ImageBlock({ src, alt = 'Image', caption }: ImageBlockProps) {
   if (!src) {
     return (
-      <div className="flex h-40 items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/30 bg-muted">
-        <span className="text-sm text-muted-foreground">Set image URL in props</span>
+      <div
+        style={{
+          display: 'flex',
+          height: 160,
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 8,
+          border: '2px dashed #cbd5e1',
+          background: '#f8fafc',
+        }}
+      >
+        <span style={{ fontSize: '0.875rem', color: '#64748b' }}>Set image URL in props</span>
       </div>
     );
   }
   return (
-    <figure className="flex flex-col gap-2">
+    <figure style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
       <img
-        src={src as string}
-        alt={alt as string}
-        className="w-full rounded-lg object-cover"
+        src={String(src)}
+        alt={String(alt)}
+        style={{ width: '100%', borderRadius: 12, objectFit: 'cover', display: 'block' }}
       />
       {caption && (
-        <figcaption className="text-center text-sm text-muted-foreground">
-          {caption as string}
+        <figcaption style={{ textAlign: 'center', fontSize: '0.875rem', color: '#64748b' }}>
+          {String(caption)}
         </figcaption>
       )}
     </figure>

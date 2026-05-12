@@ -5,10 +5,10 @@ interface CtaBlockProps {
   [key: string]: unknown;
 }
 
-const variantClasses: Record<string, string> = {
-  primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
-  secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/90',
-  outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+const variantStyles: Record<string, { background: string; color: string; border?: string }> = {
+  primary: { background: '#0f172a', color: '#ffffff' },
+  secondary: { background: '#f1f5f9', color: '#0f172a' },
+  outline: { background: 'transparent', color: '#0f172a', border: '1px solid #e2e8f0' },
 };
 
 export function CtaBlock({
@@ -16,13 +16,24 @@ export function CtaBlock({
   href = '#',
   variant = 'primary',
 }: CtaBlockProps) {
+  const style = variantStyles[String(variant)] ?? variantStyles.primary;
   return (
-    <div className="flex items-center justify-center p-6">
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
       <a
-        href={href as string}
-        className={`inline-flex items-center justify-center rounded-md px-6 py-2.5 text-sm font-semibold transition-colors ${variantClasses[variant as string] ?? variantClasses.primary}`}
+        href={String(href)}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 8,
+          padding: '10px 24px',
+          fontSize: '0.875rem',
+          fontWeight: 600,
+          textDecoration: 'none',
+          ...style,
+        }}
       >
-        {label as string}
+        {String(label)}
       </a>
     </div>
   );

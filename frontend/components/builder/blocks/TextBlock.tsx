@@ -9,9 +9,16 @@ export function TextBlock({
   align = 'left',
 }: TextBlockProps) {
   return (
-    <div className={`text-${align as string} p-4`}>
-      <p className="text-base leading-relaxed text-foreground/90 whitespace-pre-wrap">
-        {content as string}
+    <div style={{ padding: 16, textAlign: align as 'left' | 'center' | 'right' }}>
+      <p
+        style={{
+          margin: 0,
+          lineHeight: 1.65,
+          fontSize: '1rem',
+          whiteSpace: 'pre-wrap',
+        }}
+      >
+        {String(content)}
       </p>
     </div>
   );

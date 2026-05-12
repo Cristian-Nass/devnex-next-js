@@ -18,17 +18,49 @@ export function HeroBlock({
 }: HeroBlockProps) {
   return (
     <div
-      style={{ backgroundColor: bgColor as string, color: textColor as string }}
-      className="flex min-h-[200px] flex-col items-center justify-center gap-4 rounded-lg px-8 py-12 text-center"
+      style={{
+        backgroundColor: String(bgColor),
+        color: String(textColor),
+        borderRadius: 12,
+        padding: '48px 32px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 16,
+        minHeight: 200,
+        textAlign: 'center',
+      }}
     >
-      <h1 className="text-4xl font-bold leading-tight">{heading as string}</h1>
-      <p className="max-w-xl text-lg opacity-90">{subheading as string}</p>
+      <h1
+        style={{
+          margin: 0,
+          fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+          fontWeight: 700,
+          lineHeight: 1.2,
+        }}
+      >
+        {String(heading)}
+      </h1>
+      <p style={{ margin: 0, opacity: 0.9, fontSize: '1.1rem', maxWidth: 560 }}>
+        {String(subheading)}
+      </p>
       {ctaLabel && (
         <a
-          href={ctaHref as string}
-          className="mt-2 inline-block rounded-lg bg-white px-6 py-2.5 text-sm font-semibold text-gray-900 shadow transition-colors hover:bg-gray-100"
+          href={String(ctaHref)}
+          style={{
+            marginTop: 8,
+            display: 'inline-block',
+            padding: '10px 24px',
+            borderRadius: 8,
+            background: '#ffffff',
+            color: '#0f172a',
+            textDecoration: 'none',
+            fontWeight: 600,
+            fontSize: '0.875rem',
+          }}
         >
-          {ctaLabel as string}
+          {String(ctaLabel)}
         </a>
       )}
     </div>

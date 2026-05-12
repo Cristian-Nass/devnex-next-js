@@ -1,0 +1,70 @@
+name: Sync blocks to web-viewer
+
+# Runs whenever a push to master changes a shared block or renderer file.
+# Requires a secret WEB_VIEWER_SYNC_TOKEN — a GitHub PAT with `contents: write`
+# permission on the Ardi83/web-viewer repository.
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'frontend/components/builder/blocks/HeroBlock.tsx'
+      - 'frontend/components/builder/blocks/TextBlock.tsx'
+      - 'frontend/components/builder/blocks/CardBlock.tsx'
+      - 'frontend/components/builder/blocks/ImageBlock.tsx'
+      - 'frontend/components/builder/blocks/CtaBlock.tsx'
+      - 'frontend/components/builder/viewer/PageRenderer.tsx'
+
+concurrency:
+  group: sync-blocks
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout devnex-next-js
+        uses: actions/checkout@v4
+
+      - name: Checkout web-viewer
+        uses: actions/checkout@v4
+        with:
+          repository: Ardi83/web-viewer
+          token: ${{ secrets.WEB_VIEWER_SYNC_TOKEN }}
+          path: web-viewer
+
+      - name: Copy shared block files
+        run: |
+          BLOCKS_SRC=frontend/components/builder/blocks
+          BLOCKS_DST=web-viewer/next-site-template/components/blocks
+
+          cp "$BLOCKS_SRC/HeroBlock.tsx"  "$BLOCKS_DST/HeroBlock.tsx"
+          cp "$BLOCKS_SRC/TextBlock.tsx"  "$BLOCKS_DST/TextBlock.tsx"
+          cp "$BLOCKS_SRC/CardBlock.tsx"  "$BLOCKS_DST/CardBlock.tsx"
+          cp "$BLOCKS_SRC/ImageBlock.tsx" "$BLOCKS_DST/ImageBlock.tsx"
+          cp "$BLOCKS_SRC/CtaBlock.tsx"   "$BLOCKS_DST/CtaBlock.tsx"
+
+          # PageRenderer is identical except for the BlockRenderer import path.
+          sed "s|@/components/builder/blocks/registry|./blocks/registry|g" \
+            frontend/components/builder/viewer/PageRenderer.tsx \
+            > web-viewer/next-site-template/components/PageRenderer.tsx
+
+      - name: Commit and push to web-viewer
+        working-directory: web-viewer
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add \
+            next-site-template/components/blocks/HeroBlock.tsx \
+            next-site-template/components/blocks/TextBlock.tsx \
+            next-site-template/components/blocks/CardBlock.tsx \
+            next-site-template/components/blocks/ImageBlock.tsx \
+            next-site-template/components/blocks/CtaBlock.tsx \
+            next-site-template/components/PageRenderer.tsx
+
+          if git diff --cached --quiet; then
+            echo "No block changes to sync."
+          else
+            git commit -m "chore: sync blocks from devnex-next-js (${{ github.sha }})"
+            git push
+          fi
