@@ -1,65 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  EyeIcon,
-  SaveIcon,
-  CheckIcon,
-  Loader2Icon,
-  SettingsIcon,
-  GlobeIcon,
-} from 'lucide-react';
-import { Link } from '@/i18n/routing';
+import { GlobeIcon } from 'lucide-react';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
-import { apiUpdateSite } from '@/lib/api-sites';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
 import { PagesMenu } from './PagesMenu';
-import { SiteSettingsDialog } from './SiteSettingsDialog';
 
-interface BuilderToolbarProps {
-  locale: string;
-}
-
-export function BuilderToolbar({ locale }: BuilderToolbarProps) {
+export function BuilderToolbar() {
   const {
-    siteId,
     siteName,
     siteSlug,
     published,
     setSiteName,
     isDirty,
-    getSiteData,
-    markSaved,
-    loadSite,
   } = useWebBuilderStore();
-  const [saving, setSaving] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
-  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const subdomainBase = process.env.NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE ?? '';
   const liveUrl =
     published && siteSlug && subdomainBase
       ? `https://${siteSlug}-${subdomainBase}`
       : null;
-
-  async function handleSave() {
-    if (!siteId) return;
-    setSaving(true);
-    try {
-      await apiUpdateSite(siteId, {
-        name: siteName.trim() || undefined,
-        data: getSiteData(),
-      });
-      markSaved();
-      toast.success('Saved!');
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Save failed');
-    } finally {
-      setSaving(false);
-    }
-  }
 
   function startEditingName() {
     setNameInput(siteName);
@@ -72,21 +33,8 @@ export function BuilderToolbar({ locale }: BuilderToolbarProps) {
   }
 
   return (
-    <>
-      <SiteSettingsDialog
-        open={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-        siteId={siteId}
-        onSaved={(site) => {
-          loadSite(site.id, site.name, getSiteData(), {
-            published: site.published,
-            provisioningType: site.provisioningType,
-            slug: site.slug,
-          });
-        }}
-      />
-      <header className="flex h-14 shrink-0 items-center justify-between gap-4 border-b bg-background px-4">
-        <div className="flex items-center gap-3">
+    <header className="flex h-14 shrink-0 items-center justify-between gap-4 border-b bg-background px-4">
+      <div className="flex items-center gap-3">
           {editingName ? (
             <input
               autoFocus
@@ -114,61 +62,23 @@ export function BuilderToolbar({ locale }: BuilderToolbarProps) {
               Unsaved
             </span>
           )}
-        </div>
+      </div>
 
-        <PagesMenu />
+      <PagesMenu />
 
-        <div className="flex items-center gap-2">
-          {liveUrl && (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium hover:bg-accent"
-            >
-              <GlobeIcon className="h-3.5 w-3.5" />
-              View site
-            </a>
-          )}
-          {siteId && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="gap-1.5"
-              onClick={() => setSettingsOpen(true)}
-            >
-              <SettingsIcon className="h-3.5 w-3.5" />
-              Site settings
-            </Button>
-          )}
-          {siteId && (
-            <Link
-              href={`/builder/${siteId}/preview`}
-              locale={locale}
-              className="flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm hover:bg-accent"
-            >
-              <EyeIcon className="h-3.5 w-3.5" />
-              Preview
-            </Link>
-          )}
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={saving || !isDirty}
-            className="flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground disabled:opacity-50 hover:bg-primary/90"
+      <div className="flex items-center gap-2">
+        {liveUrl && (
+          <a
+            href={liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium hover:bg-accent"
           >
-            {saving ? (
-              <Loader2Icon className="h-3.5 w-3.5 animate-spin" />
-            ) : isDirty ? (
-              <SaveIcon className="h-3.5 w-3.5" />
-            ) : (
-              <CheckIcon className="h-3.5 w-3.5" />
-            )}
-            {saving ? 'Saving…' : 'Save'}
-          </button>
-        </div>
-      </header>
-    </>
+            <GlobeIcon className="h-3.5 w-3.5" />
+            View site
+          </a>
+        )}
+      </div>
+    </header>
   );
 }

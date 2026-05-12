@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, use } from 'react';
-import { useLocale } from 'next-intl';
 import { apiGetSite } from '@/lib/api-sites';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 import { BuilderToolbar } from '@/components/builder/editor/BuilderToolbar';
@@ -23,7 +22,6 @@ interface BuilderEditorPageProps {
 
 export default function BuilderEditorPage({ params }: BuilderEditorPageProps) {
   const { siteId } = use(params);
-  const locale = useLocale();
   const { loadSite, getCurrentPage, addRow, addBlock } = useWebBuilderStore();
 
   useEffect(() => {
@@ -57,7 +55,7 @@ export default function BuilderEditorPage({ params }: BuilderEditorPageProps) {
 
   return (
     <div className={`flex h-screen flex-col overflow-hidden ${ubuntu.className}`}>
-      <BuilderToolbar locale={locale} />
+      <BuilderToolbar />
       <div className="flex min-h-0 flex-1 overflow-hidden">
         <BuilderCanvas
           leftSidebar={

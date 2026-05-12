@@ -54,7 +54,7 @@ export function PagesMenu() {
       {pages.map((page) => (
         <div key={page.pageId} className="group relative flex items-center">
           {page.pageId === editingPageId ? (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 overflow-hidden group-hover:overflow-visible">
               <input
                 autoFocus
                 value={editLabel}
@@ -99,18 +99,18 @@ export function PagesMenu() {
                   <button
                     type="button"
                     onClick={() => deletePage(page.pageId)}
-                    className="absolute -left-1 -top-[-18px] hidden rounded-full bg-destructive p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
+                    className="absolute -left-1 -top-[-20px] hidden rounded-full bg-destructive p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
                     title="Delete page"
                   >
-                    <Trash2Icon className="h-2.5 w-2.5" />
+                    <Trash2Icon className="h-3 w-3" />
                   </button>
                   <button
                     type="button"
                     onClick={() => handleEditPageButton(page.pageId)}
-                    className="absolute -right-1 -top-[-18px] hidden rounded-full bg-green-500 p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
+                    className="absolute -right-1 -top-[-20px] hidden rounded-full bg-green-500 p-0.5 text-destructive-foreground group-hover:flex cursor-pointer"
                     title="Edit page"
                   >
-                    <EditIcon className="h-2.5 w-2.5" />
+                    <EditIcon className="h-3 w-3" />
                   </button>
                 </>
               )}
