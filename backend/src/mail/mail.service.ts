@@ -9,7 +9,7 @@ export class MailService {
   }
 
   async sendEmailVerification(to: string, verifyUrl: string) {
-    const mailFrom = this.config.get<string>('MAIL_FROM') || 'Devnex <noreply@mail.arvidn.dev>';
+    const mailFrom = this.config.get<string>('MAIL_FROM') || 'Netmart <noreply@mail.arvidn.dev>';
     const mailApiUrl = this.config.get<string>('MAIL_API_URL');
     const mailApiKey = this.config.get<string>('MAIL_API_KEY');
     if (!mailApiUrl || !mailApiKey) {
@@ -46,7 +46,7 @@ export class MailService {
   }
 
   async sendPasswordResetEmail(to: string, resetUrl: string, ttlMs: number) {
-    const mailFrom = this.config.get<string>('MAIL_FROM') || 'Devnex <noreply@mail.arvidn.dev>';
+    const mailFrom = this.config.get<string>('MAIL_FROM') || 'Netmart <noreply@mail.arvidn.dev>';
     const mailApiUrl = this.config.get<string>('MAIL_API_URL');
     const mailApiKey = this.config.get<string>('MAIL_API_KEY');
     if (!mailApiUrl || !mailApiKey) {
@@ -85,7 +85,7 @@ export class MailService {
   }
 
   async sendVerificationCode(to: string, code: string, expiresIn: number) {
-    const mailFrom = this.config.get<string>('MAIL_FROM') || 'Devnex <no-reply@mail.arvid.dev>';
+    const mailFrom = this.config.get<string>('MAIL_FROM') || 'Netmart <no-reply@mail.arvid.dev>';
     const mailApiUrl = this.config.get<string>('MAIL_API_URL');
     const mailApiKey = this.config.get<string>('MAIL_API_KEY');
     if (!mailApiUrl || !mailApiKey) {

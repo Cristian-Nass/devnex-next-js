@@ -1,4 +1,4 @@
-const DEFAULT_SITE_URL = "https://devnex.app";
+const DEFAULT_SITE_URL = "https://netmart.app";
 
 export function getSiteUrl() {
   const rawUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();

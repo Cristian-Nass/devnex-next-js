@@ -97,13 +97,13 @@
     "subheading": "Våra produkter är designade för att hjälpa dig att växa ditt företag",
     "products": [
       {
-        "name": "Devnex",
-        "description": "Devnex är ett webbplatsbyggverktyg som låter dig bygga webbplatser snabbt och enkelt."
+        "name": "Netmart",
+        "description": "Netmart är ett webbplatsbyggverktyg som låter dig bygga webbplatser snabbt och enkelt."
       }
     ]
   },
   "CreateWebsiteDetails": {
-    "metaTitle": "{plan} webbplatsplan | Devnex",
+    "metaTitle": "{plan} webbplatsplan | Netmart",
     "planTitle": "{plan}-plan",
     "includedFeatures": "Detta ingår",
     "CreateWebsitePlans": {

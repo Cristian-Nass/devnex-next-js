@@ -6,7 +6,7 @@
     "descriptionTwo": "Vi hanterar allt från strategi till lansering och vidare.",
     "getStarted": "Starta ditt projekt",
     "exploreOurServices": "Se våra tjänster",
-    "aboutHeading": "Om Devnex",
+    "aboutHeading": "Om Netmart",
     "aboutDescription": "Vi är ett utvecklingsteam med fokus på snabb leverans, ren arkitektur och mätbara affärsresultat för startups och små företag.",
     "aboutGoalHeading": "Vårt Mål",
     "aboutGoalIntro": "Vårt mål är inte bara att bygga och leverera en webbplats eller en app.",
@@ -16,14 +16,14 @@
     "aboutGoalPoint3": "Stötta dig steg för steg med praktiska förbättringar som ger verkliga affärsresultat.",
     "contactHeading": "Kontakta oss",
     "contactDescription": "Berätta om ditt projekt så återkommer vi med ett tydligt förslag och en realistisk tidsplan.",
-    "contactEmail": "hello@devnex.app",
+    "contactEmail": "hello@netmart.app",
     "trustLine": "Tydliga tidsplaner • SEO-redo • Mobilanpassad",
     "currentLocale": "Nuvarande språk: {locale}",
     "switchLabel": "Byt språk"
   },
   "HomePageSeo": {
     "title": "Tjänster inom webb- och apputveckling",
-    "description": "Devnex hjälper företag att snabbt lansera webbplatser och applikationer med modern teknik, SEO-anpassning och skalbar arkitektur.",
+    "description": "Netmart hjälper företag att snabbt lansera webbplatser och applikationer med modern teknik, SEO-anpassning och skalbar arkitektur.",
     "keywords": [
       "webbutveckling",
       "apputveckling",

@@ -15,14 +15,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://devnex.app'),
+  metadataBase: new URL('https://netmart.app'),
   title: {
-    default: 'Devnex | Web and App Development',
-    template: '%s | Devnex',
+    default: 'Netmart | Web and App Development',
+    template: '%s | Netmart',
   },
   description:
-    'Devnex builds modern websites, web apps, and mobile applications for growing businesses.',
-  applicationName: 'Devnex',
+    'Netmart builds modern websites, web apps, and mobile applications for growing businesses.',
+  applicationName: 'Netmart',
   robots: {
     index: true,
     follow: true,
@@ -36,16 +36,16 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    siteName: 'Devnex',
-    title: 'Devnex | Web and App Development',
+    siteName: 'Netmart',
+    title: 'Netmart | Web and App Development',
     description:
-      'Devnex builds modern websites, web apps, and mobile applications for growing businesses.',
+      'Netmart builds modern websites, web apps, and mobile applications for growing businesses.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Devnex | Web and App Development',
+    title: 'Netmart | Web and App Development',
     description:
-      'Devnex builds modern websites, web apps, and mobile applications for growing businesses.',
+      'Netmart builds modern websites, web apps, and mobile applications for growing businesses.',
   },
 };
 

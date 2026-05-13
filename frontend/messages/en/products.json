@@ -97,13 +97,13 @@
     "subheading": "Ready-to-launch solutions designed to help your business grow",
     "products": [
       {
-        "name": "Devnex",
-        "description": "Devnex is a website builder tool that lets you build websites quickly and easily."
+        "name": "Netmart",
+        "description": "Netmart is a website builder tool that lets you build websites quickly and easily."
       }
     ]
   },
   "CreateWebsiteDetails": {
-    "metaTitle": "{plan} Website Plan | Devnex",
+    "metaTitle": "{plan} Website Plan | Netmart",
     "planTitle": "{plan} Plan",
     "includedFeatures": "Included Features",
     "CreateWebsitePlans": {
