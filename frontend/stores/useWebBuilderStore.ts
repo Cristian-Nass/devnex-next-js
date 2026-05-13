@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type {
   Block,
   BlockType,
+  NavigationBar,
   Page,
   Row,
   SiteData,
@@ -20,7 +21,14 @@ export type LoadSiteMeta = {
   slug?: string;
 };
 
-interface BuilderState {
+const DEFAULT_NAVIGATION_BAR: NavigationBar = {
+  backgroundColor: '#3B82F6',
+  textColor: '#FFFFFF',
+};
+
+interface WebBuilderStateType {
+  navigationBar: NavigationBar;
+  setNavigationBar: (navigationBar: Partial<NavigationBar>) => void;
   siteId: string | null;
   siteName: string;
   siteSlug: string;
@@ -58,8 +66,15 @@ interface BuilderState {
   markSaved: () => void;
 }
 
-export const useBuilderStore = create<BuilderState>()(
+export const useWebBuilderStore = create<WebBuilderStateType>()(
   devtools((set, get) => ({
+    navigationBar: DEFAULT_NAVIGATION_BAR,
+    setNavigationBar(navigationBar) {
+      set((s) => ({
+        navigationBar: { ...s.navigationBar, ...navigationBar },
+        isDirty: true,
+      }));
+    },
     siteId: null,
     siteName: '',
     siteSlug: '',
@@ -79,6 +94,7 @@ export const useBuilderStore = create<BuilderState>()(
         provisioningType: meta?.provisioningType ?? 'SUBDOMAIN',
         published: meta?.published ?? false,
         theme: data.theme ?? { primaryColor: '#3B82F6', fontFamily: 'Inter' },
+        navigationBar: data.navigationBar ?? DEFAULT_NAVIGATION_BAR,
         pages: data.pages ?? [],
         currentPageId: data.pages?.[0]?.pageId ?? null,
         selectedBlockId: null,
@@ -307,8 +323,8 @@ export const useBuilderStore = create<BuilderState>()(
     },
 
     getSiteData(): SiteData {
-      const { theme, pages } = get();
-      return { theme, pages };
+      const { theme, navigationBar, pages } = get();
+      return { theme, navigationBar, pages };
     },
 
     markSaved() {

@@ -128,7 +128,7 @@ export default async function OurServices() {
             {t("heading")}
           </h2>
           <p className={cn("text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4", ubuntu.className)}>
-            {t("subheading")}
+            {t("subheading")}aaaaaaaaaaaaaaaaaaaaaaaaa
           </p>
         </div>
 

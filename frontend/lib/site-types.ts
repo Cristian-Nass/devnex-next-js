@@ -26,9 +26,15 @@ export interface Theme {
   fontFamily: string;
 }
 
+export interface NavigationBar {
+  backgroundColor: string;
+  textColor: string;
+}
+
 export interface SiteData {
   theme: Theme;
   pages: Page[];
+  navigationBar?: NavigationBar;
 }
 
 export interface Site {
