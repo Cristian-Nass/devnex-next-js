@@ -3,6 +3,7 @@
 import { useDraggable } from '@dnd-kit/core';
 import { BLOCK_DEFAULTS, BLOCK_ICONS, BLOCK_LABELS } from '@/components/builder/blocks/registry';
 import type { BlockType } from '@/lib/site-types';
+import { PlusIcon } from 'lucide-react';
 
 const BLOCK_TYPES: BlockType[] = ['hero', 'card', 'text', 'image', 'cta'];
 
@@ -41,14 +42,16 @@ export function BlockPanel({ onAddToRow, hasRows }: BlockPanelProps) {
         Blocks
       </p>
       {BLOCK_TYPES.map((type) => (
-        <div key={type} className="flex flex-col gap-1">
-          <DraggableBlockType type={type} />
+        <div key={type} className="flex flex-row">
+          <div className="flex-1">
+            <DraggableBlockType type={type} />
+          </div>
           {onAddToRow && hasRows && (
             <button
               onClick={() => onAddToRow(type)}
-              className="rounded px-2 py-0.5 text-xs text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+              className="rounded px-2 py-0.5 text-xs text-muted-foreground underline-offset-2 hover:text-primary hover:underline cursor-pointer"
             >
-              + add
+              <PlusIcon className="h-4 w-4" />
             </button>
           )}
         </div>
@@ -58,9 +61,9 @@ export function BlockPanel({ onAddToRow, hasRows }: BlockPanelProps) {
           Add a row first, then drag blocks onto it.
         </p>
       )}
-      <p className="mt-4 text-xs text-muted-foreground">
+      {/* <p className="mt-4 text-xs text-muted-foreground">
         Drag onto a row or click &ldquo;+ add&rdquo; to insert.
-      </p>
+      </p> */}
     </aside>
   );
 }
