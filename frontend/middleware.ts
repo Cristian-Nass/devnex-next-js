@@ -15,8 +15,8 @@ export function middleware(request: NextRequest): NextResponse {
   const response = intlMiddleware(requestWithPath) as NextResponse;
 
   // Behind nginx-proxy + Cloudflare the Host header can carry a default port
-  // (e.g. `devnex.arvidn.dev:80`) while X-Forwarded-Proto is `https`, which
-  // leaks into next-intl redirects as `https://devnex.arvidn.dev:80/sv`.
+  // (e.g. `netmart.se:80`) while X-Forwarded-Proto is `https`, which
+  // leaks into next-intl redirects as `https://netmart.se:80/sv`.
   // Strip default web ports from any absolute Location header.
   const location = response.headers.get("location");
   if (location) {

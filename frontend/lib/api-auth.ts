@@ -1,7 +1,7 @@
 /**
  * Nest uses global prefix `api` (backend `main.ts`). Browser calls must hit
  * `/api/auth/...`. If `NEXT_PUBLIC_API_URL` is only the API host (e.g.
- * `https://api-devnex.arvidn.dev`), we append `/api` automatically.
+ * `https://api.netmart.se`), we append `/api` automatically.
  */
 function normalizeApiBaseUrl(): string {
   const raw =
