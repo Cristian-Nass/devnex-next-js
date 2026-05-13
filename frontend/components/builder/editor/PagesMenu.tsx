@@ -8,6 +8,7 @@ export function PagesMenu() {
   const {
     pages,
     currentPageId,
+    navigationBar,
     setCurrentPage,
     addPage,
     deletePage,
@@ -88,9 +89,10 @@ export function PagesMenu() {
                 onClick={() => setCurrentPage(page.pageId)}
                 className={`rounded-md text-sm font-medium transition-colors items-center py-2 px-4 ${
                   currentPageId === page.pageId
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                    ? 'bg-black/80'
+                    : 'hover:bg-black/10'
                 }`}
+                style={{color: navigationBar.textColor}}
               >
                 {page.label}
               </button>
@@ -148,7 +150,8 @@ export function PagesMenu() {
       ) : (
         <button
           onClick={() => setAdding(true)}
-          className="flex items-center gap-1 rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
+          className="flex items-center gap-1 rounded-md px-2 py-1.5 text-sm hover:bg-black/10"
+          style={{color: navigationBar.textColor}}
         >
           <PlusIcon className="h-3.5 w-3.5" />
           Page

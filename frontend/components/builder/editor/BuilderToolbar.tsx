@@ -10,6 +10,7 @@ export function BuilderToolbar() {
     siteName,
     siteSlug,
     published,
+    navigationBar,
     setSiteName,
     isDirty,
   } = useWebBuilderStore();
@@ -33,7 +34,12 @@ export function BuilderToolbar() {
   }
 
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between gap-4 border-b bg-background px-4">
+    <header
+      className="flex h-14 shrink-0 items-center justify-between gap-4 border-b px-4"
+      style={{
+        backgroundColor: navigationBar.backgroundColor,
+        color: navigationBar.textColor,
+      }}>
       <div className="flex items-center gap-3">
           {editingName ? (
             <input
@@ -50,7 +56,7 @@ export function BuilderToolbar() {
           ) : (
             <button
               onClick={startEditingName}
-              className="rounded-md px-2 py-1 text-sm font-semibold hover:bg-accent"
+              className="rounded-md px-2 py-1 text-sm font-semibold hover:bg-black/10"
               title="Click to rename"
               type="button"
             >
