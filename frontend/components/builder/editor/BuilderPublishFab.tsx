@@ -18,7 +18,7 @@ export function BuilderPublishFab() {
   }, []);
 
   const subdomainBase =
-    process.env.NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE ?? 'arvidn.dev';
+    process.env.NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE || 'netmart.se';
   const liveUrl =
     siteSlug && subdomainBase
       ? `https://${siteSlug}-web.${subdomainBase}`
