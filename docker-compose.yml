@@ -1,6 +1,6 @@
 # Virtual hosts (nginx-proxy / similar):
-#   web:  VIRTUAL_HOST + VIRTUAL_PORT in frontend/.env.prod  (e.g. devnex.arvidn.dev → 3000)
-#   api:  VIRTUAL_HOST + VIRTUAL_PORT in backend/.env.prod   (e.g. api-devnex.arvidn.dev → 3001)
+#   web:  VIRTUAL_HOST + VIRTUAL_PORT in frontend/.env.prod  (e.g. netmart.se → 3000)
+#   api:  VIRTUAL_HOST + VIRTUAL_PORT in backend/.env.prod   (e.g. api.netmart.se → 3001)
 #
 # Do not set VIRTUAL_* via compose `environment: ${VIRTUAL_HOST}` — Compose resolves that before
 # env_file and overrides with empty strings. Put them only in the *.env.prod files below.
@@ -15,14 +15,14 @@ services:
       args:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-}
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-}
-    container_name: devnex-web
+    container_name: netmart-web
   
     env_file:
       - frontend/.env.prod
     # VIRTUAL_HOST / VIRTUAL_PORT must live in frontend/.env.prod (not here as ${VAR} — Compose
     # resolves those before env_file, so unset shell vars would blank them out).
     # Example values:
-    #   VIRTUAL_HOST=devnex.arvidn.dev
+    #   VIRTUAL_HOST=netmart.se
     #   VIRTUAL_PORT=3000
     restart: unless-stopped
     networks:
@@ -32,12 +32,12 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    container_name: devnex-api
+    container_name: netmart-api
     env_file:
       - backend/.env.prod
     # VIRTUAL_HOST / VIRTUAL_PORT must live in backend/.env.prod.
     # Example values:
-    #   VIRTUAL_HOST=api-devnex.arvidn.dev
+    #   VIRTUAL_HOST=api.netmart.se
     #   VIRTUAL_PORT=3001
     environment:
       - TZ=${TZ:-UTC}
