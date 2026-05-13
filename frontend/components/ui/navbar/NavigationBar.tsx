@@ -5,12 +5,23 @@ import MainMenuBar from './MainMenuBar';
 import {MenuIcon} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
 import {getMenuItems} from './menuItems';
-import {Ubuntu} from 'next/font/google';
 import {NavigationBarAuth} from './NavigationBarAuth';
+import {Ubuntu} from 'next/font/google';
+import {Poppins} from 'next/font/google';
+import {Afacad_Flux} from 'next/font/google';
 const ubuntu = Ubuntu({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
 });
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300'],
+});
+const afacad_flux = Afacad_Flux({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+});
+
 
 type NavigationBarProps = {
   locale: string;
@@ -27,17 +38,25 @@ export async function NavigationBar({locale}: NavigationBarProps) {
   });
 
   return (
-    <header className="sticky top-0 z-20 border-b border-black/10 bg-white/90 backdrop-blur dark:border-white/20 dark:bg-black/90">
+    <header className="sticky top-0 z-20 border-b border-black/10 bg-white/90 backdrop-blur dark:border-white/20 dark:bg-black/90 h-[70px]">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-        <Link
-          href={`/${locale}`}
-          className={cn(
-            'text-2xl font-semibold text-cyan-700',
-            ubuntu.className,
-          )}>
-          <span style={{letterSpacing: '-2px'}}>Devnex</span>
-        </Link>
 
+        <Link href={`/${locale}`} className="inline-flex items-end justify-end">
+          <div
+            className={cn(
+              'text-[20px] leading-none text-cyan-600 mb[-10px] mb-[2px]',
+              poppins.className,
+            )}>
+            NET
+          </div>
+          <div
+            className={cn(
+              'text-[28px] leading-none text-cyan-700 mb[-10px]',
+              afacad_flux.className,
+            )}>
+            MART
+          </div>
+        </Link>
         <div className="flex items-center gap-2 w-full">
           <MainMenuBar locale={locale} className="mx-auto hidden md:block" />
           <NavigationBarAuth
