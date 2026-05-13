@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.netmart.se'),
+  metadataBase: new URL('https://netmart.se'),
   title: {
     default: 'Netmart | Web and App Development',
     template: '%s | Netmart',

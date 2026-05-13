@@ -1,4 +1,4 @@
-const DEFAULT_SITE_URL = "https://www.netmart.se";
+const DEFAULT_SITE_URL = "https://netmart.se";
 
 export function getSiteUrl() {
   const rawUrl = process.env.FRONTEND_URL?.trim();
