@@ -91,7 +91,7 @@ export function PagesMenu() {
               <button
                 type="button"
                 onClick={() => setCurrentPage(page.pageId)}
-                className={`rounded-md text-sm font-medium transition-colors items-center py-2 px-4 ${
+                className={`cursor-pointer rounded-md text-sm font-medium transition-colors items-center py-2 px-4 ${
                   currentPageId === page.pageId
                     ? ''
                     : 'hover:bg-black/10'
@@ -146,19 +146,19 @@ export function PagesMenu() {
           />
           <button
             onClick={handleAdd}
-            className="rounded-md px-2 py-1 text-xs hover:opacity-80"
+            className="rounded-md px-2 py-1 text-xs hover:opacity-80 cursor-pointer"
             style={{
               backgroundColor: navigationBar.buttonColor,
               color: navigationBar.textColor,
             }}
           >
-            Add
+            <CheckIcon className="h-4 w-3" />
           </button>
           <button
             onClick={() => setAdding(false)}
-            className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:text-foreground"
+            className="rounded-md px-2 py-1 text-xs text-muted-foreground cursor-pointer bg-red-500 hover:bg-red-600 text-white"
           >
-            Cancel
+            <XIcon className="h-4 w-3" />
           </button>
         </div>
       ) : (
