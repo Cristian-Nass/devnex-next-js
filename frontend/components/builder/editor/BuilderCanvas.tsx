@@ -25,10 +25,11 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ChevronDownIcon, ChevronUpIcon, PencilIcon, PlusIcon, Trash2Icon, GripHorizontalIcon } from 'lucide-react';
+import { ChevronDownIcon, ChevronUpIcon, PlusIcon, Trash2Icon, GripHorizontalIcon } from 'lucide-react';
 import { BLOCK_DEFAULTS, BLOCK_LABELS, BLOCK_REGISTRY } from '@/components/builder/blocks/registry';
 import type { Block, BlockType, Row } from '@/lib/site-types';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
+import { EditBlock } from './EditBlock';
 
 /** Prefer blocks / palette over row shells so the pointer targets the grid, not the outer row box. */
 const canvasCollisionDetection: CollisionDetection = (args) => {
@@ -115,7 +116,6 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
     deleteBlock,
     moveRow,
     deleteRow,
-    setRowBackgroundColor,
     getCurrentPage,
   } = useWebBuilderStore();
   const [editMenuOpen, setEditMenuOpen] = useState(false);
@@ -123,8 +123,6 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
   const page = getCurrentPage();
 
   const blockIds = row.blocks.map((b) => b.blockId);
-  const firstBlock = row.blocks[0];
-  const rowBgColor = row.bgColor ?? '#ffffff';
 
   const { setNodeRef: setDropRef, isOver } = useDroppable({
     id: row.rowId,
@@ -192,38 +190,7 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
         >
           <ChevronDownIcon className="h-3.5 w-3.5" />
         </button>
-        <div className="relative">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (firstBlock) selectBlock(firstBlock.blockId);
-              setEditMenuOpen((open) => !open);
-            }}
-            className="rounded bg-background p-1 shadow hover:bg-green-500 cursor-pointer"
-            title="Edit row block"
-          >
-            <PencilIcon className="h-3.5 w-3.5" />
-          </button>
-          {editMenuOpen && (
-            <div
-              className="absolute left-0 top-full mt-2 w-36 rounded-md border bg-background p-2 shadow-lg"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <label className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
-                Color
-                <input
-                  type="color"
-                  value={rowBgColor}
-                  onChange={(e) =>
-                    setRowBackgroundColor(row.rowId, e.target.value)
-                  }
-                  className="h-7 w-9 cursor-pointer rounded border p-0.5"
-                />
-              </label>
-            </div>
-          )}
-        </div>
+        <EditBlock row={row} onOpenChange={setEditMenuOpen} />
       </div>
 
       <SortableContext items={blockIds} strategy={horizontalListSortingStrategy}>
