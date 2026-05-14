@@ -18,6 +18,11 @@ export function PagesMenu() {
   const [newLabel, setNewLabel] = useState('');
   const [editingPageId, setEditingPageId] = useState<string | null>(null);
   const [editLabel, setEditLabel] = useState('');
+  const justifyContent = {
+    left: 'flex-start',
+    center: 'center',
+    right: 'flex-end',
+  }[navigationBar.justify];
 
   function handleAdd() {
     const label = newLabel.trim() || 'New Page';
@@ -51,7 +56,10 @@ export function PagesMenu() {
   }
 
   return (
-    <div className="flex items-center gap-1 overflow-x-auto">
+    <div
+      className="flex w-full items-center gap-1 overflow-x-auto"
+      style={{ justifyContent }}
+    >
       {pages.map((page) => (
         <div key={page.pageId} className="group relative flex items-center">
           {page.pageId === editingPageId ? (

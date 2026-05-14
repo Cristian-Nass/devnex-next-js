@@ -1,6 +1,14 @@
 'use client';
 
 import {useWebBuilderStore} from '@/stores/useWebBuilderStore';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import type { NavigationJustify } from '@/lib/site-types';
+
+const justifyOptions: Array<{ value: NavigationJustify; label: string }> = [
+  { value: 'left', label: 'Left' },
+  { value: 'center', label: 'Center' },
+  { value: 'right', label: 'Right' },
+];
 
 const HeaderSetting = () => {
   const {navigationBar, setNavigationBar} = useWebBuilderStore();
@@ -39,6 +47,26 @@ const HeaderSetting = () => {
           className="h-8 w-8 cursor-pointer"
         />
       </label>
+      <div className="flex items-center justify-between gap-2 text-xs">
+        <span>Justify</span>
+        <RadioGroup
+          value={navigationBar.justify}
+          onValueChange={(justify) =>
+            setNavigationBar({justify: justify as NavigationJustify})
+          }
+          className="flex w-auto items-center gap-3"
+        >
+          {justifyOptions.map((option) => (
+            <label
+              key={option.value}
+              className="flex cursor-pointer items-center gap-1"
+            >
+              <RadioGroupItem value={option.value} />
+              <span>{option.label}</span>
+            </label>
+          ))}
+        </RadioGroup>
+      </div>
 
     </div>
   );

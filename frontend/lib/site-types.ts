@@ -26,10 +26,13 @@ export interface Theme {
   fontFamily: string;
 }
 
+export type NavigationJustify = 'left' | 'center' | 'right';
+
 export interface NavigationBar {
   backgroundColor: string;
   textColor: string;
   buttonColor: string;
+  justify: NavigationJustify;
 }
 
 export interface SiteData {
