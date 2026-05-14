@@ -78,18 +78,14 @@ export function PagesMenu() {
               <button
                 type="button"
                 onClick={handleSavePageEdit}
-                className="rounded-md px-2 py-1 text-xs cursor-pointer hover:opacity-80"
-                style={{
-                  backgroundColor: navigationBar.buttonColor,
-                  color: navigationBar.textColor,
-                }}
+                className="rounded-md px-2 py-1 text-xs cursor-pointer hover:opacity-80 bg-green-500 text-white"
               >
                 <CheckIcon className="h-4 w-3" />
               </button>
               <button
                 type="button"
                 onClick={handleCancelPageEdit}
-                className="rounded-md px-2 py-1 text-xs text-muted-foreground hover:text-foreground cursor-pointer hover:bg-red-500"
+                className="rounded-md px-2 py-1 text-xs cursor-pointer bg-red-500 text-white hover:bg-red-700"
               >
                 <XIcon className="h-4 w-3" />
               </button>
@@ -154,17 +150,13 @@ export function PagesMenu() {
           />
           <button
             onClick={handleAdd}
-            className="rounded-md px-2 py-1 text-xs hover:opacity-80 cursor-pointer"
-            style={{
-              backgroundColor: navigationBar.buttonColor,
-              color: navigationBar.textColor,
-            }}
+            className="rounded-md px-2 py-1 text-xs cursor-pointer bg-green-500 text-white hover:bg-green-700"
           >
             <CheckIcon className="h-4 w-3" />
           </button>
           <button
             onClick={() => setAdding(false)}
-            className="rounded-md px-2 py-1 text-xs text-muted-foreground cursor-pointer bg-red-500 hover:bg-red-600 text-white"
+            className="rounded-md px-2 py-1 text-xs cursor-pointer bg-red-500 text-white hover:bg-red-700"
           >
             <XIcon className="h-4 w-3" />
           </button>
@@ -172,8 +164,8 @@ export function PagesMenu() {
       ) : (
         <button
           onClick={() => setAdding(true)}
-          className="flex items-center gap-1 rounded-md px-2 py-1.5 text-sm hover:bg-black/10"
-          style={{color: navigationBar.textColor}}
+          className="flex items-center gap-1 rounded-md px-2 py-1.5 text-sm hover:bg-black/1 0 text-gray-100 hover:text-gray-300 cursor-pointer"
+          // style={{color: navigationBar.textColor}}
         >
           <PlusIcon className="h-3.5 w-3.5" />
           Page
