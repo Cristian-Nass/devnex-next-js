@@ -24,10 +24,21 @@ export default function BuilderLivePreviewPage({
     getCurrentPage,
     pages,
     currentPageId,
+    navigationBar,
     setCurrentPage,
     loadSite,
   } = useWebBuilderStore();
   const [hydrated, setHydrated] = useState(false);
+  const headerMaxWidth = {
+    full: undefined,
+    big: '1440px',
+    medium: '1024px',
+  }[navigationBar.width];
+  const justifyContent = {
+    left: 'flex-start',
+    center: 'center',
+    right: 'flex-end',
+  }[navigationBar.justify];
 
   useEffect(() => {
     if (storeSiteId === siteId) {
@@ -60,39 +71,55 @@ export default function BuilderLivePreviewPage({
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <header className="flex h-12 shrink-0 items-center gap-3 border-b px-4">
-        <Link
-          href={`/builder/${siteId}`}
-          locale={locale}
-          className="inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm hover:bg-accent"
-        >
-          <ArrowLeftIcon className="h-3.5 w-3.5" />
-          Back to editor
-        </Link>
-        <span className="text-muted-foreground">|</span>
-        <span className="truncate text-sm font-medium">
-          {siteName || 'Preview'}
-        </span>
-      </header>
+      <header
+        className="mx-auto h-14 w-full shrink-0 border-b"
+        style={{
+          backgroundColor: navigationBar.backgroundColor,
+          color: navigationBar.textColor,
+          maxWidth: headerMaxWidth,
+        }}
+      >
+        <div className="flex h-full w-full items-center justify-between gap-4 px-4">
+          <span className="shrink-0 truncate text-sm font-semibold">
+            {siteName || 'Preview'}
+          </span>
 
-      {hydrated && pages.length > 1 && (
-        <nav className="flex flex-wrap items-center gap-1 border-b px-4 py-2">
-          {pages.map((p) => (
-            <button
-              key={p.pageId}
-              type="button"
-              onClick={() => setCurrentPage(p.pageId)}
-              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent ${
-                p.pageId === currentPageId
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground'
-              }`}
+          {hydrated && pages.length > 0 && (
+            <nav
+              className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"
+              style={{ justifyContent }}
             >
-              {p.label}
-            </button>
-          ))}
-        </nav>
-      )}
+              {pages.map((p) => (
+                <button
+                  key={p.pageId}
+                  type="button"
+                  onClick={() => setCurrentPage(p.pageId)}
+                  className="cursor-pointer rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/10"
+                  style={{
+                    backgroundColor:
+                      p.pageId === currentPageId
+                        ? navigationBar.buttonColor
+                        : undefined,
+                    color: navigationBar.textColor,
+                  }}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </nav>
+          )}
+
+          <Link
+            href={`/builder/${siteId}`}
+            locale={locale}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm font-medium hover:bg-black/10"
+            style={{ color: navigationBar.textColor }}
+          >
+            <ArrowLeftIcon className="h-3.5 w-3.5" />
+            Back
+          </Link>
+        </div>
+      </header>
 
       <main className="container mx-auto max-w-6xl flex-1 px-4 py-8">
         {!hydrated ? (
