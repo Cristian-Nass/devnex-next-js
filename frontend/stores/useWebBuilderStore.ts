@@ -22,8 +22,8 @@ export type LoadSiteMeta = {
 };
 
 const DEFAULT_NAVIGATION_BAR: NavigationBar = {
-  backgroundColor: '#3B82F6',
-  textColor: '#FFFFFF',
+  backgroundColor: '#d6d6d6',
+  textColor: '#000000',
   buttonColor: '#FFFFFF',
 };
 
