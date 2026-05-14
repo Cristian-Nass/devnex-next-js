@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from 'react';
-import { PencilIcon } from 'lucide-react';
+import { MinusIcon, PencilIcon, PlusIcon } from 'lucide-react';
 import type { Row } from '@/lib/site-types';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
+import { Button } from '@/components/ui/button';
 
 interface EditBlockProps {
   row: Row;
@@ -41,18 +42,22 @@ export function EditBlock({ row, onOpenChange }: EditBlockProps) {
       </button>
       {open && (
         <div
-          className="absolute left-0 top-full mt-2 w-36 rounded-md border bg-background p-2 shadow-lg"
+          className="absolute left-0 top-full mt-2 w-36 rounded-md border bg-background p-2 shadow-lg flex flex-row items-center gap-2"
           onClick={(e) => e.stopPropagation()}
         >
-          <label className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
-            Color
             <input
               type="color"
               value={rowBgColor}
               onChange={(e) => setRowBackgroundColor(row.rowId, e.target.value)}
               className="h-7 w-9 cursor-pointer rounded border p-0.5"
             />
-          </label>
+            <Button variant="outline" className="w-8 h-8 cursor-pointer">
+              <PlusIcon className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" className="w-8 h-8 cursor-pointer">
+              <MinusIcon className="h-4 w-4" />
+            </Button>
+
         </div>
       )}
     </div>
