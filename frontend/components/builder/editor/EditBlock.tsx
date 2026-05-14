@@ -44,7 +44,7 @@ export function EditBlock({ row, onOpenChange }: EditBlockProps) {
       </button>
       {open && (
         <div
-          className="absolute left-0 top-full mt-2 w-36 rounded-md border bg-green-100 p-2 shadow-sm flex flex-row items-center gap-2"
+          className="absolute left-0 top-full mt-2 w-fit rounded-md border bg-green-100 p-2 shadow-sm flex flex-row items-center gap-2"
           style={{ boxShadow: '2px 2px 2px rgba(1, 1, 1, 0.5)', border:'1px solid rgb(255, 255, 255)' }}
           onClick={(e) => e.stopPropagation()}
         >
