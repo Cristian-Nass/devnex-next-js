@@ -70,7 +70,6 @@ interface WebBuilderStateType {
   addBlockToColumn: (rowId: string, columnIndex: number, type: BlockType, defaultProps: Record<string, unknown>) => void;
   updateBlock: (blockId: string, props: Record<string, unknown>) => void;
   deleteBlock: (blockId: string) => void;
-  setBlockColSpan: (blockId: string, colSpan: number) => void;
   moveBlockInRow: (rowId: string, activeId: string, overId: string) => void;
   moveBlockBetweenRows: (blockId: string, fromRowId: string, toRowId: string, overBlockId?: string) => void;
   selectBlock: (blockId: string | null) => void;
@@ -450,21 +449,6 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
           })),
         })),
         selectedBlockId: s.selectedBlockId === blockId ? null : s.selectedBlockId,
-        isDirty: true,
-      }));
-    },
-
-    setBlockColSpan(blockId, colSpan) {
-      set((s) => ({
-        pages: s.pages.map((p) => ({
-          ...p,
-          rows: p.rows.map((r) => ({
-            ...r,
-            blocks: r.blocks.map((b) =>
-              b.blockId === blockId ? { ...b, colSpan } : b,
-            ),
-          })),
-        })),
         isDirty: true,
       }));
     },

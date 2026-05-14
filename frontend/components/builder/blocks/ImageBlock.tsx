@@ -3,6 +3,7 @@ interface ImageBlockProps {
   alt?: string;
   caption?: string;
   bgColor?: string;
+  fontColor?: string;
   [key: string]: unknown;
 }
 
@@ -11,6 +12,7 @@ export function ImageBlock({
   alt = 'Image',
   caption,
   bgColor = '#f8fafc',
+  fontColor = '#64748b',
 }: ImageBlockProps) {
   if (!src) {
     return (
@@ -25,7 +27,9 @@ export function ImageBlock({
           background: String(bgColor),
         }}
       >
-        <span style={{ fontSize: '0.875rem', color: '#64748b' }}>Set image URL in props</span>
+        <span style={{ fontSize: '0.875rem', color: String(fontColor) }}>
+          Set image URL in props
+        </span>
       </div>
     );
   }
@@ -47,7 +51,7 @@ export function ImageBlock({
         style={{ width: '100%', borderRadius: 12, objectFit: 'cover', display: 'block' }}
       />
       {caption && (
-        <figcaption style={{ textAlign: 'center', fontSize: '0.875rem', color: '#64748b' }}>
+        <figcaption style={{ textAlign: 'center', fontSize: '0.875rem', color: String(fontColor) }}>
           {String(caption)}
         </figcaption>
       )}

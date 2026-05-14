@@ -3,6 +3,7 @@ interface CtaBlockProps {
   href?: string;
   variant?: string;
   bgColor?: string;
+  fontColor?: string;
   [key: string]: unknown;
 }
 
@@ -17,8 +18,13 @@ export function CtaBlock({
   href = '#',
   variant = 'primary',
   bgColor = 'transparent',
+  fontColor,
 }: CtaBlockProps) {
   const style = variantStyles[String(variant)] ?? variantStyles.primary;
+  const labelColor =
+    fontColor != null && String(fontColor) !== ''
+      ? String(fontColor)
+      : style.color;
   return (
     <div
       style={{
@@ -42,6 +48,7 @@ export function CtaBlock({
           fontWeight: 600,
           textDecoration: 'none',
           ...style,
+          color: labelColor,
         }}
       >
         {String(label)}

@@ -37,7 +37,6 @@ export function PropsPanel() {
     pages,
     selectedBlockId,
     updateBlock,
-    setBlockColSpan,
     selectBlock,
     siteId,
     siteName,
@@ -218,29 +217,6 @@ export function PropsPanel() {
                     </label>
                   );
                 })}
-              </div>
-
-              <div className="border-t pt-3">
-                <label className="flex flex-col gap-1">
-                  <span className="text-xs font-medium text-muted-foreground">
-                    Column Span (1–12)
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="range"
-                      min={1}
-                      max={12}
-                      value={block.colSpan}
-                      onChange={(e) =>
-                        setBlockColSpan(block.blockId, Number(e.target.value))
-                      }
-                      className="flex-1"
-                    />
-                    <span className="w-6 text-right text-sm font-semibold">
-                      {block.colSpan}
-                    </span>
-                  </div>
-                </label>
               </div>
             </>
           )}

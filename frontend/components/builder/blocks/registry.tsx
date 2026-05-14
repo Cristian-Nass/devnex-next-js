@@ -23,12 +23,28 @@ export const BLOCK_DEFAULTS: Record<BlockType, Record<string, unknown>> = {
     ctaLabel: 'Get started',
     ctaHref: '#',
     bgColor: '#1e293b',
-    textColor: '#ffffff',
+    fontColor: '#ffffff',
   },
-  card: { title: 'Card Title', body: 'Card content goes here.', bgColor: '#ffffff' },
-  text: { content: 'Write your content here...', align: 'left', bgColor: '#ffffff' },
-  image: { src: '', alt: 'Image', caption: '', bgColor: '#f8fafc' },
-  cta: { label: 'Click Here', href: '#', variant: 'primary', bgColor: '#ffffff' },
+  card: {
+    title: 'Card Title',
+    body: 'Card content goes here.',
+    bgColor: '#ffffff',
+    fontColor: '#0f172a',
+  },
+  text: {
+    content: 'Write your content here...',
+    align: 'left',
+    bgColor: '#ffffff',
+    fontColor: '#0f172a',
+  },
+  image: { src: '', alt: 'Image', caption: '', bgColor: '#f8fafc', fontColor: '#64748b' },
+  cta: {
+    label: 'Click Here',
+    href: '#',
+    variant: 'primary',
+    bgColor: '#ffffff',
+    fontColor: '#ffffff',
+  },
 };
 
 export const BLOCK_LABELS: Record<BlockType, string> = {
@@ -54,13 +70,14 @@ export const BLOCK_PROP_SCHEMA: Record<BlockType, PropField[]> = {
     { key: 'ctaLabel', label: 'Button Label', type: 'text' },
     { key: 'ctaHref', label: 'Button URL', type: 'url' },
     { key: 'bgColor', label: 'Background Color', type: 'color' },
-    { key: 'textColor', label: 'Text Color', type: 'color' },
+    { key: 'fontColor', label: 'Font Color', type: 'color' },
   ],
   card: [
     { key: 'title', label: 'Title', type: 'text' },
     { key: 'body', label: 'Body', type: 'textarea' },
     { key: 'imageUrl', label: 'Image URL', type: 'url' },
     { key: 'bgColor', label: 'Background Color', type: 'color' },
+    { key: 'fontColor', label: 'Font Color', type: 'color' },
   ],
   text: [
     { key: 'content', label: 'Content', type: 'textarea' },
@@ -75,12 +92,14 @@ export const BLOCK_PROP_SCHEMA: Record<BlockType, PropField[]> = {
       ],
     },
     { key: 'bgColor', label: 'Background Color', type: 'color' },
+    { key: 'fontColor', label: 'Font Color', type: 'color' },
   ],
   image: [
     { key: 'src', label: 'Image URL', type: 'url' },
     { key: 'alt', label: 'Alt Text', type: 'text' },
     { key: 'caption', label: 'Caption', type: 'text' },
     { key: 'bgColor', label: 'Background Color', type: 'color' },
+    { key: 'fontColor', label: 'Font Color', type: 'color' },
   ],
   cta: [
     { key: 'label', label: 'Label', type: 'text' },
@@ -96,6 +115,7 @@ export const BLOCK_PROP_SCHEMA: Record<BlockType, PropField[]> = {
       ],
     },
     { key: 'bgColor', label: 'Background Color', type: 'color' },
+    { key: 'fontColor', label: 'Font Color', type: 'color' },
   ],
 };
 

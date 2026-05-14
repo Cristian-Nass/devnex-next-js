@@ -4,7 +4,9 @@ interface HeroBlockProps {
   ctaLabel?: string;
   ctaHref?: string;
   bgColor?: string;
+  /** Legacy sites may still save this prop */
   textColor?: string;
+  fontColor?: string;
   [key: string]: unknown;
 }
 
@@ -14,13 +16,16 @@ export function HeroBlock({
   ctaLabel = 'Get started',
   ctaHref = '#',
   bgColor = '#1e293b',
-  textColor = '#ffffff',
+  textColor,
+  fontColor,
 }: HeroBlockProps) {
+  const mainColor = String(fontColor ?? textColor ?? '#ffffff');
+
   return (
     <div
       style={{
         backgroundColor: String(bgColor),
-        color: String(textColor),
+        color: mainColor,
         borderRadius: 12,
         padding: '48px 32px',
         display: 'flex',
