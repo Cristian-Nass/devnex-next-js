@@ -25,7 +25,7 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ChevronDownIcon, ChevronUpIcon, PlusIcon, Trash2Icon, GripHorizontalIcon } from 'lucide-react';
+import { ChevronDownIcon, ChevronUpIcon, PencilIcon, PlusIcon, Trash2Icon, GripHorizontalIcon } from 'lucide-react';
 import { BLOCK_DEFAULTS, BLOCK_LABELS, BLOCK_REGISTRY } from '@/components/builder/blocks/registry';
 import type { Block, BlockType, Row } from '@/lib/site-types';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
@@ -156,6 +156,18 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
       }`}
     >
       <div className="absolute -right-1 top-1/2 z-10 hidden -translate-y-1/2 flex-col gap-1 group-hover/row:flex">
+        <button
+          disabled={row.blocks.length === 0}
+          onClick={() => {
+            const firstBlock = row.blocks[0];
+            if (firstBlock) selectBlock(firstBlock.blockId);
+          }}
+          className="rounded bg-green-600 p-1 text-white shadow hover:bg-green-700 disabled:opacity-30"
+          title="Edit row block"
+          type="button"
+        >
+          <PencilIcon className="h-3.5 w-3.5" />
+        </button>
         <button
           disabled={rowIndex === 0}
           onClick={() => moveRow(row.rowId, 'up')}
