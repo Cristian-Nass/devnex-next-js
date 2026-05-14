@@ -159,7 +159,7 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
         <button
           type="button"
           onClick={() => deleteRow(row.rowId)}
-          className="rounded bg-background p-1 shadow hover:bg-destructive hover:text-destructive-foreground"
+          className="rounded bg-background p-1 shadow hover:bg-destructive hover:text-destructive-foreground cursor-pointer"
           title="Delete row"
         >
           <Trash2Icon className="h-3.5 w-3.5" />
@@ -167,7 +167,7 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
         <button
           disabled={rowIndex === 0}
           onClick={() => moveRow(row.rowId, 'up')}
-          className="rounded bg-background p-1 shadow hover:bg-accent disabled:opacity-30"
+          className="rounded bg-background p-1 shadow hover:bg-accent disabled:opacity-30 cursor-pointer"
           title="Move row up"
           type="button"
         >
@@ -176,20 +176,19 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
         <button
           disabled={rowIndex === totalRows - 1}
           onClick={() => moveRow(row.rowId, 'down')}
-          className="rounded bg-background p-1 shadow hover:bg-accent disabled:opacity-30"
+          className="rounded bg-background p-1 shadow hover:bg-accent disabled:opacity-30 cursor-pointer"
           title="Move row down"
           type="button"
         >
           <ChevronDownIcon className="h-3.5 w-3.5" />
         </button>
         <button
-          disabled={row.blocks.length === 0}
           type="button"
           onClick={() => {
             const firstBlock = row.blocks[0];
             if (firstBlock) selectBlock(firstBlock.blockId);
           }}
-          className="rounded bg-green-600 p-1 text-white shadow hover:bg-green-700 disabled:opacity-30"
+          className="rounded bg-background p-1 shadow hover:bg-green-500 cursor-pointer"
           title="Edit row block"
         >
           <PencilIcon className="h-3.5 w-3.5" />
