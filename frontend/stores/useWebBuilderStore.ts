@@ -56,6 +56,7 @@ interface WebBuilderStateType {
   addRow: () => void;
   deleteRow: (rowId: string) => void;
   moveRow: (rowId: string, direction: 'up' | 'down') => void;
+  setRowBackgroundColor: (rowId: string, bgColor: string) => void;
 
   addBlock: (rowId: string, type: BlockType, defaultProps: Record<string, unknown>) => void;
   updateBlock: (blockId: string, props: Record<string, unknown>) => void;
@@ -197,6 +198,22 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
           isDirty: true,
         };
       });
+    },
+
+    setRowBackgroundColor(rowId, bgColor) {
+      set((s) => ({
+        pages: s.pages.map((p) =>
+          p.pageId === s.currentPageId
+            ? {
+                ...p,
+                rows: p.rows.map((r) =>
+                  r.rowId === rowId ? { ...r, bgColor } : r,
+                ),
+              }
+            : p,
+        ),
+        isDirty: true,
+      }));
     },
 
     addBlock(rowId, type, defaultProps) {

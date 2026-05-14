@@ -59,6 +59,7 @@ function SortableBlock({ block, isSelected, onSelect, onDelete }: SortableBlockP
     transition: isDragging ? undefined : transition,
     gridColumn: `span ${block.colSpan}`,
     opacity: isDragging ? 0.2 : 1,
+    backgroundColor: String(block.props.bgColor ?? 'transparent'),
   };
 
   const Component = BLOCK_REGISTRY[block.type];
@@ -68,7 +69,7 @@ function SortableBlock({ block, isSelected, onSelect, onDelete }: SortableBlockP
       ref={setNodeRef}
       style={style}
       onClick={onSelect}
-      className={`group relative cursor-pointer rounded-lg ring-2 transition-all ${
+      className={`group relative cursor-pointer overflow-hidden rounded-lg ring-2 transition-all ${
         isSelected ? 'ring-primary' : 'ring-transparent hover:ring-primary/40'
       }`}
     >
@@ -114,12 +115,16 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
     deleteBlock,
     moveRow,
     deleteRow,
+    setRowBackgroundColor,
     getCurrentPage,
   } = useWebBuilderStore();
+  const [editMenuOpen, setEditMenuOpen] = useState(false);
   const { active, over, collisions } = useDndContext();
   const page = getCurrentPage();
 
   const blockIds = row.blocks.map((b) => b.blockId);
+  const firstBlock = row.blocks[0];
+  const rowBgColor = row.bgColor ?? '#ffffff';
 
   const { setNodeRef: setDropRef, isOver } = useDroppable({
     id: row.rowId,
@@ -149,13 +154,18 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
   return (
     <div
       ref={setDropRef}
+      style={{ backgroundColor: row.bgColor ?? 'transparent' }}
       className={`group/row relative rounded-xl border-2 border-dashed p-3 transition-colors ${
         rowDropHighlight
           ? 'border-primary bg-primary/5'
           : 'border-muted-foreground/20 hover:border-muted-foreground/40'
       }`}
     >
-      <div className="absolute bottom-0 left-3 z-10 hidden translate-y-1/2 items-center gap-1 group-hover/row:flex">
+      <div
+        className={`absolute bottom-0 left-3 z-10 translate-y-1/2 items-center gap-1 ${
+          editMenuOpen ? 'flex' : 'hidden group-hover/row:flex'
+        }`}
+      >
         <button
           type="button"
           onClick={() => deleteRow(row.rowId)}
@@ -182,17 +192,38 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
         >
           <ChevronDownIcon className="h-3.5 w-3.5" />
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            const firstBlock = row.blocks[0];
-            if (firstBlock) selectBlock(firstBlock.blockId);
-          }}
-          className="rounded bg-background p-1 shadow hover:bg-green-500 cursor-pointer"
-          title="Edit row block"
-        >
-          <PencilIcon className="h-3.5 w-3.5" />
-        </button>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (firstBlock) selectBlock(firstBlock.blockId);
+              setEditMenuOpen((open) => !open);
+            }}
+            className="rounded bg-background p-1 shadow hover:bg-green-500 cursor-pointer"
+            title="Edit row block"
+          >
+            <PencilIcon className="h-3.5 w-3.5" />
+          </button>
+          {editMenuOpen && (
+            <div
+              className="absolute left-0 top-full mt-2 w-36 rounded-md border bg-background p-2 shadow-lg"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <label className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
+                Color
+                <input
+                  type="color"
+                  value={rowBgColor}
+                  onChange={(e) =>
+                    setRowBackgroundColor(row.rowId, e.target.value)
+                  }
+                  className="h-7 w-9 cursor-pointer rounded border p-0.5"
+                />
+              </label>
+            </div>
+          )}
+        </div>
       </div>
 
       <SortableContext items={blockIds} strategy={horizontalListSortingStrategy}>

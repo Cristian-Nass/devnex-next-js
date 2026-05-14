@@ -15,12 +15,19 @@ export function PageRenderer({ page }: PageRendererProps) {
             display: 'grid',
             gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
             gap: 16,
+            backgroundColor: row.bgColor ?? 'transparent',
+            borderRadius: 12,
           }}
         >
           {row.blocks.map((block) => (
             <div
               key={block.blockId}
-              style={{ gridColumn: `span ${Math.min(12, Math.max(1, block.colSpan))}` }}
+              style={{
+                gridColumn: `span ${Math.min(12, Math.max(1, block.colSpan))}`,
+                backgroundColor: String(block.props.bgColor ?? 'transparent'),
+                borderRadius: 12,
+                overflow: 'hidden',
+              }}
             >
               <BlockRenderer type={block.type} props={block.props} />
             </div>

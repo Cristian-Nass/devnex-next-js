@@ -11,6 +11,7 @@ export interface Block {
 
 export interface Row {
   rowId: string;
+  bgColor?: string;
   blocks: Block[];
 }
 

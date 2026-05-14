@@ -2,6 +2,7 @@ interface CtaBlockProps {
   label?: string;
   href?: string;
   variant?: string;
+  bgColor?: string;
   [key: string]: unknown;
 }
 
@@ -15,10 +16,20 @@ export function CtaBlock({
   label = 'Click Here',
   href = '#',
   variant = 'primary',
+  bgColor = 'transparent',
 }: CtaBlockProps) {
   const style = variantStyles[String(variant)] ?? variantStyles.primary;
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 24,
+        backgroundColor: String(bgColor),
+        borderRadius: 12,
+      }}
+    >
       <a
         href={String(href)}
         style={{
