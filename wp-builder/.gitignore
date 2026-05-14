@@ -8,6 +8,7 @@ backups/
 !server/prisma/migrations/**/*.sql
 *.sql.gz
 node_modules/
+.turbo
 dist/
 *.db
 *.db-journal

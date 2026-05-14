@@ -114,7 +114,7 @@ jobs:
       - run: npx turbo run build --filter=web-viewer...
 
   netmart:
-    name: netmart (yarn workspaces)
+    name: netmart (npm workspaces)
     needs: detect
     if: needs.detect.outputs.netmart == 'true'
     runs-on: ubuntu-latest
@@ -126,12 +126,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: corepack enable
-      - run: yarn install --frozen-lockfile
+          cache: npm
+          cache-dependency-path: netmart/package-lock.json
+      - run: npm ci
       - name: Backend build
-        run: yarn workspace backend build
+        run: npm run build:api
       - name: Frontend build
-        run: yarn workspace frontend build
+        run: npm run build:web
 
   wp-builder-server:
     name: wp-builder server (Fastify, standalone)
