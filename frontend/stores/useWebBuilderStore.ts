@@ -57,8 +57,11 @@ interface WebBuilderStateType {
   deleteRow: (rowId: string) => void;
   moveRow: (rowId: string, direction: 'up' | 'down') => void;
   setRowBackgroundColor: (rowId: string, bgColor: string) => void;
+  addColumn: (rowId: string) => void;
+  removeColumn: (rowId: string) => void;
 
   addBlock: (rowId: string, type: BlockType, defaultProps: Record<string, unknown>) => void;
+  addBlockToColumn: (rowId: string, columnIndex: number, type: BlockType, defaultProps: Record<string, unknown>) => void;
   updateBlock: (blockId: string, props: Record<string, unknown>) => void;
   deleteBlock: (blockId: string) => void;
   setBlockColSpan: (blockId: string, colSpan: number) => void;
@@ -159,7 +162,7 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
     },
 
     addRow() {
-      const newRow: Row = { rowId: `row-${uid()}`, blocks: [] };
+      const newRow: Row = { rowId: `row-${uid()}`, columns: 1, blocks: [] };
       set((s) => ({
         pages: s.pages.map((p) =>
           p.pageId === s.currentPageId
@@ -168,6 +171,91 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
         ),
         isDirty: true,
       }));
+    },
+
+    addColumn(rowId) {
+      set((s) => ({
+        pages: s.pages.map((p) =>
+          p.pageId === s.currentPageId
+            ? {
+                ...p,
+                rows: p.rows.map((r) => {
+                  if (r.rowId !== rowId) return r;
+                  const columns = Math.min(4, (r.columns ?? Math.max(1, r.blocks.length)) + 1);
+                  const colSpan = Math.max(1, Math.floor(12 / columns));
+
+                  return {
+                    ...r,
+                    columns,
+                    blocks: r.blocks.map((block, index) => ({
+                      ...block,
+                      colSpan,
+                      columnIndex: block.columnIndex ?? index,
+                    })),
+                  };
+                }),
+              }
+            : p,
+        ),
+        isDirty: true,
+      }));
+    },
+
+    removeColumn(rowId) {
+      set((s) => {
+        let removedBlockId: string | null = null;
+        let changed = false;
+
+        const pages = s.pages.map((p) =>
+          p.pageId === s.currentPageId
+            ? {
+                ...p,
+                rows: p.rows.map((r) => {
+                  if (r.rowId !== rowId) return r;
+
+                  const columns = r.columns ?? Math.max(1, r.blocks.length);
+                  if (columns <= 1) return r;
+
+                  changed = true;
+                  const removedColumnIndex = columns - 1;
+                  const nextColumns = columns - 1;
+                  const colSpan = Math.max(1, Math.floor(12 / nextColumns));
+                  const blocks = r.blocks
+                    .filter((block, index) => {
+                      const blockColumnIndex = block.columnIndex ?? index;
+                      if (blockColumnIndex === removedColumnIndex) {
+                        removedBlockId = block.blockId;
+                        return false;
+                      }
+                      return true;
+                    })
+                    .map((block, index) => ({
+                      ...block,
+                      colSpan,
+                      columnIndex: Math.min(block.columnIndex ?? index, nextColumns - 1),
+                    }));
+
+                  return {
+                    ...r,
+                    columns: nextColumns,
+                    blocks,
+                  };
+                }),
+              }
+            : p,
+        );
+
+        if (!changed) return {};
+
+        return {
+          pages,
+          selectedBlockId:
+            removedBlockId && s.selectedBlockId === removedBlockId
+              ? null
+              : s.selectedBlockId,
+          isDirty: true,
+        };
+      });
     },
 
     deleteRow(rowId) {
@@ -220,25 +308,103 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
       const newBlock: Block = {
         blockId: `block-${uid()}`,
         type,
-        colSpan: type === 'hero' ? 12 : 6,
+        colSpan: 12,
         props: defaultProps,
       };
-      set((s) => ({
-        pages: s.pages.map((p) =>
+      set((s) => {
+        let added = false;
+
+        const pages = s.pages.map((p) =>
           p.pageId === s.currentPageId
             ? {
-              ...p,
-              rows: p.rows.map((r) =>
-                r.rowId === rowId
-                  ? { ...r, blocks: [...r.blocks, newBlock] }
-                  : r,
-              ),
-            }
+                ...p,
+                rows: p.rows.map((r) => {
+                  if (r.rowId !== rowId) return r;
+
+                  const columns = r.columns ?? Math.max(1, r.blocks.length + 1);
+                  if (r.blocks.length >= columns) return r;
+
+                  added = true;
+                  const colSpan = Math.max(1, Math.floor(12 / columns));
+                  const usedColumns = new Set(
+                    r.blocks.map((block, index) => block.columnIndex ?? index),
+                  );
+                  const columnIndex =
+                    Array.from({ length: columns }).findIndex((_, index) => !usedColumns.has(index));
+                  if (columnIndex === -1) return r;
+
+                  return {
+                    ...r,
+                    columns,
+                    blocks: [...r.blocks, { ...newBlock, colSpan, columnIndex }],
+                  };
+                }),
+              }
             : p,
-        ),
-        selectedBlockId: newBlock.blockId,
-        isDirty: true,
-      }));
+        );
+
+        if (!added) return {};
+
+        return {
+          pages,
+          selectedBlockId: newBlock.blockId,
+          isDirty: true,
+        };
+      });
+    },
+
+    addBlockToColumn(rowId, columnIndex, type, defaultProps) {
+      const newBlock: Block = {
+        blockId: `block-${uid()}`,
+        type,
+        colSpan: 12,
+        props: defaultProps,
+      };
+
+      set((s) => {
+        let added = false;
+
+        const pages = s.pages.map((p) =>
+          p.pageId === s.currentPageId
+            ? {
+                ...p,
+                rows: p.rows.map((r) => {
+                  if (r.rowId !== rowId) return r;
+
+                  const columns = r.columns ?? Math.max(1, r.blocks.length);
+                  const columnOccupied = r.blocks.some(
+                    (block, index) => (block.columnIndex ?? index) === columnIndex,
+                  );
+                  if (columnIndex < 0 || columnIndex >= columns || columnOccupied) return r;
+
+                  added = true;
+                  const colSpan = Math.max(1, Math.floor(12 / columns));
+
+                  return {
+                    ...r,
+                    columns,
+                    blocks: [
+                      ...r.blocks.map((block, index) => ({
+                        ...block,
+                        colSpan,
+                        columnIndex: block.columnIndex ?? index,
+                      })),
+                      { ...newBlock, colSpan, columnIndex },
+                    ],
+                  };
+                }),
+              }
+            : p,
+        );
+
+        if (!added) return {};
+
+        return {
+          pages,
+          selectedBlockId: newBlock.blockId,
+          isDirty: true,
+        };
+      });
     },
 
     updateBlock(blockId, props) {

@@ -6,12 +6,14 @@ export interface Block {
   blockId: string;
   type: BlockType;
   colSpan: number;
+  columnIndex?: number;
   props: Record<string, unknown>;
 }
 
 export interface Row {
   rowId: string;
   bgColor?: string;
+  columns?: number;
   blocks: Block[];
 }
 

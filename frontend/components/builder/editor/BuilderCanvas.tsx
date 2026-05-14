@@ -103,6 +103,33 @@ function SortableBlock({ block, isSelected, onSelect, onDelete }: SortableBlockP
   );
 }
 
+interface EmptyColumnSlotProps {
+  rowId: string;
+  columnIndex: number;
+  colSpan: number;
+}
+
+function EmptyColumnSlot({ rowId, columnIndex, colSpan }: EmptyColumnSlotProps) {
+  const { setNodeRef, isOver } = useDroppable({
+    id: `column-${rowId}-${columnIndex}`,
+    data: { type: 'column', rowId, columnIndex },
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{ gridColumn: `span ${colSpan}` }}
+      className={`flex h-20 items-center justify-center rounded-lg border-2 border-dashed text-sm text-muted-foreground transition-colors ${
+        isOver
+          ? 'border-primary bg-primary/5 text-primary'
+          : 'border-muted-foreground/30'
+      }`}
+    >
+      Drag a block here or click &ldquo;+ add&rdquo; in the panel
+    </div>
+  );
+}
+
 interface RowContainerProps {
   row: Row;
   rowIndex: number;
@@ -123,6 +150,8 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
   const page = getCurrentPage();
 
   const blockIds = row.blocks.map((b) => b.blockId);
+  const columnCount = Math.max(1, row.columns ?? row.blocks.length);
+  const columnSpan = Math.max(1, Math.floor(12 / columnCount));
 
   const { setNodeRef: setDropRef, isOver } = useDroppable({
     id: row.rowId,
@@ -194,23 +223,30 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
       </div>
 
       <SortableContext items={blockIds} strategy={horizontalListSortingStrategy}>
-        {row.blocks.length === 0 ? (
-          <div className="flex h-20 items-center justify-center text-sm text-muted-foreground">
-            Drag a block here or click &ldquo;+ add&rdquo; in the panel
-          </div>
-        ) : (
-          <div className="grid grid-cols-12 gap-3">
-            {row.blocks.map((block) => (
+        <div className="grid grid-cols-12 gap-3">
+          {Array.from({ length: columnCount }).map((_, columnIndex) => {
+            const block = row.blocks.find(
+              (candidate, index) => (candidate.columnIndex ?? index) === columnIndex,
+            );
+
+            return block ? (
               <SortableBlock
                 key={block.blockId}
-                block={block}
+                block={{ ...block, colSpan: columnSpan, columnIndex }}
                 isSelected={selectedBlockId === block.blockId}
                 onSelect={() => selectBlock(block.blockId)}
                 onDelete={() => deleteBlock(block.blockId)}
               />
-            ))}
-          </div>
-        )}
+            ) : (
+              <EmptyColumnSlot
+                key={`${row.rowId}-${columnIndex}`}
+                rowId={row.rowId}
+                columnIndex={columnIndex}
+                colSpan={columnSpan}
+              />
+            );
+          })}
+        </div>
       </SortableContext>
     </div>
   );
@@ -245,6 +281,7 @@ function BuilderCanvasDnd({ leftSidebar }: BuilderCanvasDndProps) {
     getCurrentPage,
     addRow,
     addBlock,
+    addBlockToColumn,
     moveBlockInRow,
     moveBlockBetweenRows,
   } = useWebBuilderStore();
@@ -290,6 +327,18 @@ function BuilderCanvasDnd({ leftSidebar }: BuilderCanvasDndProps) {
 
     if (activeData?.origin === 'panel') {
       const blockType = activeData.blockType as BlockType;
+      const overData = over.data.current;
+
+      if (overData?.type === 'column') {
+        addBlockToColumn(
+          String(overData.rowId),
+          Number(overData.columnIndex),
+          blockType,
+          BLOCK_DEFAULTS[blockType],
+        );
+        return;
+      }
+
       const targetRow = page.rows.find(
         (r) => r.rowId === overId || r.blocks.some((b) => b.blockId === overId),
       );
