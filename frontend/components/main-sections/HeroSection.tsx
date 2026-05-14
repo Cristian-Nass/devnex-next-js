@@ -26,7 +26,7 @@ export default async function HeroSection({ locale }: HeroSectionProps) {
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1440px] p-10">
         <div className="absolute right-1/10 top-1/2 h-auto w-1/3 -translate-y-1/2 flex justify-end pointer-events-none opacity-0 transition-opacity duration-1000 sm:opacity-20 md:opacity-50 lg:opacity-100">
           <Image
-            src="/hero-img.png"
+            src="/hero-image.png"
             alt="Hero Image"
             width={700}
             height={700}
