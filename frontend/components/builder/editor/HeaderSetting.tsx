@@ -30,7 +30,7 @@ const HeaderSetting = () => {
           onChange={(event) =>
             setNavigationBar({backgroundColor: event.target.value})
           }
-          className="h-8 w-8 cursor-pointer"
+          className="h-10 w-10 shrink-0 cursor-pointer rounded-md border border-input bg-background p-1"
         />
       </label>
       <label className="flex items-center justify-between gap-2 text-xs">
@@ -40,7 +40,7 @@ const HeaderSetting = () => {
           aria-label="Header text color"
           value={navigationBar.textColor}
           onChange={(event) => setNavigationBar({textColor: event.target.value})}
-          className="h-8 w-8 cursor-pointer"
+          className="h-10 w-10 shrink-0 cursor-pointer rounded-md border border-input bg-background p-1"
         />
       </label>
       <label className="flex items-center justify-between gap-2 text-xs">
@@ -50,7 +50,7 @@ const HeaderSetting = () => {
           aria-label="Header button color"
           value={navigationBar.buttonColor}
           onChange={(event) => setNavigationBar({buttonColor: event.target.value})}
-          className="h-8 w-8 cursor-pointer"
+          className="h-10 w-10 shrink-0 cursor-pointer rounded-md border border-input bg-background p-1"
         />
       </label>
       <div className="flex flex-col gap-1 text-xs">

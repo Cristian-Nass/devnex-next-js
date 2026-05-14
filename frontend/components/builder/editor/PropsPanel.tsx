@@ -7,6 +7,7 @@ import {
   CheckIcon,
   Loader2Icon,
   SettingsIcon,
+  EraserIcon,
 } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
@@ -27,6 +28,10 @@ function findSelectedBlock(pages: ReturnType<typeof useWebBuilderStore.getState>
     }
   }
   return null;
+}
+
+function solidHexForColorInput(raw: string): string {
+  return /^#[0-9A-Fa-f]{6}$/i.test(raw) ? raw : '#e5e7eb';
 }
 
 export function PropsPanel() {
@@ -186,23 +191,36 @@ export function PropsPanel() {
                           ))}
                         </select>
                       ) : field.type === 'color' ? (
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                           <input
                             type="color"
-                            value={value || '#000000'}
+                            value={solidHexForColorInput(value)}
                             onChange={(e) =>
-                              updateBlock(block.blockId, { [field.key]: e.target.value })
+                              updateBlock(block.blockId, {
+                                [field.key]: e.target.value,
+                              })
                             }
-                            className="h-8 w-10 cursor-pointer rounded border p-0.5"
+                            className="h-10 w-10 cursor-pointer rounded-md border border-input bg-background p-1"
+                            aria-label={field.label}
+                            title={field.label}
                           />
-                          <input
-                            type="text"
-                            value={value}
-                            onChange={(e) =>
-                              updateBlock(block.blockId, { [field.key]: e.target.value })
-                            }
-                            className="flex-1 rounded-md border bg-background px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
-                          />
+                          {field.key === 'bgColor' ? (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              className="h-10 w-10 shrink-0"
+                              title="Remove background color"
+                              aria-label="Remove background color"
+                              onClick={() =>
+                                updateBlock(block.blockId, {
+                                  bgColor: 'transparent',
+                                })
+                              }
+                            >
+                              <EraserIcon className="h-4 w-4" />
+                            </Button>
+                          ) : null}
                         </div>
                       ) : (
                         <input

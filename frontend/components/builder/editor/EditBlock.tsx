@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { PencilIcon } from 'lucide-react';
-import { MinusIcon, PlusIcon } from 'lucide-react';
+import { EraserIcon, MinusIcon, PencilIcon, PlusIcon } from 'lucide-react';
 import type { Row } from '@/lib/site-types';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 import { Button } from '@/components/ui/button';
@@ -16,7 +15,9 @@ export function EditBlock({ row, onOpenChange }: EditBlockProps) {
   const { addColumn, removeColumn, selectBlock, setRowBackgroundColor } = useWebBuilderStore();
   const [open, setOpen] = useState(false);
   const firstBlock = row.blocks[0];
-  const rowBgColor = row.bgColor ?? '#ffffff';
+  const rowBg = row.bgColor ?? 'transparent';
+  const rowBgPickerValue =
+    /^#[0-9A-Fa-f]{6}$/i.test(rowBg) ? rowBg : '#e5e7eb';
 
   function setMenuOpen(nextOpen: boolean) {
     setOpen(nextOpen);
@@ -49,10 +50,21 @@ export function EditBlock({ row, onOpenChange }: EditBlockProps) {
         >
             <input
               type="color"
-              value={rowBgColor}
+              value={rowBgPickerValue}
               onChange={(e) => setRowBackgroundColor(row.rowId, e.target.value)}
-              className="h-7 w-9 cursor-pointer rounded border p-0.5"
+              className="h-10 w-10 shrink-0 cursor-pointer rounded-md border border-input bg-background p-1"
+              aria-label="Row background color"
             />
+            <Button
+              type="button"
+              variant="outline"
+              className="h-10 w-10 shrink-0 cursor-pointer"
+              title="Remove row background"
+              aria-label="Remove row background"
+              onClick={() => setRowBackgroundColor(row.rowId, 'transparent')}
+            >
+              <EraserIcon className="h-4 w-4" />
+            </Button>
             <Button
               type="button"
               variant="outline"
