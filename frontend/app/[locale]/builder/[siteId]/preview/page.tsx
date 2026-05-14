@@ -1,10 +1,7 @@
 'use client';
 
 import { useEffect, use, useState } from 'react';
-import { useLocale } from 'next-intl';
-import { ArrowLeftIcon } from 'lucide-react';
-import { Link } from '@/i18n/routing';
-import { PageRenderer } from '@/components/builder/viewer/PageRenderer';
+import { useRouter } from '@/i18n/routing';
 import { apiGetSite } from '@/lib/api-sites';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
 import { toast } from 'sonner';
@@ -17,28 +14,9 @@ export default function BuilderLivePreviewPage({
   params,
 }: BuilderLivePreviewPageProps) {
   const { siteId } = use(params);
-  const locale = useLocale();
-  const {
-    siteId: storeSiteId,
-    siteName,
-    getCurrentPage,
-    pages,
-    currentPageId,
-    navigationBar,
-    setCurrentPage,
-    loadSite,
-  } = useWebBuilderStore();
+  const router = useRouter();
+  const { siteId: storeSiteId, pages, loadSite } = useWebBuilderStore();
   const [hydrated, setHydrated] = useState(false);
-  const headerMaxWidth = {
-    full: undefined,
-    big: '1440px',
-    medium: '1024px',
-  }[navigationBar.width];
-  const justifyContent = {
-    left: 'flex-start',
-    center: 'center',
-    right: 'flex-end',
-  }[navigationBar.justify];
 
   useEffect(() => {
     if (storeSiteId === siteId) {
@@ -67,71 +45,21 @@ export default function BuilderLivePreviewPage({
     };
   }, [siteId, storeSiteId, loadSite]);
 
-  const page = getCurrentPage();
+  useEffect(() => {
+    if (!hydrated) return;
+    const firstPageSlug = pages[0]?.slug;
+    if (firstPageSlug) {
+      router.replace(`/builder/${siteId}/preview/${firstPageSlug}`);
+    }
+  }, [hydrated, pages, router, siteId]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <header
-        className="mx-auto h-14 w-full shrink-0 border-b"
-        style={{
-          backgroundColor: navigationBar.backgroundColor,
-          color: navigationBar.textColor,
-          maxWidth: headerMaxWidth,
-        }}
-      >
-        <div className="flex h-full w-full items-center justify-between gap-4 px-4">
-          <span className="shrink-0 truncate text-sm font-semibold">
-            {siteName || 'Preview'}
-          </span>
-
-          {hydrated && pages.length > 0 && (
-            <nav
-              className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"
-              style={{ justifyContent }}
-            >
-              {pages.map((p) => (
-                <button
-                  key={p.pageId}
-                  type="button"
-                  onClick={() => setCurrentPage(p.pageId)}
-                  className="cursor-pointer rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-black/10"
-                  style={{
-                    backgroundColor:
-                      p.pageId === currentPageId
-                        ? navigationBar.buttonColor
-                        : undefined,
-                    color: navigationBar.textColor,
-                  }}
-                >
-                  {p.label}
-                </button>
-              ))}
-            </nav>
-          )}
-
-          <Link
-            href={`/builder/${siteId}`}
-            locale={locale}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm font-medium hover:bg-black/10"
-            style={{ color: navigationBar.textColor }}
-          >
-            <ArrowLeftIcon className="h-3.5 w-3.5" />
-            Back
-          </Link>
-        </div>
-      </header>
-
-      <main className="container mx-auto max-w-6xl flex-1 px-4 py-8">
-        {!hydrated ? (
-          <p className="text-center text-sm text-muted-foreground">Loading…</p>
-        ) : !page ? (
-          <p className="text-center text-sm text-muted-foreground">
-            No page to show yet.
-          </p>
-        ) : (
-          <PageRenderer page={page} />
-        )}
-      </main>
-    </div>
+    <main className="flex min-h-screen items-center justify-center bg-background p-6">
+      <p className="text-center text-sm text-muted-foreground">
+        {!hydrated || pages.length > 0
+          ? 'Loading preview…'
+          : 'No page to show yet.'}
+      </p>
+    </main>
   );
 }
