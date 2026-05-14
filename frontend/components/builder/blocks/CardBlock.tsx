@@ -2,6 +2,7 @@ interface CardBlockProps {
   title?: string;
   body?: string;
   imageUrl?: string;
+  bgColor?: string;
   [key: string]: unknown;
 }
 
@@ -9,6 +10,7 @@ export function CardBlock({
   title = 'Card Title',
   body = 'Card content goes here.',
   imageUrl,
+  bgColor = '#ffffff',
 }: CardBlockProps) {
   return (
     <div
@@ -19,7 +21,7 @@ export function CardBlock({
         borderRadius: 12,
         border: '1px solid #e2e8f0',
         padding: 20,
-        background: '#ffffff',
+        background: String(bgColor),
         boxShadow: '0 1px 2px rgba(15,23,42,0.06)',
       }}
     >

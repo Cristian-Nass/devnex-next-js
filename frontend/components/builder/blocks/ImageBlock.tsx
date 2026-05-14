@@ -2,10 +2,16 @@ interface ImageBlockProps {
   src?: string;
   alt?: string;
   caption?: string;
+  bgColor?: string;
   [key: string]: unknown;
 }
 
-export function ImageBlock({ src, alt = 'Image', caption }: ImageBlockProps) {
+export function ImageBlock({
+  src,
+  alt = 'Image',
+  caption,
+  bgColor = '#f8fafc',
+}: ImageBlockProps) {
   if (!src) {
     return (
       <div
@@ -16,7 +22,7 @@ export function ImageBlock({ src, alt = 'Image', caption }: ImageBlockProps) {
           justifyContent: 'center',
           borderRadius: 8,
           border: '2px dashed #cbd5e1',
-          background: '#f8fafc',
+          background: String(bgColor),
         }}
       >
         <span style={{ fontSize: '0.875rem', color: '#64748b' }}>Set image URL in props</span>
@@ -24,7 +30,17 @@ export function ImageBlock({ src, alt = 'Image', caption }: ImageBlockProps) {
     );
   }
   return (
-    <figure style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+    <figure
+      style={{
+        margin: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 8,
+        backgroundColor: String(bgColor),
+        borderRadius: 12,
+        padding: 8,
+      }}
+    >
       <img
         src={String(src)}
         alt={String(alt)}

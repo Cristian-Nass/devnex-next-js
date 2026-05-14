@@ -11,6 +11,11 @@ import type {
 } from '@/lib/site-types';
 import { devtools } from 'zustand/middleware';
 
+type SelectedColumn = {
+  rowId: string;
+  columnIndex: number;
+};
+
 function uid(): string {
   return crypto.randomUUID().slice(0, 8);
 }
@@ -41,6 +46,7 @@ interface WebBuilderStateType {
   pages: Page[];
   currentPageId: string | null;
   selectedBlockId: string | null;
+  selectedColumn: SelectedColumn | null;
   isDirty: boolean;
 
   loadSite: (id: string, name: string, data: SiteData, meta?: LoadSiteMeta) => void;
@@ -56,14 +62,19 @@ interface WebBuilderStateType {
   addRow: () => void;
   deleteRow: (rowId: string) => void;
   moveRow: (rowId: string, direction: 'up' | 'down') => void;
+  setRowBackgroundColor: (rowId: string, bgColor: string) => void;
+  addColumn: (rowId: string) => void;
+  removeColumn: (rowId: string) => void;
 
   addBlock: (rowId: string, type: BlockType, defaultProps: Record<string, unknown>) => void;
+  addBlockToColumn: (rowId: string, columnIndex: number, type: BlockType, defaultProps: Record<string, unknown>) => void;
   updateBlock: (blockId: string, props: Record<string, unknown>) => void;
   deleteBlock: (blockId: string) => void;
   setBlockColSpan: (blockId: string, colSpan: number) => void;
   moveBlockInRow: (rowId: string, activeId: string, overId: string) => void;
   moveBlockBetweenRows: (blockId: string, fromRowId: string, toRowId: string, overBlockId?: string) => void;
   selectBlock: (blockId: string | null) => void;
+  selectColumn: (rowId: string, columnIndex: number) => void;
 
   getSiteData: () => SiteData;
   markSaved: () => void;
@@ -87,6 +98,7 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
     pages: [],
     currentPageId: null,
     selectedBlockId: null,
+    selectedColumn: null,
     isDirty: false,
 
     loadSite(id, name, data, meta) {
@@ -101,6 +113,7 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
         pages: data.pages ?? [],
         currentPageId: data.pages?.[0]?.pageId ?? null,
         selectedBlockId: null,
+        selectedColumn: null,
         isDirty: false,
       });
     },
@@ -119,7 +132,7 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
     },
 
     setCurrentPage(pageId) {
-      set({ currentPageId: pageId, selectedBlockId: null });
+      set({ currentPageId: pageId, selectedBlockId: null, selectedColumn: null });
     },
 
     addPage(label, slug) {
@@ -158,7 +171,7 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
     },
 
     addRow() {
-      const newRow: Row = { rowId: `row-${uid()}`, blocks: [] };
+      const newRow: Row = { rowId: `row-${uid()}`, columns: 1, blocks: [] };
       set((s) => ({
         pages: s.pages.map((p) =>
           p.pageId === s.currentPageId
@@ -169,6 +182,98 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
       }));
     },
 
+    addColumn(rowId) {
+      set((s) => ({
+        pages: s.pages.map((p) =>
+          p.pageId === s.currentPageId
+            ? {
+                ...p,
+                rows: p.rows.map((r) => {
+                  if (r.rowId !== rowId) return r;
+                  const columns = Math.min(4, (r.columns ?? Math.max(1, r.blocks.length)) + 1);
+                  const colSpan = Math.max(1, Math.floor(12 / columns));
+
+                  return {
+                    ...r,
+                    columns,
+                    blocks: r.blocks.map((block, index) => ({
+                      ...block,
+                      colSpan,
+                      columnIndex: block.columnIndex ?? index,
+                    })),
+                  };
+                }),
+              }
+            : p,
+        ),
+        isDirty: true,
+      }));
+    },
+
+    removeColumn(rowId) {
+      set((s) => {
+        let removedBlockId: string | null = null;
+        let removedColumnIndex: number | null = null;
+        let changed = false;
+
+        const pages = s.pages.map((p) =>
+          p.pageId === s.currentPageId
+            ? {
+                ...p,
+                rows: p.rows.map((r) => {
+                  if (r.rowId !== rowId) return r;
+
+                  const columns = r.columns ?? Math.max(1, r.blocks.length);
+                  if (columns <= 1) return r;
+
+                  changed = true;
+                  removedColumnIndex = columns - 1;
+                  const nextColumns = columns - 1;
+                  const colSpan = Math.max(1, Math.floor(12 / nextColumns));
+                  const blocks = r.blocks
+                    .filter((block, index) => {
+                      const blockColumnIndex = block.columnIndex ?? index;
+                      if (blockColumnIndex === removedColumnIndex) {
+                        removedBlockId = block.blockId;
+                        return false;
+                      }
+                      return true;
+                    })
+                    .map((block, index) => ({
+                      ...block,
+                      colSpan,
+                      columnIndex: Math.min(block.columnIndex ?? index, nextColumns - 1),
+                    }));
+
+                  return {
+                    ...r,
+                    columns: nextColumns,
+                    blocks,
+                  };
+                }),
+              }
+            : p,
+        );
+
+        if (!changed) return {};
+
+        return {
+          pages,
+          selectedBlockId:
+            removedBlockId && s.selectedBlockId === removedBlockId
+              ? null
+              : s.selectedBlockId,
+          selectedColumn:
+            s.selectedColumn?.rowId === rowId &&
+            removedColumnIndex != null &&
+            s.selectedColumn.columnIndex >= removedColumnIndex
+              ? { rowId, columnIndex: Math.max(0, removedColumnIndex - 1) }
+              : s.selectedColumn,
+          isDirty: true,
+        };
+      });
+    },
+
     deleteRow(rowId) {
       set((s) => ({
         pages: s.pages.map((p) =>
@@ -177,6 +282,7 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
             : p,
         ),
         selectedBlockId: null,
+        selectedColumn: s.selectedColumn?.rowId === rowId ? null : s.selectedColumn,
         isDirty: true,
       }));
     },
@@ -199,29 +305,124 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
       });
     },
 
-    addBlock(rowId, type, defaultProps) {
-      const newBlock: Block = {
-        blockId: `block-${uid()}`,
-        type,
-        colSpan: type === 'hero' ? 12 : 6,
-        props: defaultProps,
-      };
+    setRowBackgroundColor(rowId, bgColor) {
       set((s) => ({
         pages: s.pages.map((p) =>
           p.pageId === s.currentPageId
             ? {
-              ...p,
-              rows: p.rows.map((r) =>
-                r.rowId === rowId
-                  ? { ...r, blocks: [...r.blocks, newBlock] }
-                  : r,
-              ),
-            }
+                ...p,
+                rows: p.rows.map((r) =>
+                  r.rowId === rowId ? { ...r, bgColor } : r,
+                ),
+              }
             : p,
         ),
-        selectedBlockId: newBlock.blockId,
         isDirty: true,
       }));
+    },
+
+    addBlock(rowId, type, defaultProps) {
+      const newBlock: Block = {
+        blockId: `block-${uid()}`,
+        type,
+        colSpan: 12,
+        props: defaultProps,
+      };
+      set((s) => {
+        let added = false;
+        let addedColumnIndex = 0;
+
+        const pages = s.pages.map((p) =>
+          p.pageId === s.currentPageId
+            ? {
+                ...p,
+                rows: p.rows.map((r) => {
+                  if (r.rowId !== rowId) return r;
+
+                  const columns = r.columns ?? Math.max(1, r.blocks.length + 1);
+                  if (r.blocks.length >= columns) return r;
+
+                  added = true;
+                  const colSpan = Math.max(1, Math.floor(12 / columns));
+                  const usedColumns = new Set(
+                    r.blocks.map((block, index) => block.columnIndex ?? index),
+                  );
+                  const columnIndex =
+                    Array.from({ length: columns }).findIndex((_, index) => !usedColumns.has(index));
+                  if (columnIndex === -1) return r;
+                  addedColumnIndex = columnIndex;
+
+                  return {
+                    ...r,
+                    columns,
+                    blocks: [...r.blocks, { ...newBlock, colSpan, columnIndex }],
+                  };
+                }),
+              }
+            : p,
+        );
+
+        if (!added) return {};
+
+        return {
+          pages,
+          selectedBlockId: newBlock.blockId,
+          selectedColumn: { rowId, columnIndex: addedColumnIndex },
+          isDirty: true,
+        };
+      });
+    },
+
+    addBlockToColumn(rowId, columnIndex, type, defaultProps) {
+      const newBlock: Block = {
+        blockId: `block-${uid()}`,
+        type,
+        colSpan: 12,
+        props: defaultProps,
+      };
+
+      set((s) => {
+        let added = false;
+
+        const pages = s.pages.map((p) =>
+          p.pageId === s.currentPageId
+            ? {
+                ...p,
+                rows: p.rows.map((r) => {
+                  if (r.rowId !== rowId) return r;
+
+                  const columns = r.columns ?? Math.max(1, r.blocks.length);
+                  if (columnIndex < 0 || columnIndex >= columns) return r;
+
+                  added = true;
+                  const colSpan = Math.max(1, Math.floor(12 / columns));
+
+                  return {
+                    ...r,
+                    columns,
+                    blocks: [
+                      ...r.blocks.map((block, index) => ({
+                        ...block,
+                        colSpan,
+                        columnIndex: block.columnIndex ?? index,
+                      })),
+                      { ...newBlock, colSpan, columnIndex },
+                    ],
+                  };
+                }),
+              }
+            : p,
+        );
+
+        if (!added) return {};
+
+        return {
+          pages,
+          selectedBlockId: newBlock.blockId,
+          selectedColumn: { rowId, columnIndex },
+          isDirty: true,
+        };
+      });
     },
 
     updateBlock(blockId, props) {
@@ -323,6 +524,10 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
 
     selectBlock(blockId) {
       set({ selectedBlockId: blockId });
+    },
+
+    selectColumn(rowId, columnIndex) {
+      set({ selectedColumn: { rowId, columnIndex }, selectedBlockId: null });
     },
 
     getSiteData(): SiteData {

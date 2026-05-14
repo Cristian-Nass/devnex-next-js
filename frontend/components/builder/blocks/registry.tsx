@@ -25,10 +25,10 @@ export const BLOCK_DEFAULTS: Record<BlockType, Record<string, unknown>> = {
     bgColor: '#1e293b',
     textColor: '#ffffff',
   },
-  card: { title: 'Card Title', body: 'Card content goes here.' },
-  text: { content: 'Write your content here...', align: 'left' },
-  image: { src: '', alt: 'Image', caption: '' },
-  cta: { label: 'Click Here', href: '#', variant: 'primary' },
+  card: { title: 'Card Title', body: 'Card content goes here.', bgColor: '#ffffff' },
+  text: { content: 'Write your content here...', align: 'left', bgColor: '#ffffff' },
+  image: { src: '', alt: 'Image', caption: '', bgColor: '#f8fafc' },
+  cta: { label: 'Click Here', href: '#', variant: 'primary', bgColor: '#ffffff' },
 };
 
 export const BLOCK_LABELS: Record<BlockType, string> = {
@@ -60,6 +60,7 @@ export const BLOCK_PROP_SCHEMA: Record<BlockType, PropField[]> = {
     { key: 'title', label: 'Title', type: 'text' },
     { key: 'body', label: 'Body', type: 'textarea' },
     { key: 'imageUrl', label: 'Image URL', type: 'url' },
+    { key: 'bgColor', label: 'Background Color', type: 'color' },
   ],
   text: [
     { key: 'content', label: 'Content', type: 'textarea' },
@@ -73,11 +74,13 @@ export const BLOCK_PROP_SCHEMA: Record<BlockType, PropField[]> = {
         { value: 'right', label: 'Right' },
       ],
     },
+    { key: 'bgColor', label: 'Background Color', type: 'color' },
   ],
   image: [
     { key: 'src', label: 'Image URL', type: 'url' },
     { key: 'alt', label: 'Alt Text', type: 'text' },
     { key: 'caption', label: 'Caption', type: 'text' },
+    { key: 'bgColor', label: 'Background Color', type: 'color' },
   ],
   cta: [
     { key: 'label', label: 'Label', type: 'text' },
@@ -92,6 +95,7 @@ export const BLOCK_PROP_SCHEMA: Record<BlockType, PropField[]> = {
         { value: 'outline', label: 'Outline' },
       ],
     },
+    { key: 'bgColor', label: 'Background Color', type: 'color' },
   ],
 };
 

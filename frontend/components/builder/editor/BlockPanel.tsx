@@ -48,7 +48,7 @@ export function BlockPanel({onAddToRow, hasRows}: BlockPanelProps) {
         </summary>
           <HeaderSetting />
       </details>
-      <details className="mb-1">
+      <details className="mb-1" open>
         <summary className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer hover:text-primary">
           Blocks
         </summary>

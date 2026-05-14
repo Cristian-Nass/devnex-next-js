@@ -29,6 +29,7 @@ import { ChevronDownIcon, ChevronUpIcon, PlusIcon, Trash2Icon, GripHorizontalIco
 import { BLOCK_DEFAULTS, BLOCK_LABELS, BLOCK_REGISTRY } from '@/components/builder/blocks/registry';
 import type { Block, BlockType, Row } from '@/lib/site-types';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
+import { EditBlock } from './EditBlock';
 
 /** Prefer blocks / palette over row shells so the pointer targets the grid, not the outer row box. */
 const canvasCollisionDetection: CollisionDetection = (args) => {
@@ -59,6 +60,7 @@ function SortableBlock({ block, isSelected, onSelect, onDelete }: SortableBlockP
     transition: isDragging ? undefined : transition,
     gridColumn: `span ${block.colSpan}`,
     opacity: isDragging ? 0.2 : 1,
+    backgroundColor: String(block.props.bgColor ?? 'transparent'),
   };
 
   const Component = BLOCK_REGISTRY[block.type];
@@ -67,8 +69,11 @@ function SortableBlock({ block, isSelected, onSelect, onDelete }: SortableBlockP
     <div
       ref={setNodeRef}
       style={style}
-      onClick={onSelect}
-      className={`group relative cursor-pointer rounded-lg ring-2 transition-all ${
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect();
+      }}
+      className={`group relative cursor-pointer overflow-hidden rounded-lg ring-2 transition-all ${
         isSelected ? 'ring-primary' : 'ring-transparent hover:ring-primary/40'
       }`}
     >
@@ -101,6 +106,44 @@ function SortableBlock({ block, isSelected, onSelect, onDelete }: SortableBlockP
   );
 }
 
+interface EmptyColumnSlotProps {
+  rowId: string;
+  columnIndex: number;
+  colSpan: number;
+  isSelected: boolean;
+  onSelect: () => void;
+}
+
+function EmptyColumnSlot({
+  rowId,
+  columnIndex,
+  colSpan,
+  isSelected,
+  onSelect,
+}: EmptyColumnSlotProps) {
+  const { setNodeRef, isOver } = useDroppable({
+    id: `column-${rowId}-${columnIndex}`,
+    data: { type: 'column', rowId, columnIndex },
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{ gridColumn: `span ${colSpan}` }}
+      onClick={onSelect}
+      className={`flex h-20 items-center justify-center rounded-lg border-2 border-dashed text-sm text-muted-foreground transition-colors ${
+        isSelected
+          ? 'border-primary bg-primary/10 text-primary'
+          : isOver
+          ? 'border-primary bg-primary/5 text-primary'
+          : 'border-muted-foreground/30'
+      }`}
+    >
+      Drag a block here or click &ldquo;+ add&rdquo; in the panel
+    </div>
+  );
+}
+
 interface RowContainerProps {
   row: Row;
   rowIndex: number;
@@ -110,16 +153,21 @@ interface RowContainerProps {
 function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
   const {
     selectedBlockId,
+    selectedColumn,
     selectBlock,
+    selectColumn,
     deleteBlock,
     moveRow,
     deleteRow,
     getCurrentPage,
   } = useWebBuilderStore();
+  const [editMenuOpen, setEditMenuOpen] = useState(false);
   const { active, over, collisions } = useDndContext();
   const page = getCurrentPage();
 
   const blockIds = row.blocks.map((b) => b.blockId);
+  const columnCount = Math.max(1, row.columns ?? row.blocks.length);
+  const columnSpan = Math.max(1, Math.floor(12 / columnCount));
 
   const { setNodeRef: setDropRef, isOver } = useDroppable({
     id: row.rowId,
@@ -149,17 +197,30 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
   return (
     <div
       ref={setDropRef}
+      style={{ backgroundColor: row.bgColor ?? 'transparent' }}
       className={`group/row relative rounded-xl border-2 border-dashed p-3 transition-colors ${
         rowDropHighlight
           ? 'border-primary bg-primary/5'
           : 'border-muted-foreground/20 hover:border-muted-foreground/40'
       }`}
     >
-      <div className="absolute -right-1 top-1/2 z-10 hidden -translate-y-1/2 flex-col gap-1 group-hover/row:flex">
+      <div
+        className={`absolute bottom-0 left-3 z-10 translate-y-1/2 items-center gap-1 ${
+          editMenuOpen ? 'flex' : 'hidden group-hover/row:flex'
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => deleteRow(row.rowId)}
+          className="rounded bg-background p-1 shadow hover:bg-destructive hover:text-destructive-foreground cursor-pointer"
+          title="Delete row"
+        >
+          <Trash2Icon className="h-3.5 w-3.5" />
+        </button>
         <button
           disabled={rowIndex === 0}
           onClick={() => moveRow(row.rowId, 'up')}
-          className="rounded bg-background p-1 shadow hover:bg-accent disabled:opacity-30"
+          className="rounded bg-background p-1 shadow hover:bg-accent disabled:opacity-30 cursor-pointer"
           title="Move row up"
           type="button"
         >
@@ -168,40 +229,61 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
         <button
           disabled={rowIndex === totalRows - 1}
           onClick={() => moveRow(row.rowId, 'down')}
-          className="rounded bg-background p-1 shadow hover:bg-accent disabled:opacity-30"
+          className="rounded bg-background p-1 shadow hover:bg-accent disabled:opacity-30 cursor-pointer"
           title="Move row down"
           type="button"
         >
           <ChevronDownIcon className="h-3.5 w-3.5" />
         </button>
-        <button
-          type="button"
-          onClick={() => deleteRow(row.rowId)}
-          className="rounded bg-background p-1 shadow hover:bg-destructive hover:text-destructive-foreground"
-          title="Delete row"
-        >
-          <Trash2Icon className="h-3.5 w-3.5" />
-        </button>
+        <EditBlock row={row} onOpenChange={setEditMenuOpen} />
       </div>
 
       <SortableContext items={blockIds} strategy={horizontalListSortingStrategy}>
-        {row.blocks.length === 0 ? (
-          <div className="flex h-20 items-center justify-center text-sm text-muted-foreground">
-            Drag a block here or click &ldquo;+ add&rdquo; in the panel
-          </div>
-        ) : (
-          <div className="grid grid-cols-12 gap-3">
-            {row.blocks.map((block) => (
-              <SortableBlock
-                key={block.blockId}
-                block={block}
-                isSelected={selectedBlockId === block.blockId}
-                onSelect={() => selectBlock(block.blockId)}
-                onDelete={() => deleteBlock(block.blockId)}
+        <div className="grid grid-cols-12 gap-3">
+          {Array.from({ length: columnCount }).map((_, columnIndex) => {
+            const columnBlocks = row.blocks.filter(
+              (candidate, index) => (candidate.columnIndex ?? index) === columnIndex,
+            );
+            const columnSelected =
+              selectedColumn?.rowId === row.rowId &&
+              selectedColumn.columnIndex === columnIndex;
+
+            return columnBlocks.length === 0 ? (
+              <EmptyColumnSlot
+                key={`${row.rowId}-${columnIndex}`}
+                rowId={row.rowId}
+                columnIndex={columnIndex}
+                colSpan={columnSpan}
+                isSelected={columnSelected}
+                onSelect={() => selectColumn(row.rowId, columnIndex)}
               />
-            ))}
-          </div>
-        )}
+            ) : (
+              <div
+                key={`${row.rowId}-${columnIndex}`}
+                style={{ gridColumn: `span ${columnSpan}` }}
+                onClick={() => selectColumn(row.rowId, columnIndex)}
+                className={`flex min-h-20 flex-col gap-3 rounded-lg ring-2 transition-all ${
+                  columnSelected
+                    ? 'ring-primary'
+                    : 'ring-transparent hover:ring-primary/40'
+                }`}
+              >
+                {columnBlocks.map((block) => (
+                  <SortableBlock
+                    key={block.blockId}
+                    block={{ ...block, colSpan: 12, columnIndex }}
+                    isSelected={selectedBlockId === block.blockId}
+                    onSelect={() => {
+                      selectColumn(row.rowId, columnIndex);
+                      selectBlock(block.blockId);
+                    }}
+                    onDelete={() => deleteBlock(block.blockId)}
+                  />
+                ))}
+              </div>
+            );
+          })}
+        </div>
       </SortableContext>
     </div>
   );
@@ -236,6 +318,7 @@ function BuilderCanvasDnd({ leftSidebar }: BuilderCanvasDndProps) {
     getCurrentPage,
     addRow,
     addBlock,
+    addBlockToColumn,
     moveBlockInRow,
     moveBlockBetweenRows,
   } = useWebBuilderStore();
@@ -281,6 +364,18 @@ function BuilderCanvasDnd({ leftSidebar }: BuilderCanvasDndProps) {
 
     if (activeData?.origin === 'panel') {
       const blockType = activeData.blockType as BlockType;
+      const overData = over.data.current;
+
+      if (overData?.type === 'column') {
+        addBlockToColumn(
+          String(overData.rowId),
+          Number(overData.columnIndex),
+          blockType,
+          BLOCK_DEFAULTS[blockType],
+        );
+        return;
+      }
+
       const targetRow = page.rows.find(
         (r) => r.rowId === overId || r.blocks.some((b) => b.blockId === overId),
       );
