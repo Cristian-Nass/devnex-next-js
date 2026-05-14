@@ -26,6 +26,7 @@ const DEFAULT_NAVIGATION_BAR: NavigationBar = {
   textColor: '#000000',
   buttonColor: '#FFFFFF',
   justify: 'center',
+  width: 'full',
 };
 
 interface WebBuilderStateType {

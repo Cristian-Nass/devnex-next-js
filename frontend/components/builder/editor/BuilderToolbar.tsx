@@ -16,6 +16,11 @@ export function BuilderToolbar() {
   } = useWebBuilderStore();
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
+  const toolbarMaxWidth = {
+    full: undefined,
+    big: '1440px',
+    medium: '1024px',
+  }[navigationBar.width];
 
   const subdomainBase = process.env.NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE ?? '';
   const liveUrl =
@@ -35,12 +40,16 @@ export function BuilderToolbar() {
 
   return (
     <header
-      className="flex h-14 shrink-0 items-center justify-between gap-4 border-b px-4"
+      className="mx-auto h-14 w-full shrink-0 border-b"
       style={{
         backgroundColor: navigationBar.backgroundColor,
         color: navigationBar.textColor,
+        maxWidth: toolbarMaxWidth,
       }}>
-      <div className="flex items-center gap-3">
+      <div
+        className="flex h-full w-full items-center justify-between gap-4 px-4"
+      >
+        <div className="flex items-center gap-3">
           {editingName ? (
             <input
               autoFocus
@@ -68,24 +77,25 @@ export function BuilderToolbar() {
               Unsaved
             </span>
           )}
-      </div>
+        </div>
 
-      <div className="min-w-0 flex-1">
-        <PagesMenu />
-      </div>
+        <div className="min-w-0 flex-1">
+          <PagesMenu />
+        </div>
 
-      <div className="flex items-center gap-2">
-        {liveUrl && (
-          <a
-            href={liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium hover:bg-accent"
-          >
-            <GlobeIcon className="h-3.5 w-3.5" />
-            View site
-          </a>
-        )}
+        <div className="flex items-center gap-2">
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium hover:bg-accent"
+            >
+              <GlobeIcon className="h-3.5 w-3.5" />
+              View site
+            </a>
+          )}
+        </div>
       </div>
     </header>
   );

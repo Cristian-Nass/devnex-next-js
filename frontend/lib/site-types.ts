@@ -27,12 +27,14 @@ export interface Theme {
 }
 
 export type NavigationJustify = 'left' | 'center' | 'right';
+export type NavigationWidth = 'full' | 'big' | 'medium';
 
 export interface NavigationBar {
   backgroundColor: string;
   textColor: string;
   buttonColor: string;
   justify: NavigationJustify;
+  width: NavigationWidth;
 }
 
 export interface SiteData {
