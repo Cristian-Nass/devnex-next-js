@@ -47,14 +47,14 @@ const HeaderSetting = () => {
           className="h-8 w-8 cursor-pointer"
         />
       </label>
-      <div className="flex items-center justify-between gap-2 text-xs">
-        <span>Justify</span>
+      <div className="flex flex-col gap-1 text-xs">
+        <span>Justify:</span>
         <RadioGroup
           value={navigationBar.justify}
           onValueChange={(justify) =>
             setNavigationBar({justify: justify as NavigationJustify})
           }
-          className="flex w-auto items-center gap-3"
+          className="flex w-auto justify-between py-2"
         >
           {justifyOptions.map((option) => (
             <label
