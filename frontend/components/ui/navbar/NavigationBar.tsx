@@ -7,20 +7,12 @@ import {getTranslations} from 'next-intl/server';
 import {getMenuItems} from './menuItems';
 import {NavigationBarAuth} from './NavigationBarAuth';
 import {Ubuntu} from 'next/font/google';
-import {Poppins} from 'next/font/google';
-import {Afacad_Flux} from 'next/font/google';
+import Image from 'next/image';
 const ubuntu = Ubuntu({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
 });
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['300'],
-});
-const afacad_flux = Afacad_Flux({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-});
+
 
 
 type NavigationBarProps = {
@@ -42,20 +34,7 @@ export async function NavigationBar({locale}: NavigationBarProps) {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
 
         <Link href={`/${locale}`} className="inline-flex items-end justify-end">
-          <div
-            className={cn(
-              'text-[20px] leading-none text-cyan-600 mb[-10px] mb-[2px]',
-              poppins.className,
-            )}>
-            NET
-          </div>
-          <div
-            className={cn(
-              'text-[28px] leading-none text-cyan-700 mb[-10px]',
-              afacad_flux.className,
-            )}>
-            MART
-          </div>
+        <Image src="/netmart-logo.svg" alt="logo" width={100} height={100} className="w-32 h-auto" />
         </Link>
         <div className="flex items-center gap-2 w-full">
           <MainMenuBar locale={locale} className="mx-auto hidden md:block" />
