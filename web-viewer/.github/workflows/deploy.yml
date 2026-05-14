@@ -46,7 +46,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT || 22 }}
           source: deploy-bundle
-          target: ${{ secrets.DEPLOY_PATH }}
+          target: ${{ secrets.DEPLOY_PATH_WEB_VIEWER }}
           overwrite: true
           strip_components: 1
 
@@ -59,7 +59,7 @@ jobs:
           port: ${{ secrets.SSH_PORT || 22 }}
           script: |
             set -euo pipefail
-            cd "${{ secrets.DEPLOY_PATH }}"
+            cd "${{ secrets.DEPLOY_PATH_WEB_VIEWER }}"
             docker compose down --remove-orphans
             docker compose build
             docker compose up -d --remove-orphans

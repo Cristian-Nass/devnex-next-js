@@ -45,7 +45,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           # Push only the bits the builder image needs as build context.
           source: "web-builder/,packages/,package.json,package-lock.json,turbo.json,!**/node_modules,!**/.next,!**/.git"
-          target: ${{ secrets.DEPLOY_PATH }}
+          target: ${{ secrets.DEPLOY_PATH_WEB_BUILDER }}
           overwrite: true
 
       - name: Build & restart on server
@@ -57,7 +57,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             set -eu
-            cd ${{ secrets.DEPLOY_PATH }}
+            cd ${{ secrets.DEPLOY_PATH_WEB_BUILDER }}
             if ! [ -f web-builder/.env.prod ]; then
               echo "web-builder/.env.prod must exist on the server (never commit it)."
               exit 1
