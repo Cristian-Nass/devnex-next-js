@@ -30,7 +30,11 @@ export function EditBlock({ row, onOpenChange }: EditBlockProps) {
           if (firstBlock) selectBlock(firstBlock.blockId);
           setMenuOpen(!open);
         }}
-        className="rounded bg-background p-1 shadow hover:bg-green-500 cursor-pointer"
+        className={`rounded p-1 shadow cursor-pointer ${
+          open
+            ? 'bg-green-500 text-white'
+            : 'bg-background hover:bg-green-500'
+        }`}
         title="Edit row block"
       >
         <PencilIcon className="h-3.5 w-3.5" />
