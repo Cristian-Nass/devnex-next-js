@@ -22,7 +22,14 @@ interface BuilderEditorPageProps {
 
 export default function BuilderEditorPage({ params }: BuilderEditorPageProps) {
   const { siteId } = use(params);
-  const { loadSite, getCurrentPage, addRow, addBlock } = useWebBuilderStore();
+  const {
+    loadSite,
+    getCurrentPage,
+    addRow,
+    addBlock,
+    addBlockToColumn,
+    selectedColumn,
+  } = useWebBuilderStore();
 
   useEffect(() => {
     apiGetSite(siteId)
@@ -42,6 +49,17 @@ export default function BuilderEditorPage({ params }: BuilderEditorPageProps) {
   function handleAddFromPanel(type: BlockType) {
     const page = getCurrentPage();
     if (!page) return;
+
+    if (selectedColumn) {
+      addBlockToColumn(
+        selectedColumn.rowId,
+        selectedColumn.columnIndex,
+        type,
+        BLOCK_DEFAULTS[type],
+      );
+      return;
+    }
+
     let targetRowId = page.rows[page.rows.length - 1]?.rowId;
     if (!targetRowId) {
       addRow();

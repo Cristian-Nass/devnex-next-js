@@ -107,9 +107,17 @@ interface EmptyColumnSlotProps {
   rowId: string;
   columnIndex: number;
   colSpan: number;
+  isSelected: boolean;
+  onSelect: () => void;
 }
 
-function EmptyColumnSlot({ rowId, columnIndex, colSpan }: EmptyColumnSlotProps) {
+function EmptyColumnSlot({
+  rowId,
+  columnIndex,
+  colSpan,
+  isSelected,
+  onSelect,
+}: EmptyColumnSlotProps) {
   const { setNodeRef, isOver } = useDroppable({
     id: `column-${rowId}-${columnIndex}`,
     data: { type: 'column', rowId, columnIndex },
@@ -119,8 +127,11 @@ function EmptyColumnSlot({ rowId, columnIndex, colSpan }: EmptyColumnSlotProps) 
     <div
       ref={setNodeRef}
       style={{ gridColumn: `span ${colSpan}` }}
+      onClick={onSelect}
       className={`flex h-20 items-center justify-center rounded-lg border-2 border-dashed text-sm text-muted-foreground transition-colors ${
-        isOver
+        isSelected
+          ? 'border-primary bg-primary/10 text-primary'
+          : isOver
           ? 'border-primary bg-primary/5 text-primary'
           : 'border-muted-foreground/30'
       }`}
@@ -139,7 +150,9 @@ interface RowContainerProps {
 function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
   const {
     selectedBlockId,
+    selectedColumn,
     selectBlock,
+    selectColumn,
     deleteBlock,
     moveRow,
     deleteRow,
@@ -234,7 +247,10 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
                 key={block.blockId}
                 block={{ ...block, colSpan: columnSpan, columnIndex }}
                 isSelected={selectedBlockId === block.blockId}
-                onSelect={() => selectBlock(block.blockId)}
+                onSelect={() => {
+                  selectColumn(row.rowId, columnIndex);
+                  selectBlock(block.blockId);
+                }}
                 onDelete={() => deleteBlock(block.blockId)}
               />
             ) : (
@@ -243,6 +259,11 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
                 rowId={row.rowId}
                 columnIndex={columnIndex}
                 colSpan={columnSpan}
+                isSelected={
+                  selectedColumn?.rowId === row.rowId &&
+                  selectedColumn.columnIndex === columnIndex
+                }
+                onSelect={() => selectColumn(row.rowId, columnIndex)}
               />
             );
           })}
