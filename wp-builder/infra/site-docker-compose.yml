@@ -1,0 +1,83 @@
+# Per-customer WordPress stack (provisioned by control-plane API).
+# Site files live under SITE_ROOT ({WEBSITES_ROOT}/<slug>/): wp/, mysql/, .env, .wp-builder/php/ (copied by API).
+# Run: docker compose -p wp-<slug> -f infra/site-docker-compose.yml --env-file $SITE_ROOT/.env up -d
+#
+# Note: phpMyAdmin used to be part of this stack but was removed for security
+# (always-on public DB UI per site is an unacceptable attack surface). For
+# ad-hoc DB access, exec into the `db` container with `docker compose exec db
+# mysql -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE` (credentials in the
+# site's .env).
+
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:?set MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER:?set MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?set MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${SITE_ROOT:?set SITE_ROOT}/mysql:/var/lib/mysql
+    networks:
+      - internal
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  wordpress:
+    image: wordpress:php8.2-apache
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ${SITE_ROOT}/wp:/var/www/html
+      # Bind-mount the directory only — mounting missing host *files* makes Docker create directories instead.
+      - ${SITE_ROOT}/.wp-builder/php:/mnt/wp-builder-php:ro
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      VIRTUAL_HOST: ${WORDPRESS_HOST:?set WORDPRESS_HOST}
+      # Load uploads.ini from the same folder (PHP only scans *.ini here).
+      PHP_INI_SCAN_DIR: ":/mnt/wp-builder-php"
+      WORDPRESS_CONFIG_EXTRA: |
+        require '/mnt/wp-builder-php/wp-config-extra.php';
+      WORDPRESS_HOME: ${WORDPRESS_HOME:-}
+      WORDPRESS_SITEURL: ${WORDPRESS_SITEURL:-}
+    networks:
+      internal: {}
+      wp_bridge: {}
+
+  wpcli:
+    image: wordpress:cli
+    user: "33:33"
+    profiles:
+      - cli
+    depends_on:
+      db:
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    volumes:
+      - ${SITE_ROOT}/wp:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+  wp_bridge:
+    external: true
+    name: wp-bridge-network

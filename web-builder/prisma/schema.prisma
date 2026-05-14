@@ -1,0 +1,45 @@
+datasource db {
+  provider = "postgresql"
+}
+
+// Classic JS client wired to `@prisma/client`. Matches netmart's setup so
+// shared Prisma 7 + @prisma/adapter-pg patterns transfer 1:1.
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum ProvisioningType {
+  SUBDOMAIN
+  CUSTOM_DOMAIN
+}
+
+/**
+ * A site owned by a netmart user. `userId` is a *logical* foreign key to
+ * netmart's `User.id` — there is no SQL constraint across databases. When a
+ * user is removed in netmart, the platform will eventually fire a webhook
+ * (follow-up plan) so we can clean up orphan sites here.
+ *
+ * The `@@unique([userId])` constraint preserves the original product rule
+ * "one site per user" enforced by the previous SitesService.
+ */
+model Site {
+  id                    String           @id @default(cuid())
+  userId                String
+  name                  String
+  slug                  String
+  data                  Json             @default("{}")
+  published             Boolean          @default(false)
+  provisioningType      ProvisioningType @default(SUBDOMAIN)
+  customDomain          String?
+  metaTitle             String?
+  metaDescription       String?
+  gtmContainerId        String?
+  cloudflareDnsRecordId String?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  @@unique([userId])
+  @@index([userId])
+  @@index([name])
+  @@index([slug])
+}

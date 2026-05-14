@@ -1,0 +1,71 @@
+name: Deploy wp-builder
+
+# Deploys the wp-builder control plane (Fastify API + Next.js dashboard).
+# Triggered by pushes to master that touched wp-builder/, packages/, or
+# the workspace manifests. Mirrors deploy-web-builder.yml so secrets stay
+# in one place.
+#
+# `DEPLOY_PATH` here should be the monorepo root on the server (e.g.
+# `/srv/netmart`). The script `cd`s into `wp-builder/` and runs compose
+# from there; the build context resolves correctly because compose's
+# `web` service uses `context: ..` (the workspace root).
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - 'wp-builder/**'
+      - 'packages/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/deploy-wp-builder.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-wp-builder
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          # Push only the bits the wp-builder image needs as build context.
+          source: "wp-builder/,packages/,package.json,package-lock.json,!**/node_modules,!**/.next,!**/.git"
+          target: ${{ secrets.DEPLOY_PATH }}
+          overwrite: true
+
+      - name: Build & restart on server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            set -eu
+            cd ${{ secrets.DEPLOY_PATH }}
+            if ! [ -f wp-builder/server/.env.prod ]; then
+              echo "wp-builder/server/.env.prod must exist on the server (never commit it)."
+              exit 1
+            fi
+            if ! [ -f wp-builder/web/.env.prod ]; then
+              echo "wp-builder/web/.env.prod must exist on the server (never commit it)."
+              exit 1
+            fi
+            docker network inspect wp-bridge-network >/dev/null 2>&1 || docker network create wp-bridge-network
+            docker compose -f wp-builder/docker-compose.yml down --remove-orphans
+            docker compose -f wp-builder/docker-compose.yml build --no-cache
+            docker compose -f wp-builder/docker-compose.yml up -d --remove-orphans
+            docker image prune -f

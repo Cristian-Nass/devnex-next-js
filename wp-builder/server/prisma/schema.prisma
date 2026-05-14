@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SiteStatus {
+  PENDING
+  PROVISIONING
+  READY
+  FAILED
+}
+
+// Each Site is owned by a netmart user.
+//
+// `userId` stores a netmart `User.id` value verified server-side via
+// `requireUser()` (see `lib/platform-auth.ts`), which calls
+// `${PLATFORM_API_URL}/auth/introspect`. There is intentionally NO
+// foreign key here — wp-builder's database does not contain a `User`
+// table; netmart owns the identity layer.
+model Site {
+  id                 String     @id @default(cuid())
+  slug               String     @unique
+  fqdn               String
+  status             SiteStatus @default(PENDING)
+  wpAdminUsername    String?
+  cloudflareRecordId String?
+  provisionError     String?
+  diskQuotaGb        Int        @default(5)
+  diskUsageBytes     BigInt     @default(0)
+  quotaProjectId     Int?       @unique
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  userId             String
+
+  @@index([userId])
+}

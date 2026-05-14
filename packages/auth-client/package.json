@@ -1,0 +1,26 @@
+{
+  "name": "@netmart/auth-client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Server-side helper for sibling SaaS apps to verify identity against netmart's /auth/introspect.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo \"(no lint configured)\""
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}

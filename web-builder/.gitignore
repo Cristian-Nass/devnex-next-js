@@ -1,0 +1,15 @@
+node_modules
+.next
+.turbo
+dist
+out
+
+.env
+.env.local
+.env.dev
+.env.prod
+
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+prisma/generated

@@ -1,0 +1,42 @@
+{
+  "WpBuilder": {
+    "title": "WordPress sites",
+    "subtitle": "Spin up a fully managed WordPress install in minutes.",
+    "createHeading": "Create site",
+    "createSubmit": "Create site",
+    "creating": "Creating…",
+    "slugLabel": "Subdomain / site name",
+    "slugPlaceholder": "my-shop",
+    "previewPrefix": "Site URL",
+    "sitesHeading": "Your sites",
+    "noSites": "No sites yet — create your first one above.",
+    "delete": "Delete",
+    "deleting": "Deleting…",
+    "deleteConfirm": "Delete \"{slug}\"? This stops its Docker stack, deletes site files on the server, removes the Cloudflare DNS record, and cannot be undone.",
+    "wpAdminUserLabel": "WP admin user",
+    "diskQuotaLabel": "Disk quota (GB)",
+    "diskUsedTitle": "{used} GB used of {quota} GB",
+    "diskOverQuota": "over quota",
+    "updateQuota": "Update",
+    "savingQuota": "Saving…",
+    "pollTimedOut": "One or more sites have been provisioning for over 15 minutes. Check server logs — a site may be stuck.",
+    "status": {
+      "PENDING": "Pending",
+      "PROVISIONING": "Provisioning",
+      "READY": "Ready",
+      "FAILED": "Failed"
+    },
+    "errors": {
+      "loadFailed": "Could not load sites.",
+      "createFailed": "Could not create site.",
+      "deleteFailed": "Could not delete site.",
+      "quotaRange": "Quota must be between 1 and 500 GB.",
+      "quotaUpdateFailed": "Could not update quota."
+    },
+    "success": {
+      "created": "Provisioning started. Watch the status below — admin credentials are emailed when ready.",
+      "deleted": "Deleted {slug}.",
+      "quotaUpdated": "Quota for \"{slug}\" updated to {gb} GB."
+    }
+  }
+}

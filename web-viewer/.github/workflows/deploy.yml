@@ -1,0 +1,66 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Stage files for deployment
+        run: |
+          set -euo pipefail
+          rm -rf deploy-bundle
+          mkdir -p deploy-bundle
+          rsync -a \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.cursor/' \
+            --exclude='deploy-bundle/' \
+            --exclude='next-site-template/node_modules/' \
+            --exclude='next-site-template/.next/' \
+            --exclude='.env' \
+            --exclude='next-site-template/.env' \
+            --exclude='next-site-template/.env.*' \
+            --exclude='.DS_Store' \
+            ./ deploy-bundle/
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          source: deploy-bundle
+          target: ${{ secrets.DEPLOY_PATH }}
+          overwrite: true
+          strip_components: 1
+
+      - name: Build and deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            set -euo pipefail
+            cd "${{ secrets.DEPLOY_PATH }}"
+            docker compose down --remove-orphans
+            docker compose build
+            docker compose up -d --remove-orphans
+            docker image prune -f

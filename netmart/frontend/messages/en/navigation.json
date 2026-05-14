@@ -1,0 +1,12 @@
+{
+  "NavigationBar": {
+    "navLabel": "Primary navigation",
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "products": "Products",
+    "logIn": "Log In",
+    "logOut": "Log out"
+  }
+}

@@ -1,0 +1,68 @@
+name: Deploy web-builder
+
+# Deploys ONLY the web-builder editor. Triggered by pushes to master that
+# touched web-builder or its workspace deps. Mirrors the SSH/SCP pattern
+# used by the existing per-project deploy workflows so the operator's
+# secrets (`SSH_HOST`, `SSH_USER`, `SSH_KEY`, `SSH_PORT`, `DEPLOY_PATH`)
+# stay one place.
+#
+# `DEPLOY_PATH` here should be the monorepo root on the server (e.g.
+# `/srv/netmart`). The script `cd`s into `web-builder/` and runs compose
+# from there, so the build context (`..`) still resolves to the workspace
+# root for the workspace-aware Dockerfile.
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - 'web-builder/**'
+      - 'packages/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'turbo.json'
+      - '.github/workflows/deploy-web-builder.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-web-builder
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          # Push only the bits the builder image needs as build context.
+          source: "web-builder/,packages/,package.json,package-lock.json,turbo.json,!**/node_modules,!**/.next,!**/.git"
+          target: ${{ secrets.DEPLOY_PATH }}
+          overwrite: true
+
+      - name: Build & restart on server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            set -eu
+            cd ${{ secrets.DEPLOY_PATH }}
+            if ! [ -f web-builder/.env.prod ]; then
+              echo "web-builder/.env.prod must exist on the server (never commit it)."
+              exit 1
+            fi
+            docker compose -f web-builder/docker-compose.yml --env-file web-builder/.env.prod down --remove-orphans
+            docker compose -f web-builder/docker-compose.yml --env-file web-builder/.env.prod build --no-cache builder-editor
+            docker compose -f web-builder/docker-compose.yml --env-file web-builder/.env.prod up -d --remove-orphans builder-editor
+            docker image prune -f

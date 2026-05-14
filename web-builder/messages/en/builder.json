@@ -1,0 +1,9 @@
+{
+  "Builder": {
+    "title": "Web builder",
+    "openEditor": "Open editor",
+    "newSite": "New site",
+    "unauthenticated": "Please sign in to use the builder.",
+    "openPlatformLogin": "Sign in"
+  }
+}

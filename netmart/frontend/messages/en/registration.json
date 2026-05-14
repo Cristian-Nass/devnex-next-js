@@ -1,0 +1,76 @@
+{
+  "LoginForm": {
+    "title": "Login to your account",
+    "description": "Enter your email below to login to your account",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "loginWithGoogle": "Continue with Google",
+    "forgotPassword": "Forgot password?",
+    "orContinueWith": "Or continue with",
+    "dontHaveAnAccount": "Don't have an account?",
+    "signUp": "Sign Up",
+    "emailPlaceholder": "m@example.com"
+  },
+  "SignupForm": {
+    "title": "Create an account",
+    "description": "Enter your information below to create your account",
+    "name": "Full Name",
+    "email": "Email",
+    "emailPlaceholder": "m@example.com",
+    "emailDescription": "We'll use this to contact you. We will not share your email",
+    "password": "Password",
+    "passwordDescription": "Must be at least 8 characters long.",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordDescription": "Please confirm your password.",
+    "createAccount": "Create Account",
+    "signUpWithGoogle": "Continue with Google",
+    "orContinueWith": "Or continue with",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "registerSuccessToast": "Account created. Check your email to verify your address."
+  },
+  "VerifyEmailSent": {
+    "title": "Check your email",
+    "description": "We sent a verification link to your inbox. Open it to activate your account before signing in.",
+    "checkSpam": "If you do not see the message within a few minutes, check your spam folder.",
+    "backToLogin": "Back to login"
+  },
+  "ForgotPasswordForm": {
+    "title": "Forgot password",
+    "description": "Enter your email and we will send you a link to reset your password.",
+    "email": "Email",
+    "emailPlaceholder": "m@example.com",
+    "submit": "Send reset link",
+    "backToLogin": "Back to login",
+    "successTitle": "Check your email",
+    "successDescription": "If an account exists for that address, you will receive a password reset link shortly."
+  },
+  "AuthVerifyEmail": {
+    "loading": "Verifying your email…",
+    "loadingFallback": "Loading…",
+    "titleSuccess": "Email verified",
+    "titleError": "Verification failed",
+    "missingToken": "Missing verification token.",
+    "successDescription": "Your email address is verified. You can sign in now.",
+    "errorVerificationFailed": "We could not verify your email. The link may have expired.",
+    "continueToLogin": "Continue to login"
+  },
+  "AuthResetPassword": {
+    "loadingFallback": "Loading…",
+    "invalidLink": "This reset link is invalid. Request a new one from the login page.",
+    "forgotPassword": "Forgot password",
+    "successTitle": "Password updated",
+    "successDescription": "You can now sign in with your new password.",
+    "goToLogin": "Go to login",
+    "formTitle": "Set a new password",
+    "formDescription": "Choose a strong password you have not used elsewhere.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "errorTooShort": "Password must be at least 8 characters.",
+    "errorMismatch": "Passwords do not match.",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "saving": "Saving…",
+    "updatePassword": "Update password"
+  }
+}

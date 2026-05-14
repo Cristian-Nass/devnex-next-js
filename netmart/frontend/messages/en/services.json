@@ -1,0 +1,86 @@
+{
+  "OurServices": {
+    "heading": "Our Services",
+    "subheading": "Comprehensive digital services to bring your vision to life",
+    "mobile": {
+      "title": "Mobile App Development",
+      "description": "Native and cross-platform mobile applications built with the latest technologies for iOS and Android.",
+      "features": [
+        "React Native",
+        "Flutter",
+        "Native iOS/Android",
+        "App Store Optimization"
+      ]
+    },
+    "web": {
+      "title": "Web Application Development",
+      "description": "Modern, responsive web applications tailored to your business needs with cutting-edge frameworks.",
+      "features": [
+        "React/Vue/Angular",
+        "Node.js Backend",
+        "Cloud Deployment",
+        "Responsive Design"
+      ]
+    },
+    "uiux": {
+      "title": "SMS Service",
+      "description": "Reliable SMS messaging solutions for alerts, reminders, and customer communication.",
+      "features": [
+        "Transactional SMS",
+        "Bulk Messaging",
+        "Delivery Reports",
+        "SMS Automation"
+      ]
+    },
+    "cloud": {
+      "title": "Cloud Solutions",
+      "description": "Scalable cloud infrastructure and deployment solutions for your applications.",
+      "features": [
+        "AWS/Azure/GCP",
+        "DevOps",
+        "CI/CD Pipelines",
+        "Monitoring"
+      ]
+    },
+    "database": {
+      "title": "Database Design",
+      "description": "Robust database architecture and optimization for high-performance applications.",
+      "features": [
+        "SQL/NoSQL",
+        "Data Modeling",
+        "Performance Tuning",
+        "Migration"
+      ]
+    },
+    "api": {
+      "title": "API Development",
+      "description": "RESTful and GraphQL APIs designed for scalability, security, and performance.",
+      "features": [
+        "REST API",
+        "GraphQL",
+        "Authentication",
+        "Documentation"
+      ]
+    },
+    "email": {
+      "title": "Email Service",
+      "description": "Professional email setup and automation to improve communication and customer engagement.",
+      "features": [
+        "Business Email Setup",
+        "Email Automation",
+        "Template Design",
+        "Delivery Monitoring"
+      ]
+    },
+    "booking": {
+      "title": "Booking System",
+      "description": "Online booking solutions that make scheduling easy for your team and your customers.",
+      "features": [
+        "Calendar Integration",
+        "Automated Reminders",
+        "Availability Management",
+        "Customer Self-Booking"
+      ]
+    }
+  }
+}

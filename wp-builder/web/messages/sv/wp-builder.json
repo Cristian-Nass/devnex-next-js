@@ -1,0 +1,42 @@
+{
+  "WpBuilder": {
+    "title": "WordPress-sajter",
+    "subtitle": "Skapa en helt hanterad WordPress-installation på några minuter.",
+    "createHeading": "Skapa sajt",
+    "createSubmit": "Skapa sajt",
+    "creating": "Skapar…",
+    "slugLabel": "Subdomän / sajtnamn",
+    "slugPlaceholder": "min-butik",
+    "previewPrefix": "Sajt-URL",
+    "sitesHeading": "Dina sajter",
+    "noSites": "Inga sajter ännu — skapa din första ovan.",
+    "delete": "Ta bort",
+    "deleting": "Tar bort…",
+    "deleteConfirm": "Ta bort \"{slug}\"? Detta stoppar dess Docker-stack, raderar sajtfiler på servern, tar bort Cloudflare-DNS-posten och kan inte ångras.",
+    "wpAdminUserLabel": "WP-admin-användare",
+    "diskQuotaLabel": "Diskkvot (GB)",
+    "diskUsedTitle": "{used} GB använt av {quota} GB",
+    "diskOverQuota": "över kvot",
+    "updateQuota": "Uppdatera",
+    "savingQuota": "Sparar…",
+    "pollTimedOut": "En eller flera sajter har provisionerats i över 15 minuter. Kontrollera serverloggarna — en sajt kan ha fastnat.",
+    "status": {
+      "PENDING": "Väntar",
+      "PROVISIONING": "Provisionerar",
+      "READY": "Klar",
+      "FAILED": "Misslyckades"
+    },
+    "errors": {
+      "loadFailed": "Kunde inte ladda sajter.",
+      "createFailed": "Kunde inte skapa sajt.",
+      "deleteFailed": "Kunde inte ta bort sajt.",
+      "quotaRange": "Kvoten måste vara mellan 1 och 500 GB.",
+      "quotaUpdateFailed": "Kunde inte uppdatera kvot."
+    },
+    "success": {
+      "created": "Provisionering startad. Följ statusen nedan — admin-uppgifter mejlas när det är klart.",
+      "deleted": "Tog bort {slug}.",
+      "quotaUpdated": "Kvot för \"{slug}\" uppdaterad till {gb} GB."
+    }
+  }
+}

@@ -1,0 +1,16 @@
+services:
+  web:
+    build:
+      context: ./next-site-template
+      dockerfile: Dockerfile
+    ports:
+      - '3000'
+    networks:
+      - my-bridge-network
+    environment:
+      SITE_API_URL: ${SITE_API_URL:-http://netmart-api:5000/api}
+      VIRTUAL_HOST: '~^(.+)-web\.netmart\.se$'
+
+networks:
+  my-bridge-network:
+    external: true

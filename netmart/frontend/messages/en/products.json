@@ -1,0 +1,160 @@
+{
+  "ProductsSection": {
+    "heading": "Our Products",
+    "subheading": "Explore ready-to-launch product packages built for online selling, service businesses, and content growth.",
+    "readMoreCta": "View Package Details",
+    "items": {
+      "shop": {
+        "title": "Online Shop",
+        "description": "A complete storefront solution for selling products with modern UX and easy catalog management.",
+        "features": [
+          "Product catalog and variants",
+          "Fast checkout experience",
+          "Simple order tracking dashboard"
+        ]
+      },
+      "restaurant": {
+        "title": "Pizza Bar",
+        "description": "A restaurant-focused website package optimized for menu display, quick ordering, and local delivery.",
+        "features": [
+          "Menu sections and item customization",
+          "Table booking and order requests",
+          "Built-in campaign banners"
+        ]
+      },
+      "enterprise": {
+        "title": "Enterprise Website",
+        "description": "A scalable business website template with sections for teams, services, and corporate communication.",
+        "features": [
+          "Multi-page corporate structure",
+          "Lead capture contact modules",
+          "Performance-focused page templates",
+          "SEO-friendly article layout",
+          "PWA compatible with desktop and mobile devices"
+        ]
+      },
+      "wordPress": {
+        "title": "WordPress",
+        "description": "A content-ready publishing product to share updates, stories, and news with a clean reading experience.",
+        "features": [
+          "Category and tag organization",
+          "Author and post highlight blocks",
+          "SEO-friendly article layout"
+        ]
+      },
+      "easyWithoutDeveloper": {
+        "title": "Easy Without Developer",
+        "description": "A simple solution to create a website without using a developer.",
+        "features": [
+          "Simple user interface",
+          "Simple catalog management",
+          "Simple order management"
+        ]
+      }
+    }
+  },
+  "CreateWebsiteLanding": {
+    "title": "Order Your Website/Web Application",
+    "subtitle": "We help you create your website.",
+    "orderNow": "Order Now",
+    "plans": {
+      "launch": {
+        "name": "Launch"
+      },
+      "growth": {
+        "name": "Growth"
+      },
+      "scale": {
+        "name": "Scale"
+      },
+      "custom": {
+        "name": "Custom",
+        "description": "We build a custom web or mobile application based on your goals, workflows, and business needs."
+      }
+    },
+    "features": {
+      "customizable": "Customizable",
+      "editable": "Editable",
+      "responsive": "Responsive",
+      "seoFriendly": "SEO Friendly",
+      "performanceOptimized": "Performance Optimized",
+      "security": "Security",
+      "support": "Support",
+      "updates": "Updates",
+      "maintenance": "Maintenance",
+      "emailSupport": "Email Support",
+      "analyticsAndReporting": "Analytics and Reporting",
+      "sendSms": "Send SMS",
+      "payOnline": "Pay Online",
+      "bookingSystemAndReporting": "Booking System and Reporting",
+      "multipleLanguageSupport": "Multiple Language Support",
+      "webApplicationMobile": "Web Application / Mobile App",
+      "RegistrationAndLogin": "Registration and Login"
+    }
+  },
+  "Products": {
+    "heading": "Our Products",
+    "subheading": "Ready-to-launch solutions designed to help your business grow",
+    "products": [
+      {
+        "name": "Netmart",
+        "description": "Netmart is a website builder tool that lets you build websites quickly and easily."
+      }
+    ]
+  },
+  "CreateWebsiteDetails": {
+    "metaTitle": "{plan} Website Plan | Netmart",
+    "planTitle": "{plan} Plan",
+    "includedFeatures": "Included Features",
+    "CreateWebsitePlans": {
+      "launch": {
+        "name": "Launch",
+        "description": [
+          "Perfect for startups, freelancers, and local businesses that need a strong online presence quickly.",
+          "This plan is ideal when you want a clean, professional website to present your services and start getting leads."
+        ]
+      },
+      "growth": {
+        "name": "Growth",
+        "description": [
+          "Designed for small to mid-size companies that are already operating and want to generate more traffic and conversions.",
+          "A great fit for businesses that need deeper content, stronger SEO, and better marketing performance."
+        ]
+      },
+      "scale": {
+        "name": "Scale",
+        "description": [
+          "Built for growing companies with higher traffic and more complex business needs.",
+          "Best for teams that need advanced features, integrations, analytics, and multilingual support to scale operations and reach wider markets."
+        ]
+      },
+      "custom": {
+        "name": "Custom",
+        "description": [
+          "Best for established companies with unique workflows that require a tailored solution.",
+          "Choose this plan when you need a custom web application or mobile app built around your exact processes, systems, and long-term goals."
+        ]
+      },
+      "features": {
+        "customizable": "The website can be tailored to your brand and needs (colors, layout, sections, features, and content style).",
+        "editable": "You can easily update text, images, and key content later without rebuilding the whole site.",
+        "responsive": "The website is fully responsive and works smoothly on all devices.",
+        "seoFriendly": "The website is SEO-friendly and easier for search engines to index.",
+        "performanceOptimized": "The site is built to load fast and run smoothly (optimized images/code, good Core Web Vitals, better user experience, and SEO).",
+        "security": "The website is secure and protected against common attacks.",
+        "support": "You receive ongoing support after launch for questions and improvements.",
+        "updates": "The website is updated regularly to keep it secure and reliable.",
+        "maintenance": "Ongoing maintenance keeps your site healthy with bug fixes, monitoring, backups, and minor improvements.",
+        "emailSupport": "Email support to help you with any questions or issues.",
+        "sendSms": "Send SMS messages to customers for updates, reminders, or promotions.",
+        "payOnline": "Accept online payments for your services or products.",
+        "analyticsAndReporting": "Analytics and reporting to track your website performance and growth.",
+        "bookingSystemAndReporting": "Booking system and reporting to manage appointments and availability.",
+        "multipleLanguageSupport": "Multiple language support to help you reach a wider audience.",
+        "RegistrationAndLogin": "Registration and Login to help you manage your users and their data with a secure and user-friendly interface with 20000 Active Users.",
+        "webApplication": "Custom web application development tailored to your business workflows and operational needs.",
+        "mobileApplication": "Custom mobile application development for iOS and Android, aligned with your business goals."
+      }
+    }
+  }
+}

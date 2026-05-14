@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+.vercel
+
+# Certificates / keys (local)
+*.pem
+
+# Environment (never commit secrets; server keeps its own .env)
+.env
+.env.*
+!.env.example
+
+# Logs & debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing / coverage
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editors & tooling
+.idea/
+.vscode/
+.cursor/
+
+# Local deploy staging (matches CI bundle folder name)
+deploy-bundle/

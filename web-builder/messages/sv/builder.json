@@ -1,0 +1,9 @@
+{
+  "Builder": {
+    "title": "Webbyggare",
+    "openEditor": "Öppna editor",
+    "newSite": "Ny webbplats",
+    "unauthenticated": "Logga in för att använda byggaren.",
+    "openPlatformLogin": "Logga in"
+  }
+}

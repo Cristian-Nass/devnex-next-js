@@ -1,0 +1,99 @@
+import Link from 'next/link';
+import {LanguageSwitch} from './LanguageSwitch';
+import {cn} from '@/lib/utils';
+import MainMenuBar from './MainMenuBar';
+import {MenuIcon} from 'lucide-react';
+import {getTranslations} from 'next-intl/server';
+import {getMenuItems} from './menuItems';
+import {NavigationBarAuth} from './NavigationBarAuth';
+import {Ubuntu} from 'next/font/google';
+import {Poppins} from 'next/font/google';
+import {Afacad_Flux} from 'next/font/google';
+const ubuntu = Ubuntu({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+});
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300'],
+});
+const afacad_flux = Afacad_Flux({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+});
+
+
+type NavigationBarProps = {
+  locale: string;
+};
+
+export async function NavigationBar({locale}: NavigationBarProps) {
+  const t = await getTranslations('NavigationBar');
+  const mobileMenuItems = getMenuItems(locale, {
+    home: t('home'),
+    services: t('services'),
+    products: t('products'),
+    about: t('about'),
+    contact: t('contact'),
+  });
+
+  return (
+    <header className="sticky top-0 z-20 border-b border-black/10 bg-white/90 backdrop-blur dark:border-white/20 dark:bg-black/90 h-[70px]">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+
+        <Link href={`/${locale}`} className="inline-flex items-end justify-end">
+          <div
+            className={cn(
+              'text-[20px] leading-none text-cyan-600 mb[-10px] mb-[2px]',
+              poppins.className,
+            )}>
+            NET
+          </div>
+          <div
+            className={cn(
+              'text-[28px] leading-none text-cyan-700 mb[-10px]',
+              afacad_flux.className,
+            )}>
+            MART
+          </div>
+        </Link>
+        <div className="flex items-center gap-2 w-full">
+          <MainMenuBar locale={locale} className="mx-auto hidden md:block" />
+          <NavigationBarAuth
+            locale={locale}
+            loginLabel={t('logIn')}
+            logoutLabel={t('logOut')}
+            className={cn(
+              'text-base text-sm mr-2 hidden md:flex',
+              ubuntu.className,
+            )}
+          />
+          <LanguageSwitch locale={locale} />
+          <details className="ml-auto relative md:hidden">
+            <summary
+              className="list-none rounded-lg border border-gray-200 bg-white p-2 text-gray-700 cursor-pointer"
+              aria-label={t('navLabel')}>
+              <MenuIcon className="w-6 h-6" />
+            </summary>
+            <nav
+              className="absolute right-0 mt-3 min-w-44 rounded-xl border border-gray-200 bg-white p-2 shadow-lg"
+              aria-label={t('navLabel')}>
+              {mobileMenuItems.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  prefetch={false}
+                  className={cn(
+                    'block rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-100',
+                    ubuntu.className,
+                  )}>
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+  );
+}

@@ -1,0 +1,44 @@
+# Standalone compose for the web-builder editor.
+#
+#   docker compose -f web-builder/docker-compose.yml up -d --build
+#
+# Build context is the monorepo root so the workspace packages
+# (`@netmart/auth-client`, `@netmart/builder-core`) get included. Run this
+# file from the monorepo root or pass the project directory explicitly.
+#
+# Virtual host (nginx-proxy / similar) and all secrets live in
+# web-builder/.env.prod — never inject them through `environment:` here
+# (Compose substitutes ${VAR} before env_file, which would blank unset
+# shell vars).
+
+services:
+  builder-editor:
+    build:
+      # Workspace root: see web-builder/Dockerfile for why.
+      context: ..
+      dockerfile: web-builder/Dockerfile
+      args:
+        # Baked into the static bundle (Next.js public env). Set the same
+        # values in your shell or .env at the repo root when invoking
+        # compose, or rely on the defaults in .env.prod for runtime.
+        NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE: ${NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE:-}
+        NEXT_PUBLIC_PLATFORM_FRONTEND_URL: ${NEXT_PUBLIC_PLATFORM_FRONTEND_URL:-}
+    container_name: netmart-builder
+    env_file:
+      - .env.prod
+    # VIRTUAL_HOST / VIRTUAL_PORT live in web-builder/.env.prod, e.g.:
+    #   VIRTUAL_HOST=builder.netmart.se
+    #   VIRTUAL_PORT=3001
+    restart: unless-stopped
+    networks:
+      - my-bridge-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3001/api/sites/public/by-host/healthcheck.local || exit 0"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+networks:
+  my-bridge-network:
+    external: true

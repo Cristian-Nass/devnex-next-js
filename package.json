@@ -1,0 +1,32 @@
+{
+  "name": "netmart-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Top-level workspace for netmart + sibling SaaS products. Each app (netmart/, web-builder/, web-viewer/, wp-builder/) deploys independently — Turbo orchestrates dev / build / lint / typecheck and caches per-package output so changing one app doesn't rebuild the others.",
+  "workspaces": [
+    "packages/*",
+    "web-builder",
+    "web-viewer",
+    "wp-builder/web"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "dev": "turbo run dev --parallel",
+    "build:builder": "turbo run build --filter=web-builder...",
+    "build:viewer": "turbo run build --filter=web-viewer...",
+    "build:packages": "turbo run build --filter=./packages/*",
+    "migrate:sites": "tsx tools/migrate-sites-to-builder.ts",
+    "clean": "turbo run clean"
+  },
+  "devDependencies": {
+    "pg": "^8.16.3",
+    "tsx": "^4.19.4",
+    "turbo": "^2.4.4"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "npm@10.0.0"
+}

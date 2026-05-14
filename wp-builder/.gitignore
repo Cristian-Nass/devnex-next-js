@@ -1,0 +1,14 @@
+.env
+.env.local
+.env.dev
+.env.prod
+backups/
+# Ignore loose SQL dumps; Prisma migration SQL must stay in git for deploy/migrate.
+*.sql
+!server/prisma/migrations/**/*.sql
+*.sql.gz
+node_modules/
+dist/
+*.db
+*.db-journal
+server/prisma/dev.db

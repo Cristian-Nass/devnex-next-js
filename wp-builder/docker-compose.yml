@@ -1,0 +1,66 @@
+# wp-builder control-plane stack: Fastify API + Next.js dashboard.
+#
+#   docker compose -f wp-builder/docker-compose.yml up -d --build
+#
+# Run from the MONOREPO ROOT (d:\Programing\netmart) so the `web` service
+# can use the workspace-root build context — `wp-builder/web` consumes the
+# `@netmart/auth-client` workspace package the same way `web-builder` does.
+#
+# Postgres is external — set DATABASE_URL in wp-builder/server/.env. The
+# api container reaches it via host.docker.internal, LAN IP, or by joining
+# the DB network.
+#
+# Per-customer WordPress stacks are started by the API via host Docker
+# using infra/site-docker-compose.yml.
+
+services:
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: wp-builder-api
+    restart: unless-stopped
+    env_file:
+      - ./server/.env.prod
+    extra_hosts:
+      # Lets api resolve host.docker.internal on Linux (Docker 20.10+); use DB host in DATABASE_URL if preferred.
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./infra:/opt/wp-builder/infra:ro
+      - ./docker:/opt/wp-builder/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${WEBSITES_ROOT:-/home/wordpress/websites}:/home/wordpress/websites
+    networks:
+      - platform
+      - wp_bridge
+
+  web:
+    build:
+      # Workspace root: see wp-builder/web/Dockerfile for why.
+      context: ..
+      dockerfile: wp-builder/web/Dockerfile
+      args:
+        # Inlined into the static bundle. Set the same values in your
+        # shell or repo-root .env when invoking compose, or rely on the
+        # defaults inside wp-builder/web/.env.prod for runtime.
+        NEXT_PUBLIC_PLATFORM_FRONTEND_URL: ${NEXT_PUBLIC_PLATFORM_FRONTEND_URL:-}
+        NEXT_PUBLIC_WP_BUILDER_API_URL: ${NEXT_PUBLIC_WP_BUILDER_API_URL:-}
+    container_name: wp-builder-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    env_file:
+      - ./web/.env.prod
+    # VIRTUAL_HOST / VIRTUAL_PORT live in wp-builder/web/.env.prod, e.g.:
+    #   VIRTUAL_HOST=wp.netmart.se
+    #   VIRTUAL_PORT=3003
+    networks:
+      - platform
+      - wp_bridge
+
+networks:
+  platform:
+    driver: bridge
+  wp_bridge:
+    external: true
+    name: wp-bridge-network

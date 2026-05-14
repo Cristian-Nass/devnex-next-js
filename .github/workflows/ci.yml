@@ -1,0 +1,173 @@
+name: CI
+
+# Single CI entrypoint for the monorepo. `dorny/paths-filter` decides
+# which downstream jobs run, so a change in one project never triggers
+# builds for the others. Each job exits fast if nothing in its path
+# changed, which keeps PRs cheap and matches the user's design goal:
+# "avoid a big build process".
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  detect:
+    name: Detect changed projects
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.filter.outputs.packages }}
+      web-builder: ${{ steps.filter.outputs.web-builder }}
+      web-viewer: ${{ steps.filter.outputs.web-viewer }}
+      netmart: ${{ steps.filter.outputs.netmart }}
+      wp-builder-server: ${{ steps.filter.outputs.wp-builder-server }}
+      wp-builder-web: ${{ steps.filter.outputs.wp-builder-web }}
+      tools: ${{ steps.filter.outputs.tools }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            packages:
+              - 'packages/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'turbo.json'
+            web-builder:
+              - 'web-builder/**'
+              - 'packages/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'turbo.json'
+            web-viewer:
+              - 'web-viewer/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'turbo.json'
+            netmart:
+              - 'netmart/**'
+            wp-builder-server:
+              - 'wp-builder/server/**'
+            wp-builder-web:
+              - 'wp-builder/web/**'
+              - 'packages/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'turbo.json'
+            tools:
+              - 'tools/**'
+
+  packages:
+    name: packages/* (typecheck)
+    needs: detect
+    if: needs.detect.outputs.packages == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --workspaces --include-workspace-root=true
+      - run: npx turbo run typecheck --filter=./packages/*
+
+  web-builder:
+    name: web-builder (lint + build)
+    needs: detect
+    if: needs.detect.outputs.web-builder == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --workspaces --include-workspace-root=true
+      - name: Lint
+        run: npx turbo run lint --filter=web-builder...
+      - name: Build
+        env:
+          NEXT_PUBLIC_PLATFORM_SUBDOMAIN_BASE: web.netmart.se
+          NEXT_PUBLIC_PLATFORM_FRONTEND_URL: https://www.netmart.se
+        run: npx turbo run build --filter=web-builder...
+
+  web-viewer:
+    name: web-viewer (build)
+    needs: detect
+    if: needs.detect.outputs.web-viewer == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --workspaces --include-workspace-root=true
+      - run: npx turbo run build --filter=web-viewer...
+
+  netmart:
+    name: netmart (yarn workspaces)
+    needs: detect
+    if: needs.detect.outputs.netmart == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: netmart
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: corepack enable
+      - run: yarn install --frozen-lockfile
+      - name: Backend build
+        run: yarn workspace backend build
+      - name: Frontend build
+        run: yarn workspace frontend build
+
+  wp-builder-server:
+    name: wp-builder server (Fastify, standalone)
+    needs: detect
+    if: needs.detect.outputs.wp-builder-server == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wp-builder/server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: wp-builder/server/package-lock.json
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm run build
+
+  wp-builder-web:
+    name: wp-builder web (Next, root workspace)
+    needs: detect
+    if: needs.detect.outputs.wp-builder-web == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --workspaces --include-workspace-root=true
+      - name: Lint
+        run: npx turbo run lint --filter=wp-builder-web...
+      - name: Build
+        env:
+          NEXT_PUBLIC_PLATFORM_FRONTEND_URL: https://www.netmart.se
+          NEXT_PUBLIC_WP_BUILDER_API_URL: https://wp-api.netmart.se
+        run: npx turbo run build --filter=wp-builder-web...

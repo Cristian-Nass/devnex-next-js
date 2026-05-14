@@ -1,0 +1,86 @@
+{
+  "OurServices": {
+    "heading": "Våra Tjänster",
+    "subheading": "Vi erbjuder ett brett utbud av tjänster för att hjälpa dig att växa ditt företag",
+    "mobile": {
+      "title": "Mobilapputveckling",
+      "description": "Nativa och plattformsoberoende mobilappar byggda med modern teknik för iOS och Android.",
+      "features": [
+        "React Native",
+        "Flutter",
+        "Native iOS/Android",
+        "App Store-optimering"
+      ]
+    },
+    "web": {
+      "title": "Webbapplikationsutveckling",
+      "description": "Moderna och responsiva webbapplikationer anpassade efter ditt företags behov med avancerade ramverk.",
+      "features": [
+        "React/Vue/Angular",
+        "Node.js-backend",
+        "Cloud-deployment",
+        "Responsiv webbdesign"
+      ]
+    },
+    "uiux": {
+      "title": "SMS-tjänst",
+      "description": "Tillförlitliga SMS-lösningar för aviseringar, påminnelser och kundkommunikation.",
+      "features": [
+        "Transaktionella SMS",
+        "Massutskick",
+        "Leveransrapporter",
+        "SMS-automation"
+      ]
+    },
+    "cloud": {
+      "title": "Molnlösningar",
+      "description": "Skalbar molninfrastruktur och driftsättningslösningar för dina applikationer.",
+      "features": [
+        "AWS/Azure/GCP",
+        "DevOps",
+        "CI/CD Pipelines",
+        "Övervakning"
+      ]
+    },
+    "database": {
+      "title": "Databasdesign",
+      "description": "Robust databasarkitektur och optimering för högpresterande applikationer.",
+      "features": [
+        "SQL/NoSQL",
+        "Datamodellering",
+        "Prestandaoptimering",
+        "Migration"
+      ]
+    },
+    "api": {
+      "title": "API Utveckling",
+      "description": "RESTful och GraphQL API:er designade för skalbarhet, säkerhet och prestanda.",
+      "features": [
+        "REST API",
+        "GraphQL",
+        "Autentisering",
+        "Dokumentation"
+      ]
+    },
+    "email": {
+      "title": "E-posttjänst",
+      "description": "Professionell e-postinstallation och automation som förbättrar kommunikation och kundengagemang.",
+      "features": [
+        "Företagsmejl",
+        "E-postautomation",
+        "Mallar",
+        "Leveransövervakning"
+      ]
+    },
+    "booking": {
+      "title": "Bokningssystem",
+      "description": "Onlinebokning som gör schemaläggning enkel för både ditt team och dina kunder.",
+      "features": [
+        "Kalenderintegration",
+        "Automatiska påminnelser",
+        "Tillgänglighetshantering",
+        "Självbokning för kunder"
+      ]
+    }
+  }
+}
