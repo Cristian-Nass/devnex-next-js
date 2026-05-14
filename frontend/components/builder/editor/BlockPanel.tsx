@@ -52,20 +52,23 @@ export function BlockPanel({onAddToRow, hasRows}: BlockPanelProps) {
         <summary className="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground cursor-pointer hover:text-primary">
           Blocks
         </summary>
+        <div className="flex flex-col gap-2 pt-2">
+
         {BLOCK_TYPES.map((type) => (
-          <div key={type} className="flex flex-row">
+          <div key={type} className="flex flex-row items-center gap-2">
             <div className="flex-1">
               <DraggableBlockType type={type} />
             </div>
             {onAddToRow && hasRows && (
               <button
-                onClick={() => onAddToRow(type)}
-                className="rounded px-2 py-0.5 text-xs text-muted-foreground underline-offset-2 hover:text-primary hover:underline cursor-pointer">
+              onClick={() => onAddToRow(type)}
+              className="rounded px-2 py-0.5 text-xs text-muted-foreground cursor-pointer bg-gray-400 text-white hover:bg-green-700 h-8 w-8">
                 <PlusIcon className="h-4 w-4" />
               </button>
             )}
           </div>
         ))}
+        </div>
         {!hasRows && (
           <p className="mt-4 text-xs text-muted-foreground">
             Add a row first, then drag blocks onto it.
