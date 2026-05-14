@@ -29,6 +29,17 @@ const HeaderSetting = () => {
           className="h-8 w-8 cursor-pointer"
         />
       </label>
+      <label className="flex items-center justify-between gap-2 text-xs">
+        <span>Button</span>
+        <input
+          type="color"
+          aria-label="Header button color"
+          value={navigationBar.buttonColor}
+          onChange={(event) => setNavigationBar({buttonColor: event.target.value})}
+          className="h-8 w-8 cursor-pointer"
+        />
+      </label>
+
     </div>
   );
 };

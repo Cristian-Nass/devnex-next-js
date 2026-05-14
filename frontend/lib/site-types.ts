@@ -29,6 +29,7 @@ export interface Theme {
 export interface NavigationBar {
   backgroundColor: string;
   textColor: string;
+  buttonColor: string;
 }
 
 export interface SiteData {

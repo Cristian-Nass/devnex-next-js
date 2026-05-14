@@ -70,7 +70,11 @@ export function PagesMenu() {
               <button
                 type="button"
                 onClick={handleSavePageEdit}
-                className="rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground cursor-pointer hover:bg-green-500"
+                className="rounded-md px-2 py-1 text-xs cursor-pointer hover:opacity-80"
+                style={{
+                  backgroundColor: navigationBar.buttonColor,
+                  color: navigationBar.textColor,
+                }}
               >
                 <CheckIcon className="h-4 w-3" />
               </button>
@@ -89,10 +93,16 @@ export function PagesMenu() {
                 onClick={() => setCurrentPage(page.pageId)}
                 className={`rounded-md text-sm font-medium transition-colors items-center py-2 px-4 ${
                   currentPageId === page.pageId
-                    ? 'bg-black/80'
+                    ? ''
                     : 'hover:bg-black/10'
                 }`}
-                style={{color: navigationBar.textColor}}
+                style={{
+                  backgroundColor:
+                    currentPageId === page.pageId
+                      ? navigationBar.buttonColor
+                      : undefined,
+                  color: navigationBar.textColor,
+                }}
               >
                 {page.label}
               </button>
@@ -136,7 +146,11 @@ export function PagesMenu() {
           />
           <button
             onClick={handleAdd}
-            className="rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground"
+            className="rounded-md px-2 py-1 text-xs hover:opacity-80"
+            style={{
+              backgroundColor: navigationBar.buttonColor,
+              color: navigationBar.textColor,
+            }}
           >
             Add
           </button>

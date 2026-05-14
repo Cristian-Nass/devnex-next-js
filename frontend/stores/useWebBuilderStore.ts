@@ -24,6 +24,7 @@ export type LoadSiteMeta = {
 const DEFAULT_NAVIGATION_BAR: NavigationBar = {
   backgroundColor: '#3B82F6',
   textColor: '#FFFFFF',
+  buttonColor: '#FFFFFF',
 };
 
 interface WebBuilderStateType {
@@ -94,7 +95,7 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
         provisioningType: meta?.provisioningType ?? 'SUBDOMAIN',
         published: meta?.published ?? false,
         theme: data.theme ?? { primaryColor: '#3B82F6', fontFamily: 'Inter' },
-        navigationBar: data.navigationBar ?? DEFAULT_NAVIGATION_BAR,
+        navigationBar: { ...DEFAULT_NAVIGATION_BAR, ...data.navigationBar },
         pages: data.pages ?? [],
         currentPageId: data.pages?.[0]?.pageId ?? null,
         selectedBlockId: null,
