@@ -51,7 +51,7 @@ export function BuilderToolbar() {
                 if (e.key === 'Enter') commitName();
                 if (e.key === 'Escape') setEditingName(false);
               }}
-              className="rounded-md border bg-background px-2 py-1 text-sm font-semibold focus:outline-none focus:ring-1 focus:ring-primary"
+              className="rounded-md border bg-background px-2 py-1 text-sm font-semibold text-black focus:outline-none focus:ring-1 focus:ring-primary"
             />
           ) : (
             <button

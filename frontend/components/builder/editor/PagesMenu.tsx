@@ -65,7 +65,7 @@ export function PagesMenu() {
                   if (e.key === 'Escape') handleCancelPageEdit();
                 }}
                 placeholder="Page name"
-                className="h-7 w-28 rounded-md border bg-background px-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                className="h-7 w-28 rounded-md border bg-background px-2 text-sm text-black focus:outline-none focus:ring-1 focus:ring-primary"
               />
               <button
                 type="button"
@@ -132,7 +132,7 @@ export function PagesMenu() {
               if (e.key === 'Escape') setAdding(false);
             }}
             placeholder="Page name"
-            className="h-7 w-28 rounded-md border bg-background px-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+            className="h-7 w-28 rounded-md border bg-background px-2 text-sm text-black focus:outline-none focus:ring-1 focus:ring-primary"
           />
           <button
             onClick={handleAdd}
