@@ -155,18 +155,14 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
           : 'border-muted-foreground/20 hover:border-muted-foreground/40'
       }`}
     >
-      <div className="absolute -right-1 top-1/2 z-10 hidden -translate-y-1/2 flex-col gap-1 group-hover/row:flex">
+      <div className="absolute bottom-0 left-3 z-10 hidden translate-y-1/2 items-center gap-1 group-hover/row:flex">
         <button
-          disabled={row.blocks.length === 0}
-          onClick={() => {
-            const firstBlock = row.blocks[0];
-            if (firstBlock) selectBlock(firstBlock.blockId);
-          }}
-          className="rounded bg-green-600 p-1 text-white shadow hover:bg-green-700 disabled:opacity-30"
-          title="Edit row block"
           type="button"
+          onClick={() => deleteRow(row.rowId)}
+          className="rounded bg-background p-1 shadow hover:bg-destructive hover:text-destructive-foreground"
+          title="Delete row"
         >
-          <PencilIcon className="h-3.5 w-3.5" />
+          <Trash2Icon className="h-3.5 w-3.5" />
         </button>
         <button
           disabled={rowIndex === 0}
@@ -187,12 +183,16 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
           <ChevronDownIcon className="h-3.5 w-3.5" />
         </button>
         <button
+          disabled={row.blocks.length === 0}
           type="button"
-          onClick={() => deleteRow(row.rowId)}
-          className="rounded bg-background p-1 shadow hover:bg-destructive hover:text-destructive-foreground"
-          title="Delete row"
+          onClick={() => {
+            const firstBlock = row.blocks[0];
+            if (firstBlock) selectBlock(firstBlock.blockId);
+          }}
+          className="rounded bg-green-600 p-1 text-white shadow hover:bg-green-700 disabled:opacity-30"
+          title="Edit row block"
         >
-          <Trash2Icon className="h-3.5 w-3.5" />
+          <PencilIcon className="h-3.5 w-3.5" />
         </button>
       </div>
 
