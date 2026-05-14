@@ -69,7 +69,10 @@ function SortableBlock({ block, isSelected, onSelect, onDelete }: SortableBlockP
     <div
       ref={setNodeRef}
       style={style}
-      onClick={onSelect}
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect();
+      }}
       className={`group relative cursor-pointer overflow-hidden rounded-lg ring-2 transition-all ${
         isSelected ? 'ring-primary' : 'ring-transparent hover:ring-primary/40'
       }`}
@@ -238,33 +241,46 @@ function RowContainer({ row, rowIndex, totalRows }: RowContainerProps) {
       <SortableContext items={blockIds} strategy={horizontalListSortingStrategy}>
         <div className="grid grid-cols-12 gap-3">
           {Array.from({ length: columnCount }).map((_, columnIndex) => {
-            const block = row.blocks.find(
+            const columnBlocks = row.blocks.filter(
               (candidate, index) => (candidate.columnIndex ?? index) === columnIndex,
             );
+            const columnSelected =
+              selectedColumn?.rowId === row.rowId &&
+              selectedColumn.columnIndex === columnIndex;
 
-            return block ? (
-              <SortableBlock
-                key={block.blockId}
-                block={{ ...block, colSpan: columnSpan, columnIndex }}
-                isSelected={selectedBlockId === block.blockId}
-                onSelect={() => {
-                  selectColumn(row.rowId, columnIndex);
-                  selectBlock(block.blockId);
-                }}
-                onDelete={() => deleteBlock(block.blockId)}
-              />
-            ) : (
+            return columnBlocks.length === 0 ? (
               <EmptyColumnSlot
                 key={`${row.rowId}-${columnIndex}`}
                 rowId={row.rowId}
                 columnIndex={columnIndex}
                 colSpan={columnSpan}
-                isSelected={
-                  selectedColumn?.rowId === row.rowId &&
-                  selectedColumn.columnIndex === columnIndex
-                }
+                isSelected={columnSelected}
                 onSelect={() => selectColumn(row.rowId, columnIndex)}
               />
+            ) : (
+              <div
+                key={`${row.rowId}-${columnIndex}`}
+                style={{ gridColumn: `span ${columnSpan}` }}
+                onClick={() => selectColumn(row.rowId, columnIndex)}
+                className={`flex min-h-20 flex-col gap-3 rounded-lg ring-2 transition-all ${
+                  columnSelected
+                    ? 'ring-primary'
+                    : 'ring-transparent hover:ring-primary/40'
+                }`}
+              >
+                {columnBlocks.map((block) => (
+                  <SortableBlock
+                    key={block.blockId}
+                    block={{ ...block, colSpan: 12, columnIndex }}
+                    isSelected={selectedBlockId === block.blockId}
+                    onSelect={() => {
+                      selectColumn(row.rowId, columnIndex);
+                      selectBlock(block.blockId);
+                    }}
+                    onDelete={() => deleteBlock(block.blockId)}
+                  />
+                ))}
+              </div>
             );
           })}
         </div>

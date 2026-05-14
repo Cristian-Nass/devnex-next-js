@@ -392,10 +392,7 @@ export const useWebBuilderStore = create<WebBuilderStateType>()(
                   if (r.rowId !== rowId) return r;
 
                   const columns = r.columns ?? Math.max(1, r.blocks.length);
-                  const columnOccupied = r.blocks.some(
-                    (block, index) => (block.columnIndex ?? index) === columnIndex,
-                  );
-                  if (columnIndex < 0 || columnIndex >= columns || columnOccupied) return r;
+                  if (columnIndex < 0 || columnIndex >= columns) return r;
 
                   added = true;
                   const colSpan = Math.max(1, Math.floor(12 / columns));
