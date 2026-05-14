@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from 'react';
-import { MinusIcon, PencilIcon, PlusIcon } from 'lucide-react';
+import { PencilIcon } from 'lucide-react';
+// import { MinusIcon, PlusIcon } from 'lucide-react';
 import type { Row } from '@/lib/site-types';
 import { useWebBuilderStore } from '@/stores/useWebBuilderStore';
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 
 interface EditBlockProps {
   row: Row;
@@ -51,12 +52,12 @@ export function EditBlock({ row, onOpenChange }: EditBlockProps) {
               onChange={(e) => setRowBackgroundColor(row.rowId, e.target.value)}
               className="h-7 w-9 cursor-pointer rounded border p-0.5"
             />
-            <Button variant="outline" className="w-8 h-8 cursor-pointer">
+            {/* <Button variant="outline" className="w-8 h-8 cursor-pointer">
               <PlusIcon className="h-4 w-4" />
             </Button>
             <Button variant="outline" className="w-8 h-8 cursor-pointer">
               <MinusIcon className="h-4 w-4" />
-            </Button>
+            </Button> */}
 
         </div>
       )}
